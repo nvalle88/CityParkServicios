@@ -1,0 +1,34 @@
+﻿@model AppCityParkServices.Models.Saldo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Saldo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Saldo1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Saldo1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.Nombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SaldoId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

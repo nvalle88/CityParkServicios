@@ -1,0 +1,275 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CityParkContext" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Carro">
+    <Key>
+      <PropertyRef Name="CarroId" />
+    </Key>
+    <Property Name="CarroId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MarcaId" Type="Int32" Nullable="false" />
+    <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+    <Property Name="Placa" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Marca" Relationship="Self.FK_Carro_Marca" FromRole="Carro" ToRole="Marca" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_Carro_Usuario" FromRole="Carro" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Marca">
+    <Key>
+      <PropertyRef Name="MarcaId" />
+    </Key>
+    <Property Name="MarcaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Carro" Relationship="Self.FK_Carro_Marca" FromRole="Marca" ToRole="Carro" />
+    <NavigationProperty Name="Modelo" Relationship="Self.FK_Modelo_Marca" FromRole="Marca" ToRole="Modelo" />
+  </EntityType>
+  <EntityType Name="Modelo">
+    <Key>
+      <PropertyRef Name="ModeloId" />
+    </Key>
+    <Property Name="ModeloId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MarcaId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Marca" Relationship="Self.FK_Modelo_Marca" FromRole="Modelo" ToRole="Marca" />
+  </EntityType>
+  <EntityType Name="Parqueo">
+    <Key>
+      <PropertyRef Name="ParqueoId" />
+    </Key>
+    <Property Name="ParqueoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UsuarioId" Type="Int32" />
+    <Property Name="FechaInicio" Type="DateTime" Precision="0" />
+    <Property Name="FechaFin" Type="DateTime" Precision="0" />
+    <Property Name="TarjetaCreditoId" Type="Int32" />
+    <Property Name="TarjetaPrepagoId" Type="Int32" />
+    <NavigationProperty Name="TarjetaCredito" Relationship="Self.FK_Parqueo_TarjetaCredito" FromRole="Parqueo" ToRole="TarjetaCredito" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_Parqueo_Usuario" FromRole="Parqueo" ToRole="Usuario" />
+    <NavigationProperty Name="UsuarioTarjetaPrepago" Relationship="Self.FK_Parqueo_UsuarioTarjetaPrepago" FromRole="Parqueo" ToRole="UsuarioTarjetaPrepago" />
+  </EntityType>
+  <EntityType Name="Saldo">
+    <Key>
+      <PropertyRef Name="SaldoId" />
+    </Key>
+    <Property Name="SaldoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Saldo1" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_Saldo_Usuario" FromRole="Saldo" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="TarjetaCredito">
+    <Key>
+      <PropertyRef Name="TarjetaCreditoId" />
+    </Key>
+    <Property Name="TarjetaCreditoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Numero" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CVV_CVC" Type="Int32" Nullable="false" />
+    <Property Name="UsuarioId" Type="Int32" />
+    <NavigationProperty Name="Parqueo" Relationship="Self.FK_Parqueo_TarjetaCredito" FromRole="TarjetaCredito" ToRole="Parqueo" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_TarjetaCredito_Usuario" FromRole="TarjetaCredito" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="TarjetaPrepago">
+    <Key>
+      <PropertyRef Name="TarjetaPrepagoId" />
+    </Key>
+    <Property Name="TarjetaPrepagoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Numero" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Saldo" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="FechaVence" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Activa" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="UsuarioTarjetaPrepago" Relationship="Self.FK_UsuarioTarjetaPrepago_TarjetaPrepago" FromRole="TarjetaPrepago" ToRole="UsuarioTarjetaPrepago" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="UsuarioId" />
+    </Key>
+    <Property Name="UsuarioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Contrasena" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Carro" Relationship="Self.FK_Carro_Usuario" FromRole="Usuario" ToRole="Carro" />
+    <NavigationProperty Name="Parqueo" Relationship="Self.FK_Parqueo_Usuario" FromRole="Usuario" ToRole="Parqueo" />
+    <NavigationProperty Name="Saldo" Relationship="Self.FK_Saldo_Usuario" FromRole="Usuario" ToRole="Saldo" />
+    <NavigationProperty Name="TarjetaCredito" Relationship="Self.FK_TarjetaCredito_Usuario" FromRole="Usuario" ToRole="TarjetaCredito" />
+    <NavigationProperty Name="UsuarioTarjetaPrepago" Relationship="Self.FK_UsuarioTarjetaPrepago_Usuario" FromRole="Usuario" ToRole="UsuarioTarjetaPrepago" />
+  </EntityType>
+  <EntityType Name="UsuarioTarjetaPrepago">
+    <Key>
+      <PropertyRef Name="UsuarioTarjetaPrepagoId" />
+    </Key>
+    <Property Name="UsuarioTarjetaPrepagoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+    <Property Name="TarjetaPrepagoId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Parqueo" Relationship="Self.FK_Parqueo_UsuarioTarjetaPrepago" FromRole="UsuarioTarjetaPrepago" ToRole="Parqueo" />
+    <NavigationProperty Name="TarjetaPrepago" Relationship="Self.FK_UsuarioTarjetaPrepago_TarjetaPrepago" FromRole="UsuarioTarjetaPrepago" ToRole="TarjetaPrepago" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_UsuarioTarjetaPrepago_Usuario" FromRole="UsuarioTarjetaPrepago" ToRole="Usuario" />
+  </EntityType>
+  <Association Name="FK_Carro_Marca">
+    <End Role="Marca" Type="Self.Marca" Multiplicity="1" />
+    <End Role="Carro" Type="Self.Carro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Marca">
+        <PropertyRef Name="MarcaId" />
+      </Principal>
+      <Dependent Role="Carro">
+        <PropertyRef Name="MarcaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Carro_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Carro" Type="Self.Carro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Carro">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Modelo_Marca">
+    <End Role="Marca" Type="Self.Marca" Multiplicity="1" />
+    <End Role="Modelo" Type="Self.Modelo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Marca">
+        <PropertyRef Name="MarcaId" />
+      </Principal>
+      <Dependent Role="Modelo">
+        <PropertyRef Name="MarcaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parqueo_TarjetaCredito">
+    <End Role="TarjetaCredito" Type="Self.TarjetaCredito" Multiplicity="0..1" />
+    <End Role="Parqueo" Type="Self.Parqueo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TarjetaCredito">
+        <PropertyRef Name="TarjetaCreditoId" />
+      </Principal>
+      <Dependent Role="Parqueo">
+        <PropertyRef Name="TarjetaCreditoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parqueo_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="Parqueo" Type="Self.Parqueo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Parqueo">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parqueo_UsuarioTarjetaPrepago">
+    <End Role="UsuarioTarjetaPrepago" Type="Self.UsuarioTarjetaPrepago" Multiplicity="0..1" />
+    <End Role="Parqueo" Type="Self.Parqueo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UsuarioTarjetaPrepago">
+        <PropertyRef Name="UsuarioTarjetaPrepagoId" />
+      </Principal>
+      <Dependent Role="Parqueo">
+        <PropertyRef Name="TarjetaPrepagoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Saldo_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Saldo" Type="Self.Saldo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Saldo">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TarjetaCredito_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="TarjetaCredito" Type="Self.TarjetaCredito" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="TarjetaCredito">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsuarioTarjetaPrepago_TarjetaPrepago">
+    <End Role="TarjetaPrepago" Type="Self.TarjetaPrepago" Multiplicity="1" />
+    <End Role="UsuarioTarjetaPrepago" Type="Self.UsuarioTarjetaPrepago" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TarjetaPrepago">
+        <PropertyRef Name="TarjetaPrepagoId" />
+      </Principal>
+      <Dependent Role="UsuarioTarjetaPrepago">
+        <PropertyRef Name="TarjetaPrepagoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsuarioTarjetaPrepago_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="UsuarioTarjetaPrepago" Type="Self.UsuarioTarjetaPrepago" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="UsuarioTarjetaPrepago">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DefaultConnection" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Carro" EntityType="Self.Carro" />
+    <EntitySet Name="Marca" EntityType="Self.Marca" />
+    <EntitySet Name="Modelo" EntityType="Self.Modelo" />
+    <EntitySet Name="Parqueo" EntityType="Self.Parqueo" />
+    <EntitySet Name="Saldo" EntityType="Self.Saldo" />
+    <EntitySet Name="TarjetaCredito" EntityType="Self.TarjetaCredito" />
+    <EntitySet Name="TarjetaPrepago" EntityType="Self.TarjetaPrepago" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+    <EntitySet Name="UsuarioTarjetaPrepago" EntityType="Self.UsuarioTarjetaPrepago" />
+    <AssociationSet Name="FK_Carro_Marca" Association="Self.FK_Carro_Marca">
+      <End Role="Marca" EntitySet="Marca" />
+      <End Role="Carro" EntitySet="Carro" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Carro_Usuario" Association="Self.FK_Carro_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Carro" EntitySet="Carro" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Modelo_Marca" Association="Self.FK_Modelo_Marca">
+      <End Role="Marca" EntitySet="Marca" />
+      <End Role="Modelo" EntitySet="Modelo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parqueo_TarjetaCredito" Association="Self.FK_Parqueo_TarjetaCredito">
+      <End Role="TarjetaCredito" EntitySet="TarjetaCredito" />
+      <End Role="Parqueo" EntitySet="Parqueo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parqueo_Usuario" Association="Self.FK_Parqueo_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Parqueo" EntitySet="Parqueo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parqueo_UsuarioTarjetaPrepago" Association="Self.FK_Parqueo_UsuarioTarjetaPrepago">
+      <End Role="UsuarioTarjetaPrepago" EntitySet="UsuarioTarjetaPrepago" />
+      <End Role="Parqueo" EntitySet="Parqueo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Saldo_Usuario" Association="Self.FK_Saldo_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Saldo" EntitySet="Saldo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TarjetaCredito_Usuario" Association="Self.FK_TarjetaCredito_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="TarjetaCredito" EntitySet="TarjetaCredito" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsuarioTarjetaPrepago_TarjetaPrepago" Association="Self.FK_UsuarioTarjetaPrepago_TarjetaPrepago">
+      <End Role="TarjetaPrepago" EntitySet="TarjetaPrepago" />
+      <End Role="UsuarioTarjetaPrepago" EntitySet="UsuarioTarjetaPrepago" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsuarioTarjetaPrepago_Usuario" Association="Self.FK_UsuarioTarjetaPrepago_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="UsuarioTarjetaPrepago" EntitySet="UsuarioTarjetaPrepago" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

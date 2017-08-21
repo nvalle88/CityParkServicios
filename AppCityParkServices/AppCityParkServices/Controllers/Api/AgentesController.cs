@@ -1,0 +1,168 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Description;
+using AppCityParkServices.Models;
+using Newtonsoft.Json.Linq;
+
+namespace AppCityParkServices.Controllers.Api
+{
+    [RoutePrefix("api/Agentes")]
+
+    public class AgentesController : ApiController
+    {
+        private CityParkApp db = new CityParkApp();
+
+        [HttpPost]
+        [Route("Login")]
+        public IHttpActionResult Login(JObject form)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            var Nombreusuario = string.Empty;
+            var contrasena = string.Empty;
+            dynamic jsonObject = form;
+
+            try
+            {
+
+                Nombreusuario = jsonObject.Agente.Value;
+                contrasena = jsonObject.Contrasena.Value;
+            }
+            catch (Exception)
+            {
+
+                return BadRequest("LLamada Incorrecta");
+            }
+
+            var existeAgente = db.Agente.
+                                Where(u => u.Nombre == Nombreusuario && u.Contrasena == contrasena)
+                                .Include(u => u.Multa)
+                                .FirstOrDefault();
+
+            if (existeAgente == null)
+            {
+                return BadRequest("Usuario o contraseña incorrecto...");
+            }
+
+            var respuestaAgente = new Agente
+            {
+                AgenteId=existeAgente.AgenteId,
+                Apellido=existeAgente.Apellido,
+                Multa=existeAgente.Multa,
+                Contrasena=existeAgente.Contrasena,
+                Nombre=existeAgente.Nombre,
+            };
+
+            return Ok(respuestaAgente);
+
+        }
+
+
+
+        // GET: api/Agentes
+        public IQueryable<Agente> GetAgente()
+        {
+            return db.Agente;
+        }
+
+        // GET: api/Agentes/5
+        [ResponseType(typeof(Agente))]
+        public async Task<IHttpActionResult> GetAgente(int id)
+        {
+            Agente agente = await db.Agente.FindAsync(id);
+            if (agente == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(agente);
+        }
+
+        // PUT: api/Agentes/5
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> PutAgente(int id, Agente agente)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != agente.AgenteId)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(agente).State = EntityState.Modified;
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AgenteExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // POST: api/Agentes
+        [ResponseType(typeof(Agente))]
+        public async Task<IHttpActionResult> PostAgente(Agente agente)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.Agente.Add(agente);
+            await db.SaveChangesAsync();
+
+            return CreatedAtRoute("DefaultApi", new { id = agente.AgenteId }, agente);
+        }
+
+        // DELETE: api/Agentes/5
+        [ResponseType(typeof(Agente))]
+        public async Task<IHttpActionResult> DeleteAgente(int id)
+        {
+            Agente agente = await db.Agente.FindAsync(id);
+            if (agente == null)
+            {
+                return NotFound();
+            }
+
+            db.Agente.Remove(agente);
+            await db.SaveChangesAsync();
+
+            return Ok(agente);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool AgenteExists(int id)
+        {
+            return db.Agente.Count(e => e.AgenteId == id) > 0;
+        }
+    }
+}

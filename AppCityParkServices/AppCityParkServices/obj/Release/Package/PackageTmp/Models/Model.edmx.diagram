@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="272b53573e7147b8a0adca46e0e5247d" Name="Diagram1">
+        <EntityTypeShape EntityType="CityParkAppModel.Agente" Width="1.5" PointX="5.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkAppModel.Carro" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkAppModel.Marca" Width="1.5" PointX="1.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkAppModel.Modelo" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkAppModel.Multa" Width="1.5" PointX="8" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkAppModel.Parqueo" Width="1.5" PointX="5.25" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkAppModel.Saldo" Width="1.5" PointX="3" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkAppModel.TarjetaCredito" Width="1.5" PointX="3" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkAppModel.TarjetaPrepago" Width="1.5" PointX="3.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkAppModel.Usuario" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkAppModel.UsuarioTarjetaPrepago" Width="1.5" PointX="6" PointY="7.5" IsExpanded="true" />
+        <AssociationConnector Association="CityParkAppModel.FK_Multa_Agente" ManuallyRouted="false" />
+        <AssociationConnector Association="CityParkAppModel.FK_Carro_Modelo" ManuallyRouted="false" />
+        <AssociationConnector Association="CityParkAppModel.FK_Carro_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="CityParkAppModel.FK_Parqueo_Carro" ManuallyRouted="false" />
+        <AssociationConnector Association="CityParkAppModel.FK_Modelo_Marca" ManuallyRouted="false" />
+        <AssociationConnector Association="CityParkAppModel.FK_Parqueo_TarjetaCredito" ManuallyRouted="false" />
+        <AssociationConnector Association="CityParkAppModel.FK_Parqueo_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="CityParkAppModel.FK_Saldo_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="CityParkAppModel.FK_TarjetaCredito_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="CityParkAppModel.FK_UsuarioTarjetaPrepago_TarjetaPrepago" ManuallyRouted="false" />
+        <AssociationConnector Association="CityParkAppModel.FK_UsuarioTarjetaPrepago_Usuario" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

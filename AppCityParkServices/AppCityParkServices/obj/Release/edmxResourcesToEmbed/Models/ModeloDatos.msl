@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CityParkContextStoreContainer" CdmEntityContainer="DefaultConnection">
+    <EntitySetMapping Name="Carro">
+      <EntityTypeMapping TypeName="CityParkContext.Carro">
+        <MappingFragment StoreEntitySet="Carro">
+          <ScalarProperty Name="CarroId" ColumnName="CarroId" />
+          <ScalarProperty Name="MarcaId" ColumnName="MarcaId" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+          <ScalarProperty Name="Placa" ColumnName="Placa" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Marca">
+      <EntityTypeMapping TypeName="CityParkContext.Marca">
+        <MappingFragment StoreEntitySet="Marca">
+          <ScalarProperty Name="MarcaId" ColumnName="MarcaId" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Modelo">
+      <EntityTypeMapping TypeName="CityParkContext.Modelo">
+        <MappingFragment StoreEntitySet="Modelo">
+          <ScalarProperty Name="ModeloId" ColumnName="ModeloId" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="MarcaId" ColumnName="MarcaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Parqueo">
+      <EntityTypeMapping TypeName="CityParkContext.Parqueo">
+        <MappingFragment StoreEntitySet="Parqueo">
+          <ScalarProperty Name="ParqueoId" ColumnName="ParqueoId" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+          <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+          <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+          <ScalarProperty Name="TarjetaCreditoId" ColumnName="TarjetaCreditoId" />
+          <ScalarProperty Name="TarjetaPrepagoId" ColumnName="TarjetaPrepagoId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Saldo">
+      <EntityTypeMapping TypeName="CityParkContext.Saldo">
+        <MappingFragment StoreEntitySet="Saldo">
+          <ScalarProperty Name="SaldoId" ColumnName="SaldoId" />
+          <ScalarProperty Name="Saldo1" ColumnName="Saldo" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TarjetaCredito">
+      <EntityTypeMapping TypeName="CityParkContext.TarjetaCredito">
+        <MappingFragment StoreEntitySet="TarjetaCredito">
+          <ScalarProperty Name="TarjetaCreditoId" ColumnName="TarjetaCreditoId" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+          <ScalarProperty Name="Numero" ColumnName="Numero" />
+          <ScalarProperty Name="CVV_CVC" ColumnName="CVV_CVC" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TarjetaPrepago">
+      <EntityTypeMapping TypeName="CityParkContext.TarjetaPrepago">
+        <MappingFragment StoreEntitySet="TarjetaPrepago">
+          <ScalarProperty Name="TarjetaPrepagoId" ColumnName="TarjetaPrepagoId" />
+          <ScalarProperty Name="Numero" ColumnName="Numero" />
+          <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+          <ScalarProperty Name="FechaVence" ColumnName="FechaVence" />
+          <ScalarProperty Name="Activa" ColumnName="Activa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuario">
+      <EntityTypeMapping TypeName="CityParkContext.Usuario">
+        <MappingFragment StoreEntitySet="Usuario">
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UsuarioTarjetaPrepago">
+      <EntityTypeMapping TypeName="CityParkContext.UsuarioTarjetaPrepago">
+        <MappingFragment StoreEntitySet="UsuarioTarjetaPrepago">
+          <ScalarProperty Name="UsuarioTarjetaPrepagoId" ColumnName="UsuarioTarjetaPrepagoId" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+          <ScalarProperty Name="TarjetaPrepagoId" ColumnName="TarjetaPrepagoId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

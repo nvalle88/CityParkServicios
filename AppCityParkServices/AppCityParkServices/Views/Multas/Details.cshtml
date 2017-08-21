@@ -1,0 +1,58 @@
+﻿@model AppCityParkServices.Models.Multa
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Multa</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Foto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Foto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Valor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Valor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Agente.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Agente.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Carro.Placa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Carro.Placa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.Nombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MultaId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
