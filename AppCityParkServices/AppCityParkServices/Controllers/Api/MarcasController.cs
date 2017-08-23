@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using AppCityParkServices.Models;
+using AppCityParkServices.Clases;
 
 namespace AppCityParkServices.Controllers.Api
 {
@@ -18,10 +19,17 @@ namespace AppCityParkServices.Controllers.Api
         private CityParkApp db = new CityParkApp();
 
         // GET: api/Marcas
-        public IQueryable<Marca> GetMarca()
+        public List<MarcaRequest> GetMarca()
         {
-            return db.Marca;
+            var Marcas = new List<MarcaRequest>();
+            foreach (var item in db.Marca)
+            {
+                Marcas.Add(new MarcaRequest { Id = item.MarcaId, Nombre = item.Nombre });
+            }
+            return Marcas;
         }
+
+       
 
         // GET: api/Marcas/5
         [ResponseType(typeof(Marca))]

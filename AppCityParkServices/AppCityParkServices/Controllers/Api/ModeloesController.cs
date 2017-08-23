@@ -26,6 +26,18 @@ namespace AppCityParkServices.Controllers.Api
 
         // GET: api/Modeloes/5
         [ResponseType(typeof(Modelo))]
+
+        public  List<Modelo> GetModeloByMarca(int Marcaid)
+        {            
+            var Modelos = new List<Modelo>();
+            foreach (var item in db.Modelo)
+            {
+                if (item.MarcaId==Marcaid)
+                Modelos.Add(item);
+            }
+            return Modelos;
+        }
+
         public async Task<IHttpActionResult> GetModelo(int id)
         {
             Modelo modelo = await db.Modelo.FindAsync(id);
