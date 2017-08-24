@@ -10,9 +10,11 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using AppCityParkServices.Models;
+using AppCityParkServices.Clases;
 
 namespace AppCityParkServices.Controllers.Api
 {
+    [RoutePrefix("api/Modelos")]
     public class ModeloesController : ApiController
     {
         private CityParkApp db = new CityParkApp();
@@ -23,21 +25,26 @@ namespace AppCityParkServices.Controllers.Api
             db.Configuration.ProxyCreationEnabled = false;
             return db.Modelo.Include(m=>m.Marca);
         }
+        
+        // GET: api/Modeloes/GetModeloByMarca
+        [HttpPost]
+        [Route("GetModelosByMarca")]
+        public List<ModeloRequest> GetModeloByMarca(MarcaRequest _marca)
+        {
+            
+            var ModelosDB=db.Modelo.Where(x => x.MarcaId == _marca.Id).ToList();
+            var Modelos = new List<ModeloRequest>();
+            foreach (var item in ModelosDB)
+            {
+                Modelos.Add(new ModeloRequest { Id = item.ModeloId, Nombre = item.Nombre });
+            }
+            return Modelos;
+
+        }
+
 
         // GET: api/Modeloes/5
         [ResponseType(typeof(Modelo))]
-
-        public  List<Modelo> GetModeloByMarca(int Marcaid)
-        {            
-            var Modelos = new List<Modelo>();
-            foreach (var item in db.Modelo)
-            {
-                if (item.MarcaId==Marcaid)
-                Modelos.Add(item);
-            }
-            return Modelos;
-        }
-
         public async Task<IHttpActionResult> GetModelo(int id)
         {
             Modelo modelo = await db.Modelo.FindAsync(id);
@@ -45,7 +52,6 @@ namespace AppCityParkServices.Controllers.Api
             {
                 return NotFound();
             }
-
             return Ok(modelo);
         }
 

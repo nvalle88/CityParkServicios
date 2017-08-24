@@ -163,6 +163,7 @@
     <Compile Include="Clases\FileHelper.cs" />
     <Compile Include="Clases\FotoRequest.cs" />
     <Compile Include="Clases\MarcaRequest.cs" />
+    <Compile Include="Clases\ModeloRequest.cs" />
     <Compile Include="Clases\Response.cs" />
     <Compile Include="Controllers\Api\AgentesController.cs" />
     <Compile Include="Controllers\Api\CarroesController.cs" />
