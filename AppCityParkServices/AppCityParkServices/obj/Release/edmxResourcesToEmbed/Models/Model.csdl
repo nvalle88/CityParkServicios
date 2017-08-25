@@ -315,5 +315,16 @@
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="UsuarioTarjetaPrepago" EntitySet="UsuarioTarjetaPrepago" />
     </AssociationSet>
+    <EntitySet Name="Plaza" EntityType="CityParkAppModel.Plaza" />
   </EntityContainer>
+  <EntityType Name="Plaza">
+    <Key>
+      <PropertyRef Name="PlazaId" />
+    </Key>
+    <Property Name="PlazaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="Barrio" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="Direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Ocupado" Type="Boolean" />
+  </EntityType>
 </Schema>

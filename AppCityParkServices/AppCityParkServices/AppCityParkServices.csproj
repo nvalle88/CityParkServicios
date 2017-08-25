@@ -171,6 +171,7 @@
     <Compile Include="Controllers\Api\ModeloesController.cs" />
     <Compile Include="Controllers\Api\MultasController.cs" />
     <Compile Include="Controllers\Api\ParqueosController.cs" />
+    <Compile Include="Controllers\Api\PlazasController.cs" />
     <Compile Include="Controllers\Api\SaldoesController.cs" />
     <Compile Include="Controllers\Api\TarjetaCreditoesController.cs" />
     <Compile Include="Controllers\Api\TarjetaPrepagoesController.cs" />
@@ -183,6 +184,7 @@
     <Compile Include="Controllers\MVC\ModeloesController.cs" />
     <Compile Include="Controllers\MVC\MultasController.cs" />
     <Compile Include="Controllers\MVC\ParqueosController.cs" />
+    <Compile Include="Controllers\MVC\PlazasController.cs" />
     <Compile Include="Controllers\MVC\SaldoesController.cs" />
     <Compile Include="Controllers\MVC\TarjetaCreditoesController.cs" />
     <Compile Include="Controllers\MVC\TarjetaPrepagoesController.cs" />
@@ -222,6 +224,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Parqueo.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Plaza.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Saldo.cs">
@@ -355,6 +360,11 @@
     <Content Include="Views\Multas\Details.cshtml" />
     <Content Include="Views\Multas\Edit.cshtml" />
     <Content Include="Views\Multas\Index.cshtml" />
+    <Content Include="Views\Plazas\Create.cshtml" />
+    <Content Include="Views\Plazas\Delete.cshtml" />
+    <Content Include="Views\Plazas\Details.cshtml" />
+    <Content Include="Views\Plazas\Edit.cshtml" />
+    <Content Include="Views\Plazas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -117,5 +117,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Plaza">
+      <EntityTypeMapping TypeName="CityParkAppModel.Plaza">
+        <MappingFragment StoreEntitySet="Plaza">
+          <ScalarProperty Name="Ocupado" ColumnName="Ocupado" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="Barrio" ColumnName="Barrio" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="PlazaId" ColumnName="PlazaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

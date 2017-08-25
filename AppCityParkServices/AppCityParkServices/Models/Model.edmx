@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CityParkAppModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CityParkAppModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Agente">
           <Key>
             <PropertyRef Name="AgenteId" />
@@ -64,6 +64,16 @@
           <Property Name="Longitud" Type="float" />
           <Property Name="TarjetaCreditoId" Type="int" />
           <Property Name="CarroId" Type="int" />
+        </EntityType>
+        <EntityType Name="Plaza">
+          <Key>
+            <PropertyRef Name="PlazaId" />
+          </Key>
+          <Property Name="PlazaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="25" />
+          <Property Name="Barrio" Type="varchar" MaxLength="25" />
+          <Property Name="Direccion" Type="text" />
+          <Property Name="Ocupado" Type="bit" />
         </EntityType>
         <EntityType Name="Saldo">
           <Key>
@@ -249,6 +259,7 @@
           <EntitySet Name="Modelo" EntityType="Self.Modelo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Multa" EntityType="Self.Multa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Parqueo" EntityType="Self.Parqueo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Plaza" EntityType="Self.Plaza" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Saldo" EntityType="Self.Saldo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TarjetaCredito" EntityType="Self.TarjetaCredito" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TarjetaPrepago" EntityType="Self.TarjetaPrepago" Schema="dbo" store:Type="Tables" />
@@ -299,8 +310,7 @@
             <End Role="UsuarioTarjetaPrepago" EntitySet="UsuarioTarjetaPrepago" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CityParkAppModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -619,7 +629,18 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="UsuarioTarjetaPrepago" EntitySet="UsuarioTarjetaPrepago" />
           </AssociationSet>
+          <EntitySet Name="Plaza" EntityType="CityParkAppModel.Plaza" />
         </EntityContainer>
+        <EntityType Name="Plaza">
+          <Key>
+            <PropertyRef Name="PlazaId" />
+          </Key>
+          <Property Name="PlazaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Barrio" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Ocupado" Type="Boolean" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -739,6 +760,17 @@
                 <ScalarProperty Name="UsuarioTarjetaPrepagoId" ColumnName="UsuarioTarjetaPrepagoId" />
                 <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
                 <ScalarProperty Name="TarjetaPrepagoId" ColumnName="TarjetaPrepagoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Plaza">
+            <EntityTypeMapping TypeName="CityParkAppModel.Plaza">
+              <MappingFragment StoreEntitySet="Plaza">
+                <ScalarProperty Name="Ocupado" ColumnName="Ocupado" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Barrio" ColumnName="Barrio" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="PlazaId" ColumnName="PlazaId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

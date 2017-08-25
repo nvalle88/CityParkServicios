@@ -60,6 +60,16 @@
     <Property Name="TarjetaCreditoId" Type="int" />
     <Property Name="CarroId" Type="int" />
   </EntityType>
+  <EntityType Name="Plaza">
+    <Key>
+      <PropertyRef Name="PlazaId" />
+    </Key>
+    <Property Name="PlazaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="25" />
+    <Property Name="Barrio" Type="varchar" MaxLength="25" />
+    <Property Name="Direccion" Type="text" />
+    <Property Name="Ocupado" Type="bit" />
+  </EntityType>
   <EntityType Name="Saldo">
     <Key>
       <PropertyRef Name="SaldoId" />
@@ -244,6 +254,7 @@
     <EntitySet Name="Modelo" EntityType="Self.Modelo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Multa" EntityType="Self.Multa" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Parqueo" EntityType="Self.Parqueo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Plaza" EntityType="Self.Plaza" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Saldo" EntityType="Self.Saldo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TarjetaCredito" EntityType="Self.TarjetaCredito" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TarjetaPrepago" EntityType="Self.TarjetaPrepago" Schema="dbo" store:Type="Tables" />
