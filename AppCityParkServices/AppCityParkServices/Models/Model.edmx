@@ -64,6 +64,7 @@
           <Property Name="Longitud" Type="float" />
           <Property Name="TarjetaCreditoId" Type="int" />
           <Property Name="CarroId" Type="int" />
+          <Property Name="PlazaId" Type="int" />
         </EntityType>
         <EntityType Name="Plaza">
           <Key>
@@ -384,6 +385,7 @@
           <NavigationProperty Name="Carro" Relationship="Self.FK_Parqueo_Carro" FromRole="Parqueo" ToRole="Carro" />
           <NavigationProperty Name="TarjetaCredito" Relationship="Self.FK_Parqueo_TarjetaCredito" FromRole="Parqueo" ToRole="TarjetaCredito" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_Parqueo_Usuario" FromRole="Parqueo" ToRole="Usuario" />
+          <Property Name="PlazaId" Type="Int32" />
         </EntityType>
         <EntityType Name="Saldo">
           <Key>
@@ -702,6 +704,7 @@
           <EntitySetMapping Name="Parqueo">
             <EntityTypeMapping TypeName="CityParkAppModel.Parqueo">
               <MappingFragment StoreEntitySet="Parqueo">
+                <ScalarProperty Name="PlazaId" ColumnName="PlazaId" />
                 <ScalarProperty Name="ParqueoId" ColumnName="ParqueoId" />
                 <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
                 <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />

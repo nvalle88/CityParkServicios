@@ -50,7 +50,7 @@ namespace AppCityParkServices.Controllers.MVC
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ParqueoId,UsuarioId,FechaInicio,FechaFin,Latitud,Longitud,TarjetaCreditoId")] Parqueo parqueo)
+        public async Task<ActionResult> Create([Bind(Include = "ParqueoId,UsuarioId,FechaInicio,FechaFin,Latitud,Longitud,TarjetaCreditoId,PlazaId")] Parqueo parqueo)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace AppCityParkServices.Controllers.MVC
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ParqueoId,UsuarioId,FechaInicio,FechaFin,Latitud,Longitud,TarjetaCreditoId")] Parqueo parqueo)
+        public async Task<ActionResult> Edit([Bind(Include = "ParqueoId,UsuarioId,FechaInicio,FechaFin,Latitud,Longitud,TarjetaCreditoId,PlazaId")] Parqueo parqueo)
         {
             if (ModelState.IsValid)
             {

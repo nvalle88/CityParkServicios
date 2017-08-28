@@ -24,7 +24,7 @@ namespace AppCityParkServices.Controllers.Api
             var Marcas = new List<MarcaRequest>();
             foreach (var item in db.Marca)
             {
-                Marcas.Add(new MarcaRequest { Id = item.MarcaId, Nombre = item.Nombre });
+                Marcas.Add(new MarcaRequest { MarcaId = item.MarcaId, Nombre = item.Nombre });
             }
             return Marcas;
         }

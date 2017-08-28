@@ -25,11 +25,22 @@ namespace AppCityParkServices.Controllers.Api
             return db.Plaza;
         }
 
+        // GET: api/Plazas/GetPlazaByNombre
+        [HttpPost]
+        [Route("GetPlazaByNombre")]
+        public Plaza GetPlazaByNombre(Plaza plaza)
+        {
+            Plaza PlazaDB = db.Plaza.Where(x => x.Nombre == plaza.Nombre).FirstOrDefault();           
+            return PlazaDB;
+        }
+
         // GET: api/Plazas/5
         [ResponseType(typeof(Plaza))]
         public async Task<IHttpActionResult> GetPlaza(int id)
         {
             Plaza plaza = await db.Plaza.FindAsync(id);
+
+
             if (plaza == null)
             {
                 return NotFound();
@@ -74,6 +85,8 @@ namespace AppCityParkServices.Controllers.Api
         }
 
         // POST: api/Plazas
+        [Route("insertarPlaza")]
+
         [ResponseType(typeof(Plaza))]
         public async Task<IHttpActionResult> PostPlaza(Plaza plaza)
         {

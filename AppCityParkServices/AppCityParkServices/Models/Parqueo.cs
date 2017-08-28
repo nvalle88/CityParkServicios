@@ -22,6 +22,7 @@ namespace AppCityParkServices.Models
         public Nullable<double> Longitud { get; set; }
         public Nullable<int> TarjetaCreditoId { get; set; }
         public Nullable<int> CarroId { get; set; }
+        public Nullable<int> PlazaId { get; set; }
     
         public virtual Carro Carro { get; set; }
         public virtual TarjetaCredito TarjetaCredito { get; set; }
