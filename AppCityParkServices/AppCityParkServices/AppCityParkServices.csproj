@@ -160,6 +160,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Clases\Barrios.cs" />
     <Compile Include="Clases\FileHelper.cs" />
     <Compile Include="Clases\FotoRequest.cs" />
     <Compile Include="Clases\MarcaRequest.cs" />

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using AppCityParkServices.Models;
+using AppCityParkServices.Clases;
 
 namespace AppCityParkServices.Controllers.Api
 {
@@ -25,6 +26,15 @@ namespace AppCityParkServices.Controllers.Api
             return db.Plaza;
         }
 
+        // GET: api/Plazas/GetPlazaByBarrio
+        [HttpPost]
+        [Route("GetPlazaByBarrio")]
+        public List<Plaza> GetPlazaByBarrio(Barrios barrio)
+        {
+            var PlazaDB = db.Plaza.Where(x => x.Barrio == barrio.NombreBarrio).ToList();
+            return PlazaDB;
+        }
+
         // GET: api/Plazas/GetPlazaByNombre
         [HttpPost]
         [Route("GetPlazaByNombre")]
@@ -33,6 +43,23 @@ namespace AppCityParkServices.Controllers.Api
             Plaza PlazaDB = db.Plaza.Where(x => x.Nombre == plaza.Nombre).FirstOrDefault();           
             return PlazaDB;
         }
+
+        // GET: api/Plazas/GetBarrios
+        [HttpGet]
+        [Route("GetBarrios")]
+        public List<Barrios> GetBarrios()
+        {
+            var g = db.Plaza.GroupBy(a => a.Barrio);
+            var Barrios = new List<Barrios>();
+
+            foreach (var pc in g)
+            {
+                Barrios.Add(new Barrios { NombreBarrio = pc.Key});
+            }         
+            return Barrios;
+        }
+
+
 
         // GET: api/Plazas/5
         [ResponseType(typeof(Plaza))]
@@ -51,18 +78,13 @@ namespace AppCityParkServices.Controllers.Api
 
         // PUT: api/Plazas/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutPlaza(int id, Plaza plaza)
+        public async Task<IHttpActionResult> PutPlaza(Plaza plaza)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            if (id != plaza.PlazaId)
-            {
-                return BadRequest();
-            }
-
+          
             db.Entry(plaza).State = EntityState.Modified;
 
             try
@@ -70,15 +92,8 @@ namespace AppCityParkServices.Controllers.Api
                 await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
-            {
-                if (!PlazaExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+            {                
+                    throw;                
             }
 
             return StatusCode(HttpStatusCode.NoContent);
