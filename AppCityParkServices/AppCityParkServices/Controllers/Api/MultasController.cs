@@ -40,6 +40,11 @@ namespace AppCityParkServices.Controllers.Api
             var folder = "~/Content/Multas";
             var fullPath = string.Format("{0}/{1}",folder,file);
 
+           //if(!Directory.Exists(folder))
+           // {
+           //     Directory.CreateDirectory(folder);
+           // }
+
             var response = FileHelper.UploadFoto(stream,folder,file);
 
             if (!response)

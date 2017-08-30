@@ -46,7 +46,7 @@
       <PropertyRef Name="MultaId" />
     </Key>
     <Property Name="MultaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Foto" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Foto" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
     <Property Name="Valor" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="Fecha" Type="DateTime" Precision="0" />
     <Property Name="AgenteId" Type="Int32" />
@@ -54,6 +54,7 @@
     <Property Name="latitud" Type="Double" />
     <Property Name="Placa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Agente" Relationship="Self.FK_Multa_Agente" FromRole="Multa" ToRole="Agente" />
+    <Property Name="Plaza" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Parqueo">
     <Key>

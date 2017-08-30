@@ -22,6 +22,7 @@ namespace AppCityParkServices.Models
         public Nullable<double> Longitud { get; set; }
         public Nullable<double> latitud { get; set; }
         public string Placa { get; set; }
+        public string Plaza { get; set; }
     
         public virtual Agente Agente { get; set; }
     }

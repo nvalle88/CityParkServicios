@@ -42,6 +42,7 @@
     <EntitySetMapping Name="Multa">
       <EntityTypeMapping TypeName="CityParkAppModel.Multa">
         <MappingFragment StoreEntitySet="Multa">
+          <ScalarProperty Name="Plaza" ColumnName="Plaza" />
           <ScalarProperty Name="MultaId" ColumnName="MultaId" />
           <ScalarProperty Name="Foto" ColumnName="Foto" />
           <ScalarProperty Name="Valor" ColumnName="Valor" />

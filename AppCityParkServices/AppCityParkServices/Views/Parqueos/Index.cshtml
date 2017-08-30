@@ -29,6 +29,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Usuario.Nombre)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PlazaId)
+        </th>
         <th></th>
     </tr>
 
@@ -52,6 +55,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.Usuario.Nombre)
         </td>
+        <th>
+            @Html.DisplayFor(modelItem => item.PlazaId)
+        </th>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ParqueoId }) |
             @Html.ActionLink("Details", "Details", new { id=item.ParqueoId }) |

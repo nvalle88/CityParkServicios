@@ -50,18 +50,19 @@ namespace AppCityParkServices.Controllers.Api
         }
 
         [HttpPost]
-        [Route("BuscarPlaca")]
-        
+        [Route("BuscarPlaca")]    
         public  IHttpActionResult BuscarPlaca(JObject form)
         {
             db.Configuration.ProxyCreationEnabled = false;
             var placa = string.Empty;
+            var plazaNombre = string.Empty;
 
             dynamic jsonObject = form;
 
             try
             {
                 placa = jsonObject.Placa.Value;
+                plazaNombre = jsonObject.Plaza.Value;
             }
             catch (Exception)
             {
@@ -69,9 +70,10 @@ namespace AppCityParkServices.Controllers.Api
                 return null;
             }
 
-            Response response; 
+            Response response;
+            Plaza Plaza = db.Plaza.Where(x => x.Nombre == plazaNombre).FirstOrDefault();
             var parqueos = db.Parqueo.Where(s => s.Carro.Placa==placa && s.FechaFin.Day==DateTime.Now.Day 
-                                             && s.FechaFin.Month==DateTime.Now.Month && s.FechaFin.Year==DateTime.Now.Year)
+                                             && s.FechaFin.Month==DateTime.Now.Month && s.FechaFin.Year==DateTime.Now.Year && s.PlazaId==Plaza.PlazaId)
                                              .Include(s=>s.Carro.Modelo.Marca)
                                              .Include(s=>s.Usuario)
                                              .ToList();
