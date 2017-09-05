@@ -23,9 +23,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Placa)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Imagen)
-        </th>
+       
         <th></th>
     </tr>
 
@@ -43,9 +41,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.Placa)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Imagen)
-        </td>
+       
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.MultaId }) |
             @Html.ActionLink("Details", "Details", new { id=item.MultaId }) |

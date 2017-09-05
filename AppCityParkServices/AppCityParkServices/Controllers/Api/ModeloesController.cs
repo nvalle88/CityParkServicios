@@ -30,8 +30,7 @@ namespace AppCityParkServices.Controllers.Api
         [HttpPost]
         [Route("GetModelosByMarca")]
         public List<ModeloRequest> GetModeloByMarca(MarcaRequest _marca)
-        {
-            
+        {            
             var ModelosDB=db.Modelo.Where(x => x.MarcaId == _marca.MarcaId).ToList();
             var Modelos = new List<ModeloRequest>();
             foreach (var item in ModelosDB)
@@ -39,7 +38,6 @@ namespace AppCityParkServices.Controllers.Api
                 Modelos.Add(new ModeloRequest { ModeloId = item.ModeloId, Nombre = item.Nombre });
             }
             return Modelos;
-
         }
 
 

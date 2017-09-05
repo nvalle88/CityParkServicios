@@ -12,6 +12,7 @@ using System.Web.Http.Description;
 using AppCityParkServices.Models;
 using Newtonsoft.Json.Linq;
 using AppCityParkServices.Clases;
+using System.Diagnostics;
 
 namespace AppCityParkServices.Controllers.Api
 {
@@ -22,32 +23,40 @@ namespace AppCityParkServices.Controllers.Api
 
         [HttpPost]
         [Route("GetParqueos")]
-        public IQueryable<Parqueo> GetParqueo(JObject form)
+        public Parqueo GetParqueo(UsuarioRequest usuario)
         {
-            db.Configuration.ProxyCreationEnabled = false;
-            var UsuarioId = string.Empty;
+            List<Parqueo> ParqueoDB = db.Parqueo.Where(x => x.UsuarioId == usuario.UsuarioId).ToList();
+            Parqueo parqueo = null;
 
-            dynamic jsonObject = form;
+            parqueo= ParqueoDB.OrderByDescending(x => x.ParqueoId).First();
 
-            try
-            {
-                UsuarioId = jsonObject.UsuarioId.Value;
-            }
-            catch (Exception)
-            {
-
-                return null;
-            }
-
-            var usuarioId = Convert.ToInt32(UsuarioId);
-            var parqueos = db.Parqueo.Where(s => s.UsuarioId == usuarioId);
-            if (parqueos != null)
-            {
-                return parqueos;
-            }
-            return null;
-
+            return parqueo;           
         }
+
+        [HttpPost]
+        [Route("GetTiempo")]
+        public TiempoRequest GetTiempo(UsuarioRequest usuario)
+        {
+            List<Parqueo> ParqueoDB = db.Parqueo.Where(x => x.UsuarioId == usuario.UsuarioId).ToList();
+            Parqueo parqueo = null;
+
+            parqueo = ParqueoDB.OrderByDescending(x => x.ParqueoId).First();
+            var tiempoComprado = parqueo.FechaFin.TimeOfDay - parqueo.FechaInicio.TimeOfDay;
+            Debug.WriteLine(tiempoComprado);
+            var tiempoRestante = parqueo.FechaFin.TimeOfDay - DateTime.UtcNow.TimeOfDay;
+            Debug.WriteLine(tiempoRestante);
+            
+                var tiempos = new TiempoRequest
+                {
+                    Comprado = tiempoComprado,
+                    Restante = tiempoRestante,
+
+                };
+            
+            
+            return tiempos;
+        }
+        
 
         [HttpPost]
         [Route("BuscarPlaca")]    
