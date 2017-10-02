@@ -28,6 +28,7 @@
         <AssociationConnector Association="CityParkAppModel.FK_UsuarioTarjetaPrepago_TarjetaPrepago" ManuallyRouted="false" />
         <AssociationConnector Association="CityParkAppModel.FK_UsuarioTarjetaPrepago_Usuario" ManuallyRouted="false" />
         <EntityTypeShape EntityType="CityParkAppModel.Plaza" Width="1.5" PointX="7.5" PointY="10.625" />
+        <EntityTypeShape EntityType="CityParkAppModel.sysdiagrams" Width="1.5" PointX="8.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -80,9 +80,10 @@ namespace AppCityParkServices.Controllers.Api
 
             var agenteId = Convert.ToInt32(AgenteId);
             var multa = db.Multa.Where(s => s.AgenteId == agenteId 
-                                       && s.Fecha.Day==DateTime.Now.Day 
-                                       && s.Fecha.Month==DateTime.Now.Month 
-                                       && s.Fecha.Year==DateTime.Now.Year)
+                                       && s.Fecha.Day ==DateTime.Now.Day 
+                                       && s.Fecha.Month ==DateTime.Now.Month 
+                                       && s.Fecha.Year ==DateTime.Now.Year
+                                       )
                                        .Include(s=>s.Agente)
                                        .OrderByDescending(s=>s.Fecha);
             if (multa != null)

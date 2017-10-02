@@ -12,14 +12,12 @@ namespace AppCityParkServices.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Plaza
+    public partial class sysdiagrams
     {
-        public int PlazaId { get; set; }
-        public string Nombre { get; set; }
-        public string Barrio { get; set; }
-        public string Direccion { get; set; }
-        public Nullable<bool> Ocupado { get; set; }
-        public Nullable<double> Longitud { get; set; }
-        public Nullable<double> Latitud { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

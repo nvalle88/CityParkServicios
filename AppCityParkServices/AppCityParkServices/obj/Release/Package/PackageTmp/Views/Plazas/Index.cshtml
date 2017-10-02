@@ -23,6 +23,12 @@
         <th>
             @Html.DisplayNameFor(model => model.Ocupado)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Latitud)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Longitud)
+        </th>
         <th></th>
     </tr>
 
@@ -39,6 +45,12 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Ocupado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Latitud)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Longitud)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.PlazaId }) |

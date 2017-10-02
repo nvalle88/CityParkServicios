@@ -11,6 +11,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using AppCityParkServices.Models;
 using AppCityParkServices.Clases;
+using AppCityParkServices.Utils;
 
 namespace AppCityParkServices.Controllers.Api
 {
@@ -43,6 +44,28 @@ namespace AppCityParkServices.Controllers.Api
             Plaza PlazaDB = db.Plaza.Where(x => x.Nombre == plaza.Nombre).FirstOrDefault();           
             return PlazaDB;
         }
+
+        // GET: api/Plazas/GetPlazaByPosition
+        [HttpPost]
+        [Route("GetPlazaByPosition")]
+        public List<Plaza> GetPlazaByPosition(Position Position)
+        {
+
+           var PlazaDB = db.Plaza.Where(x => x.Ocupado == false).ToList();
+            List<Plaza> _plazas = new List<Plaza>();
+
+            foreach (var plaza in PlazaDB)
+            {                              //Posicion del ususario, Plaza a comparar y la distancia que desamos comparar en KM
+                if (GeoUtils.EstaCercaDeMi(Position, plaza, 0.1))
+                {
+                    _plazas.Add(plaza);
+                }
+            }
+
+            return _plazas;
+        }
+
+
 
         // GET: api/Plazas/GetBarrios
         [HttpGet]

@@ -13,13 +13,48 @@ using AppCityParkServices.Models;
 using Newtonsoft.Json.Linq;
 using AppCityParkServices.Clases;
 using System.Diagnostics;
-
+using AppCityParkServices.Utils;
+using AppCityParkServices.Constants;
 namespace AppCityParkServices.Controllers.Api
 {
     [RoutePrefix("api/Parqueos")]
     public class ParqueosController : ApiController
     {
         private CityParkApp db = new CityParkApp();
+
+
+
+        // GET: api/Parqueos/GetParqueados
+        [HttpGet]
+        [Route("GetParqueados")]
+        public List<PinRequest> GetParqueados()
+        {
+            List<Parqueo> ParqueoDB = db.Parqueo.Where(x => x.FechaFin >= DateTime.Now).ToList();
+
+            var Parqueados = new List<PinRequest>();
+
+            
+            foreach (var parqueos in ParqueoDB)
+            {
+                if (parqueos.FechaFin.ToLocalTime() >= DateTime.Now.ToLocalTime())
+                {
+                    if (GeoUtils.EstaEnMiSector(Constants.Constants.polygonEMOV,parqueos ))
+                        Parqueados.Add(new PinRequest
+                    {
+                        placa = parqueos.Carro.Placa,
+                        HoraFin = parqueos.FechaFin,
+                        Latitud = parqueos.Latitud,
+                        Longitud = parqueos.Longitud,
+                    });
+                }
+            }
+            return Parqueados;
+        }
+
+       
+
+
+
 
         [HttpPost]
         [Route("GetParqueos")]
@@ -33,6 +68,7 @@ namespace AppCityParkServices.Controllers.Api
             return parqueo;           
         }
 
+
         [HttpPost]
         [Route("GetTiempo")]
         public TiempoRequest GetTiempo(UsuarioRequest usuario)
@@ -44,17 +80,18 @@ namespace AppCityParkServices.Controllers.Api
             var tiempoComprado = parqueo.FechaFin.TimeOfDay - parqueo.FechaInicio.TimeOfDay;
             Debug.WriteLine(tiempoComprado);
             var tiempoRestante = parqueo.FechaFin.TimeOfDay - DateTime.UtcNow.TimeOfDay;
-            Debug.WriteLine(tiempoRestante);
-            
+            if (parqueo.FechaFin >= DateTime.Now.Date)
+            {
+                Debug.WriteLine(tiempoRestante);
                 var tiempos = new TiempoRequest
                 {
                     Comprado = tiempoComprado,
                     Restante = tiempoRestante,
-
                 };
-            
-            
-            return tiempos;
+
+                return tiempos;
+            }
+            return null;
         }
         
 
@@ -80,13 +117,24 @@ namespace AppCityParkServices.Controllers.Api
             }
 
             Response response;
-            Plaza Plaza = db.Plaza.Where(x => x.Nombre == plazaNombre).FirstOrDefault();
+            var Plaza = db.Plaza.Where(x => x.Nombre == plazaNombre).FirstOrDefault();
+            if (Plaza == null)
+            {
+                response = new Response
+                {
+                    IsSuccess = true,
+                    Message = "La Plaza de parqueo no Existe...",
+                    Result = null,
+                };
+                return Ok(response);
+            }
+
             var parqueos = db.Parqueo.Where(s => s.Carro.Placa==placa && s.FechaFin.Day==DateTime.Now.Day 
                                              && s.FechaFin.Month==DateTime.Now.Month && s.FechaFin.Year==DateTime.Now.Year && s.PlazaId==Plaza.PlazaId)
                                              .Include(s=>s.Carro.Modelo.Marca)
                                              .Include(s=>s.Usuario)
                                              .ToList();
-            if (parqueos.Count()==0)
+            if (parqueos.Count()==0 )
             {
                  response = new Response
                 {
@@ -95,7 +143,6 @@ namespace AppCityParkServices.Controllers.Api
                     Result=null,
                 };
                 return Ok(response);
-
             }
 
             var pa = parqueos.Where(p => (p.FechaFin.TimeOfDay > DateTime.Now.TimeOfDay)&& p.FechaInicio.TimeOfDay<DateTime.Now.TimeOfDay).FirstOrDefault();
@@ -119,6 +166,9 @@ namespace AppCityParkServices.Controllers.Api
 
         }
 
+      
+
+
         // GET: api/Parqueos/5
         [ResponseType(typeof(Parqueo))]
         public async Task<IHttpActionResult> GetParqueo(int id)
@@ -128,7 +178,6 @@ namespace AppCityParkServices.Controllers.Api
             {
                 return NotFound();
             }
-
             return Ok(parqueo);
         }
 
@@ -178,20 +227,13 @@ namespace AppCityParkServices.Controllers.Api
             {
                 return BadRequest(ModelState);
             }
-
             db.Parqueo.Add(parqueo);
-            await db.SaveChangesAsync();
-
-           
-
-            var carro = db.Carro.Where(c=>c.CarroId==parqueo.CarroId).Include(c=>c.Modelo.Marca).FirstOrDefault();
-
-            
+            await db.SaveChangesAsync();          
+            var carro = db.Carro.Where(c=>c.CarroId==parqueo.CarroId).Include(c=>c.Modelo.Marca).FirstOrDefault();            
             parqueo.Carro = carro;
             parqueo.CarroId = carro.CarroId;
-
             return Ok(parqueo);
-        }
+        }        
 
         // DELETE: api/Parqueos/5
         [ResponseType(typeof(Parqueo))]

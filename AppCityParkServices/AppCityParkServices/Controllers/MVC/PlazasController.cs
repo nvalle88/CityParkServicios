@@ -47,7 +47,7 @@ namespace AppCityParkServices.Controllers.MVC
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "PlazaId,Nombre,Barrio,Direccion,Ocupado")] Plaza plaza)
+        public async Task<ActionResult> Create([Bind(Include = "PlazaId,Nombre,Barrio,Direccion,Ocupado,Latitud,Longitud")] Plaza plaza)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace AppCityParkServices.Controllers.MVC
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "PlazaId,Nombre,Barrio,Direccion,Ocupado")] Plaza plaza)
+        public async Task<ActionResult> Edit([Bind(Include = "PlazaId,Nombre,Barrio,Direccion,Ocupado,Latitud,Longitud")] Plaza plaza)
         {
             if (ModelState.IsValid)
             {
