@@ -19,7 +19,6 @@ namespace AppCityParkServices.Constants
             new Position{latitude=-2.908122,longitude= -79.037977},
 
         };
-
         public static ObservableCollection<Position> polygonQuito = new ObservableCollection<Position>
         {
            
@@ -29,6 +28,8 @@ namespace AppCityParkServices.Constants
             new Position{latitude=-0.169270,longitude= -78.484454},
 
         };
+        public static Models.Usuario UserVendedor = new Models.Usuario {UsuarioId=3,Nombre="Vendedor",Contrasena="Vendedor"};
+
 
 
 
