@@ -74,6 +74,15 @@
     <Property Name="Longitud" Type="float" />
     <Property Name="Latitud" Type="float" />
   </EntityType>
+  <EntityType Name="PuntoSector">
+    <Key>
+      <PropertyRef Name="PuntoSectorId" />
+    </Key>
+    <Property Name="PuntoSectorId" Type="int" Nullable="false" />
+    <Property Name="NombreSector" Type="nchar" MaxLength="10" />
+    <Property Name="Latitud" Type="float" />
+    <Property Name="Longitud" Type="float" />
+  </EntityType>
   <EntityType Name="Saldo">
     <Key>
       <PropertyRef Name="SaldoId" />
@@ -81,6 +90,14 @@
     <Property Name="SaldoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Saldo" Type="decimal" Precision="18" Scale="0" />
     <Property Name="UsuarioId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Sector">
+    <Key>
+      <PropertyRef Name="SectorId" />
+    </Key>
+    <Property Name="SectorId" Type="int" Nullable="false" />
+    <Property Name="AgenteId" Type="int" />
+    <Property Name="NombreSector" Type="nchar" MaxLength="10" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -113,6 +130,16 @@
     <Property Name="FechaVence" Type="date" Nullable="false" />
     <Property Name="Activa" Type="bit" Nullable="false" />
   </EntityType>
+  <EntityType Name="Transaccion">
+    <Key>
+      <PropertyRef Name="TransaccionId" />
+    </Key>
+    <Property Name="TransaccionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UsuarioId" Type="int" />
+    <Property Name="VendedorId" Type="int" />
+    <Property Name="Monto" Type="float" />
+    <Property Name="Fecha" Type="datetime" />
+  </EntityType>
   <EntityType Name="Usuario">
     <Key>
       <PropertyRef Name="UsuarioId" />
@@ -128,6 +155,15 @@
     <Property Name="UsuarioTarjetaPrepagoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UsuarioId" Type="int" Nullable="false" />
     <Property Name="TarjetaPrepagoId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Vendedor">
+    <Key>
+      <PropertyRef Name="VendedorId" />
+    </Key>
+    <Property Name="VendedorId" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="nchar" MaxLength="50" />
+    <Property Name="Apellido" Type="nchar" MaxLength="50" />
+    <Property Name="Contrasena" Type="nchar" MaxLength="50" />
   </EntityType>
   <Association Name="FK_Carro_Modelo">
     <End Role="Modelo" Type="Self.Modelo" Multiplicity="1" />
@@ -225,6 +261,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Sector_Agente">
+    <End Role="Agente" Type="Self.Agente" Multiplicity="0..1" />
+    <End Role="Sector" Type="Self.Sector" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Agente">
+        <PropertyRef Name="AgenteId" />
+      </Principal>
+      <Dependent Role="Sector">
+        <PropertyRef Name="AgenteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_TarjetaCredito_Usuario">
     <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
     <End Role="TarjetaCredito" Type="Self.TarjetaCredito" Multiplicity="*" />
@@ -234,6 +282,30 @@
       </Principal>
       <Dependent Role="TarjetaCredito">
         <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaccion_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Transaccion">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaccion_Vendedor">
+    <End Role="Vendedor" Type="Self.Vendedor" Multiplicity="0..1" />
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendedor">
+        <PropertyRef Name="VendedorId" />
+      </Principal>
+      <Dependent Role="Transaccion">
+        <PropertyRef Name="VendedorId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -300,12 +372,16 @@
     <EntitySet Name="Multa" EntityType="Self.Multa" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Parqueo" EntityType="Self.Parqueo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Plaza" EntityType="Self.Plaza" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PuntoSector" EntityType="Self.PuntoSector" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Saldo" EntityType="Self.Saldo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Sector" EntityType="Self.Sector" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TarjetaCredito" EntityType="Self.TarjetaCredito" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TarjetaPrepago" EntityType="Self.TarjetaPrepago" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Transaccion" EntityType="Self.Transaccion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UsuarioTarjetaPrepago" EntityType="Self.UsuarioTarjetaPrepago" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Vendedor" EntityType="Self.Vendedor" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Carro_Modelo" Association="Self.FK_Carro_Modelo">
       <End Role="Modelo" EntitySet="Modelo" />
       <End Role="Carro" EntitySet="Carro" />
@@ -338,9 +414,21 @@
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="Saldo" EntitySet="Saldo" />
     </AssociationSet>
+    <AssociationSet Name="FK_Sector_Agente" Association="Self.FK_Sector_Agente">
+      <End Role="Agente" EntitySet="Agente" />
+      <End Role="Sector" EntitySet="Sector" />
+    </AssociationSet>
     <AssociationSet Name="FK_TarjetaCredito_Usuario" Association="Self.FK_TarjetaCredito_Usuario">
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="TarjetaCredito" EntitySet="TarjetaCredito" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaccion_Usuario" Association="Self.FK_Transaccion_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Transaccion" EntitySet="Transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaccion_Vendedor" Association="Self.FK_Transaccion_Vendedor">
+      <End Role="Vendedor" EntitySet="Vendedor" />
+      <End Role="Transaccion" EntitySet="Transaccion" />
     </AssociationSet>
     <AssociationSet Name="FK_UsuarioTarjetaPrepago_TarjetaPrepago" Association="Self.FK_UsuarioTarjetaPrepago_TarjetaPrepago">
       <End Role="TarjetaPrepago" EntitySet="TarjetaPrepago" />

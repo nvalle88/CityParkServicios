@@ -150,5 +150,45 @@
     <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="CityParkAppModel.Store.sp_helpdiagrams" />
     <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="CityParkAppModel.Store.sp_renamediagram" />
     <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="CityParkAppModel.Store.sp_upgraddiagrams" />
+    <EntitySetMapping Name="PuntoSector">
+      <EntityTypeMapping TypeName="CityParkAppModel.PuntoSector">
+        <MappingFragment StoreEntitySet="PuntoSector">
+          <ScalarProperty Name="Longitud" ColumnName="Longitud" />
+          <ScalarProperty Name="Latitud" ColumnName="Latitud" />
+          <ScalarProperty Name="NombreSector" ColumnName="NombreSector" />
+          <ScalarProperty Name="PuntoSectorId" ColumnName="PuntoSectorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sector">
+      <EntityTypeMapping TypeName="CityParkAppModel.Sector">
+        <MappingFragment StoreEntitySet="Sector">
+          <ScalarProperty Name="NombreSector" ColumnName="NombreSector" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+          <ScalarProperty Name="SectorId" ColumnName="SectorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Transaccion">
+      <EntityTypeMapping TypeName="CityParkAppModel.Transaccion">
+        <MappingFragment StoreEntitySet="Transaccion">
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Monto" ColumnName="Monto" />
+          <ScalarProperty Name="VendedorId" ColumnName="VendedorId" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+          <ScalarProperty Name="TransaccionId" ColumnName="TransaccionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Vendedor">
+      <EntityTypeMapping TypeName="CityParkAppModel.Vendedor">
+        <MappingFragment StoreEntitySet="Vendedor">
+          <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
+          <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="VendedorId" ColumnName="VendedorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

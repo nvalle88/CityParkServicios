@@ -1,0 +1,48 @@
+﻿@model AppCityParkServices.Models.PuntoSector
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>PuntoSector</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NombreSector)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NombreSector)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Latitud)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Latitud)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Longitud)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Longitud)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

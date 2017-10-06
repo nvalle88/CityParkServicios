@@ -9,6 +9,7 @@
     <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Contrasena" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Multa" Relationship="Self.FK_Multa_Agente" FromRole="Agente" ToRole="Multa" />
+    <NavigationProperty Name="Sector" Relationship="CityParkAppModel.FK_Sector_Agente" FromRole="Agente" ToRole="Sector" />
   </EntityType>
   <EntityType Name="Carro">
     <Key>
@@ -118,6 +119,7 @@
     <NavigationProperty Name="Saldo" Relationship="Self.FK_Saldo_Usuario" FromRole="Usuario" ToRole="Saldo" />
     <NavigationProperty Name="TarjetaCredito" Relationship="Self.FK_TarjetaCredito_Usuario" FromRole="Usuario" ToRole="TarjetaCredito" />
     <NavigationProperty Name="UsuarioTarjetaPrepago" Relationship="Self.FK_UsuarioTarjetaPrepago_Usuario" FromRole="Usuario" ToRole="UsuarioTarjetaPrepago" />
+    <NavigationProperty Name="Transaccion" Relationship="CityParkAppModel.FK_Transaccion_Usuario" FromRole="Usuario" ToRole="Transaccion" />
   </EntityType>
   <EntityType Name="UsuarioTarjetaPrepago">
     <Key>
@@ -349,6 +351,22 @@
       <Parameter Name="new_diagramname" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="sp_upgraddiagrams" />
+    <EntitySet Name="PuntoSector" EntityType="CityParkAppModel.PuntoSector" />
+    <EntitySet Name="Sector" EntityType="CityParkAppModel.Sector" />
+    <AssociationSet Name="FK_Sector_Agente" Association="CityParkAppModel.FK_Sector_Agente">
+      <End Role="Agente" EntitySet="Agente" />
+      <End Role="Sector" EntitySet="Sector" />
+    </AssociationSet>
+    <EntitySet Name="Transaccion" EntityType="CityParkAppModel.Transaccion" />
+    <EntitySet Name="Vendedor" EntityType="CityParkAppModel.Vendedor" />
+    <AssociationSet Name="FK_Transaccion_Usuario" Association="CityParkAppModel.FK_Transaccion_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Transaccion" EntitySet="Transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaccion_Vendedor" Association="CityParkAppModel.FK_Transaccion_Vendedor">
+      <End Role="Vendedor" EntitySet="Vendedor" />
+      <End Role="Transaccion" EntitySet="Transaccion" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Plaza">
     <Key>
@@ -372,4 +390,80 @@
     <Property Name="version" Type="Int32" />
     <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
+  <EntityType Name="PuntoSector">
+    <Key>
+      <PropertyRef Name="PuntoSectorId" />
+    </Key>
+    <Property Name="PuntoSectorId" Type="Int32" Nullable="false" />
+    <Property Name="NombreSector" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Latitud" Type="Double" />
+    <Property Name="Longitud" Type="Double" />
+  </EntityType>
+  <EntityType Name="Sector">
+    <Key>
+      <PropertyRef Name="SectorId" />
+    </Key>
+    <Property Name="SectorId" Type="Int32" Nullable="false" />
+    <Property Name="AgenteId" Type="Int32" />
+    <Property Name="NombreSector" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Agente" Relationship="CityParkAppModel.FK_Sector_Agente" FromRole="Sector" ToRole="Agente" />
+  </EntityType>
+  <Association Name="FK_Sector_Agente">
+    <End Type="CityParkAppModel.Agente" Role="Agente" Multiplicity="0..1" />
+    <End Type="CityParkAppModel.Sector" Role="Sector" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Agente">
+        <PropertyRef Name="AgenteId" />
+      </Principal>
+      <Dependent Role="Sector">
+        <PropertyRef Name="AgenteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Transaccion">
+    <Key>
+      <PropertyRef Name="TransaccionId" />
+    </Key>
+    <Property Name="TransaccionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UsuarioId" Type="Int32" />
+    <Property Name="VendedorId" Type="Int32" />
+    <Property Name="Monto" Type="Double" />
+    <Property Name="Fecha" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Usuario" Relationship="CityParkAppModel.FK_Transaccion_Usuario" FromRole="Transaccion" ToRole="Usuario" />
+    <NavigationProperty Name="Vendedor" Relationship="CityParkAppModel.FK_Transaccion_Vendedor" FromRole="Transaccion" ToRole="Vendedor" />
+  </EntityType>
+  <EntityType Name="Vendedor">
+    <Key>
+      <PropertyRef Name="VendedorId" />
+    </Key>
+    <Property Name="VendedorId" Type="Int32" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="Contrasena" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Transaccion" Relationship="CityParkAppModel.FK_Transaccion_Vendedor" FromRole="Vendedor" ToRole="Transaccion" />
+  </EntityType>
+  <Association Name="FK_Transaccion_Usuario">
+    <End Type="CityParkAppModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+    <End Type="CityParkAppModel.Transaccion" Role="Transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Transaccion">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaccion_Vendedor">
+    <End Type="CityParkAppModel.Vendedor" Role="Vendedor" Multiplicity="0..1" />
+    <End Type="CityParkAppModel.Transaccion" Role="Transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendedor">
+        <PropertyRef Name="VendedorId" />
+      </Principal>
+      <Dependent Role="Transaccion">
+        <PropertyRef Name="VendedorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

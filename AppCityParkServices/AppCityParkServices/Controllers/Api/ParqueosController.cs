@@ -15,30 +15,36 @@ using AppCityParkServices.Clases;
 using System.Diagnostics;
 using AppCityParkServices.Utils;
 using AppCityParkServices.Constants;
+using System.Collections.ObjectModel;
+
 namespace AppCityParkServices.Controllers.Api
 {
     [RoutePrefix("api/Parqueos")]
     public class ParqueosController : ApiController
     {
         private CityParkApp db = new CityParkApp();
-
-
-
         // GET: api/Parqueos/GetParqueados
-        [HttpGet]
+        [HttpPost]
         [Route("GetParqueados")]
-        public List<PinRequest> GetParqueados()
+        public List<PinRequest> GetParqueados(Agente _agente)
         {
             List<Parqueo> ParqueoDB = db.Parqueo.Where(x => x.FechaFin >= DateTime.Now).ToList();
 
-            var Parqueados = new List<PinRequest>();
+            var _sector = db.Sector.Where(x => x.AgenteId == _agente.AgenteId).FirstOrDefault();
 
-            
+            List<PuntoSector> _PolygonSector = db.PuntoSector.Where(x => x.NombreSector == _sector.NombreSector).ToList();
+            ObservableCollection<Position> PoligonoAgente = new ObservableCollection<Position>();
+             foreach ( var a in _PolygonSector)
+            {
+                PoligonoAgente.Add(new Position { latitude = (double)a.Latitud, longitude = (double)a.Longitud });
+            }
+            var Parqueados = new List<PinRequest>();
+           
             foreach (var parqueos in ParqueoDB)
             {
                 if (parqueos.FechaFin.ToLocalTime() >= DateTime.Now.ToLocalTime())
                 {
-                    if (GeoUtils.EstaEnMiSector(Constants.Constants.polygonEMOV,parqueos ))
+                    if (GeoUtils.EstaEnMiSector(PoligonoAgente,parqueos ))
                         Parqueados.Add(new PinRequest
                     {
                         placa = parqueos.Carro.Placa,

@@ -178,11 +178,15 @@
     <Compile Include="Controllers\Api\MultasController.cs" />
     <Compile Include="Controllers\Api\ParqueosController.cs" />
     <Compile Include="Controllers\Api\PlazasController.cs" />
+    <Compile Include="Controllers\Api\PuntoSectorsController.cs" />
     <Compile Include="Controllers\Api\SaldoesController.cs" />
+    <Compile Include="Controllers\Api\SectorsController.cs" />
     <Compile Include="Controllers\Api\TarjetaCreditoesController.cs" />
     <Compile Include="Controllers\Api\TarjetaPrepagoesController.cs" />
+    <Compile Include="Controllers\Api\TransaccionsController.cs" />
     <Compile Include="Controllers\Api\UsuariosController.cs" />
     <Compile Include="Controllers\Api\UsuarioTarjetaPrepagoesController.cs" />
+    <Compile Include="Controllers\Api\VendedorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MVC\AgentesController.cs" />
     <Compile Include="Controllers\MVC\CarroesController.cs" />
@@ -191,11 +195,15 @@
     <Compile Include="Controllers\MVC\MultasController.cs" />
     <Compile Include="Controllers\MVC\ParqueosController.cs" />
     <Compile Include="Controllers\MVC\PlazasController.cs" />
+    <Compile Include="Controllers\MVC\PuntoSectorsController.cs" />
     <Compile Include="Controllers\MVC\SaldoesController.cs" />
+    <Compile Include="Controllers\MVC\SectorsController.cs" />
     <Compile Include="Controllers\MVC\TarjetaCreditoesController.cs" />
     <Compile Include="Controllers\MVC\TarjetaPrepagoesController.cs" />
+    <Compile Include="Controllers\MVC\TransaccionsController.cs" />
     <Compile Include="Controllers\MVC\UsuariosController.cs" />
     <Compile Include="Controllers\MVC\UsuarioTarjetaPrepagoesController.cs" />
+    <Compile Include="Controllers\MVC\VendedorsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -235,7 +243,13 @@
     <Compile Include="Models\Plaza.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PuntoSector.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Saldo.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Sector.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagrams.cs">
@@ -247,10 +261,16 @@
     <Compile Include="Models\TarjetaPrepago.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Transaccion.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Usuario.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UsuarioTarjetaPrepago.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Vendedor.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -376,6 +396,26 @@
     <Content Include="Views\Plazas\Details.cshtml" />
     <Content Include="Views\Plazas\Edit.cshtml" />
     <Content Include="Views\Plazas\Index.cshtml" />
+    <Content Include="Views\Sectors\Create.cshtml" />
+    <Content Include="Views\Sectors\Delete.cshtml" />
+    <Content Include="Views\Sectors\Details.cshtml" />
+    <Content Include="Views\Sectors\Edit.cshtml" />
+    <Content Include="Views\Sectors\Index.cshtml" />
+    <Content Include="Views\PuntoSectors\Create.cshtml" />
+    <Content Include="Views\PuntoSectors\Delete.cshtml" />
+    <Content Include="Views\PuntoSectors\Details.cshtml" />
+    <Content Include="Views\PuntoSectors\Edit.cshtml" />
+    <Content Include="Views\PuntoSectors\Index.cshtml" />
+    <Content Include="Views\Vendedors\Create.cshtml" />
+    <Content Include="Views\Vendedors\Delete.cshtml" />
+    <Content Include="Views\Vendedors\Details.cshtml" />
+    <Content Include="Views\Vendedors\Edit.cshtml" />
+    <Content Include="Views\Vendedors\Index.cshtml" />
+    <Content Include="Views\Transaccions\Create.cshtml" />
+    <Content Include="Views\Transaccions\Delete.cshtml" />
+    <Content Include="Views\Transaccions\Details.cshtml" />
+    <Content Include="Views\Transaccions\Edit.cshtml" />
+    <Content Include="Views\Transaccions\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
