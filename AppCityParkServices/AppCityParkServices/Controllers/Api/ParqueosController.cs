@@ -57,11 +57,6 @@ namespace AppCityParkServices.Controllers.Api
             return Parqueados;
         }
 
-       
-
-
-
-
         [HttpPost]
         [Route("GetParqueos")]
         public Parqueo GetParqueo(UsuarioRequest usuario)
@@ -73,7 +68,6 @@ namespace AppCityParkServices.Controllers.Api
 
             return parqueo;           
         }
-
 
         [HttpPost]
         [Route("GetTiempo")]
@@ -98,8 +92,7 @@ namespace AppCityParkServices.Controllers.Api
                 return tiempos;
             }
             return null;
-        }
-        
+        }       
 
         [HttpPost]
         [Route("BuscarPlaca")]    
@@ -170,9 +163,7 @@ namespace AppCityParkServices.Controllers.Api
             return BadRequest("El vehículo cuenta con tiempo de parqueo..."); ;
            
 
-        }
-
-      
+        }  
 
 
         // GET: api/Parqueos/5

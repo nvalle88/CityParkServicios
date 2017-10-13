@@ -11,9 +11,12 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using AppCityParkServices.Models;
 using Newtonsoft.Json.Linq;
+using AppCityParkServices.Clases;
 
 namespace AppCityParkServices.Controllers.Api
 {
+    [RoutePrefix("api/Vendedors")]
+
     public class VendedorsController : ApiController
     {
         private CityParkApp db = new CityParkApp();
@@ -23,6 +26,7 @@ namespace AppCityParkServices.Controllers.Api
         {
             return db.Vendedor;
         }
+
         [HttpPost]
         [Route("Login")]
         public IHttpActionResult Login(JObject form)
@@ -31,38 +35,32 @@ namespace AppCityParkServices.Controllers.Api
             var Nombreusuario = string.Empty;
             var contrasena = string.Empty;
             dynamic jsonObject = form;
-
             try
             {
-
                 Nombreusuario = jsonObject.Nombre.Value;
                 contrasena = jsonObject.Contrasena.Value;
             }
+
             catch (Exception)
             {
-
                 return BadRequest("LLamada Incorrecta");
             }
 
             var existeVendedor = db.Vendedor.
                                 Where(u => u.Nombre == Nombreusuario && u.Contrasena == contrasena)
                                 .FirstOrDefault();
-
             if (existeVendedor == null)
             {
                 return BadRequest("Usuario o contraseña incorrecto...");
             }
-
-            var respuestaVendedor = new Vendedor
+            var respuestaVendedor = new VendedorRequest
             {
                 VendedorId = existeVendedor.VendedorId,
                 Apellido = existeVendedor.Apellido,
                 Contrasena = existeVendedor.Contrasena,
                 Nombre = existeVendedor.Nombre,
             };
-
             return Ok(respuestaVendedor);
-
         }
 
 

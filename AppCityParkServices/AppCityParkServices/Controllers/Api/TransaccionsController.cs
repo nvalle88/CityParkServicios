@@ -13,6 +13,8 @@ using AppCityParkServices.Models;
 
 namespace AppCityParkServices.Controllers.Api
 {
+    [RoutePrefix("api/Transaccions")]
+
     public class TransaccionsController : ApiController
     {
         private CityParkApp db = new CityParkApp();
@@ -85,6 +87,81 @@ namespace AppCityParkServices.Controllers.Api
 
             return CreatedAtRoute("DefaultApi", new { id = transaccion.TransaccionId }, transaccion);
         }
+
+        //Transaccion para Recargar Saldo
+        #region Recargar Saldo
+        [HttpPost]
+        [Route("RecargarSaldo")]
+        public async Task<IHttpActionResult> RecargarSaldo(Transaccion transaccion)
+        {            
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    db.Configuration.ProxyCreationEnabled = false;
+                   var usuario = Convert.ToInt32(transaccion.UsuarioId);
+                   var IngresarSaldo = db.Saldo.Where(s => s.UsuarioId == usuario).FirstOrDefault();
+                    if (IngresarSaldo == null)
+                    {
+                        var nuevoSaldo = new Saldo
+                        {
+                            UsuarioId = usuario,
+                            Saldo1 =(decimal)transaccion.Monto,
+                        };
+                        db.Saldo.Add(nuevoSaldo);
+                        await db.SaveChangesAsync();
+                        transaction.Commit();
+                        return Ok(nuevoSaldo);
+                    }
+                    IngresarSaldo.Saldo1 = IngresarSaldo.Saldo1 + (decimal)transaccion.Monto;
+                    db.Entry(IngresarSaldo).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+                    transaction.Commit();
+
+                    //______________
+
+                    if (!ModelState.IsValid)
+                    {
+                        return BadRequest(ModelState);
+                    }
+                    db.Transaccion.Add(transaccion);
+                    await db.SaveChangesAsync();
+                    
+                    //_______________
+
+                    return Ok(IngresarSaldo);
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    return BadRequest("Error");
+                }
+            }
+        }
+
+        #endregion
+
+        //Transaccion para Parquear
+        #region Parqueo Transaccion
+
+        public async Task<IHttpActionResult> PostParqueo(Parqueo parqueo)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            db.Parqueo.Add(parqueo);
+            await db.SaveChangesAsync();
+            var carro = db.Carro.Where(c => c.CarroId == parqueo.CarroId).Include(c => c.Modelo.Marca).FirstOrDefault();
+            parqueo.Carro = carro;
+            parqueo.CarroId = carro.CarroId;
+            return Ok(parqueo);
+        }
+
+
+        #endregion
+
 
         // DELETE: api/Transaccions/5
         [ResponseType(typeof(Transaccion))]
