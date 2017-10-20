@@ -230,7 +230,81 @@ namespace AppCityParkServices.Controllers.Api
             parqueo.Carro = carro;
             parqueo.CarroId = carro.CarroId;
             return Ok(parqueo);
-        }        
+        }
+
+        // POST: api/Parqueos/InsertarParqueoHelper
+        [HttpPost]
+        [Route("InsertarParqueoHelper")]
+        [ResponseType(typeof(ParqueoHelper))]
+        public async Task<IHttpActionResult> InsertarParqueoHelper(ParqueoHelper parqueoHelper)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }          
+                // verificamos si la Marca existe sino la agregamos
+                #region marca
+                Marca MarcaDB = db.Marca.Where(x => x.Nombre == parqueoHelper.Marca).FirstOrDefault();
+                if (MarcaDB == null)
+                {
+                    Marca marca = new Marca { Nombre = parqueoHelper.Marca };
+                    db.Marca.Add(marca);
+                    await db.SaveChangesAsync();
+                    MarcaDB = db.Marca.Where(x => x.Nombre == parqueoHelper.Marca).FirstOrDefault();
+                }
+                #endregion
+                // verificamos si el Modelo existe sino lo agregamos
+                #region Modelo
+                Modelo ModeloDB = db.Modelo.Where(x => x.Nombre == parqueoHelper.Modelo).FirstOrDefault();
+                if (ModeloDB == null)
+                {
+                    Modelo modelo = new Modelo
+                    {
+                        Nombre = parqueoHelper.Modelo,
+                        MarcaId = MarcaDB.MarcaId
+                    };
+                    db.Modelo.Add(modelo);
+                    await db.SaveChangesAsync();
+                    ModeloDB = db.Modelo.Where(x => x.Nombre == parqueoHelper.Modelo).FirstOrDefault();
+                }
+                #endregion
+                // verificamos si El carro existe sino lo agregamos
+                #region Carro
+                Carro CarroDB = db.Carro.Where(x => x.UsuarioId == parqueoHelper.UsuarioId && x.Placa == parqueoHelper.Placa).FirstOrDefault();
+                if (CarroDB == null)
+                {
+                    Carro Carro = new Carro
+                    {
+                        ModeloId = ModeloDB.ModeloId,
+                        Placa = parqueoHelper.Placa,
+                        UsuarioId = parqueoHelper.UsuarioId,
+                        Color = parqueoHelper.Color
+                    };
+                    db.Carro.Add(Carro);
+                    await db.SaveChangesAsync();
+                    CarroDB = db.Carro.Where(x => x.UsuarioId == parqueoHelper.UsuarioId && x.Placa == parqueoHelper.Placa).FirstOrDefault();
+                }
+                #endregion
+
+                //Ingresamos el parqueo
+                var parqueo = new Parqueo
+                {
+                    FechaInicio = parqueoHelper.FechaInicio,
+                    FechaFin = parqueoHelper.FechaFin,
+                    CarroId = CarroDB.CarroId,
+                    Latitud = parqueoHelper.Latitud,
+                    Longitud = parqueoHelper.Longitud,
+                    UsuarioId = parqueoHelper.UsuarioId,
+                    PlazaId = parqueoHelper.PlazaId,
+                };
+                db.Parqueo.Add(parqueo);
+                await db.SaveChangesAsync();
+                var carro = db.Carro.Where(c => c.CarroId == parqueo.CarroId).Include(c => c.Modelo.Marca).FirstOrDefault();
+                parqueo.Carro = carro;
+                parqueo.CarroId = carro.CarroId;
+                return Ok(parqueo);                       
+        }
 
         // DELETE: api/Parqueos/5
         [ResponseType(typeof(Parqueo))]
@@ -261,5 +335,7 @@ namespace AppCityParkServices.Controllers.Api
         {
             return db.Parqueo.Count(e => e.ParqueoId == id) > 0;
         }
+
+
     }
 }

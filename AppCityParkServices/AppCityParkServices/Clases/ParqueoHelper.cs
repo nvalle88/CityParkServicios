@@ -11,7 +11,7 @@ namespace AppCityParkServices.Clases
         public string Marca {get; set;}
         public string Color {get; set;}
         public string Modelo {get; set;}
-        public Nullable<int> UsuarioId {get; set;}
+        public int UsuarioId {get; set;}
         public DateTime FechaInicio {get;set;}
         public DateTime FechaFin {get; set;}
         public Nullable<double> Latitud { get; set;}
