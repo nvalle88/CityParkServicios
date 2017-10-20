@@ -261,3 +261,6 @@ C:\Users\brian\Downloads\CityParkServicios-master (2)\CityParkServicios-master\A
 C:\Users\brian\Downloads\CityParkServicios-master (2)\CityParkServicios-master\AppCityParkServices\AppCityParkServices\obj\Release\AppCityParkServices.csproj.CoreCompileInputs.cache
 C:\Users\brian\Downloads\CityParkServicios-master (2)\CityParkServicios-master\AppCityParkServices\AppCityParkServices\obj\Release\AppCityParkServices.dll
 C:\Users\brian\Downloads\CityParkServicios-master (2)\CityParkServicios-master\AppCityParkServices\AppCityParkServices\obj\Release\AppCityParkServices.pdb
+C:\Users\brian\source\repos\CityParkServicios\AppCityParkServices\AppCityParkServices\bin\HtmlAgilityPack.dll
+C:\Users\brian\source\repos\CityParkServicios\AppCityParkServices\AppCityParkServices\bin\HtmlAgilityPack.pdb
+C:\Users\brian\source\repos\CityParkServicios\AppCityParkServices\AppCityParkServices\bin\HtmlAgilityPack.xml
