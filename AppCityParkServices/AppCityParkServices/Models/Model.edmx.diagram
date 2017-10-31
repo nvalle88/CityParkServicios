@@ -36,6 +36,28 @@
         <EntityTypeShape EntityType="CityParkAppModel.Vendedor" Width="1.5" PointX="7.75" PointY="16.625" />
         <AssociationConnector Association="CityParkAppModel.FK_Transaccion_Usuario" />
         <AssociationConnector Association="CityParkAppModel.FK_Transaccion_Vendedor" />
+        <EntityTypeShape EntityType="CityParkAppModel.Administrador" Width="1.5" PointX="3" PointY="19.125" />
+        <EntityTypeShape EntityType="CityParkAppModel.Dispositivo" Width="1.5" PointX="10" PointY="17.5" />
+        <EntityTypeShape EntityType="CityParkAppModel.Empresa" Width="1.5" PointX="0.75" PointY="11.5" />
+        <EntityTypeShape EntityType="CityParkAppModel.SO" Width="1.5" PointX="7.75" PointY="20.75" />
+        <EntityTypeShape EntityType="CityParkAppModel.TipoMultas" Width="1.5" PointX="3" PointY="16.125" />
+        <AssociationConnector Association="CityParkAppModel.FK_Administrador_Empresa" />
+        <AssociationConnector Association="CityParkAppModel.FK_Agente_Empresa" />
+        <AssociationConnector Association="CityParkAppModel.FK_Dispositivo_Empresa" />
+        <AssociationConnector Association="CityParkAppModel.FK_Dispositivo_SO" />
+        <AssociationConnector Association="CityParkAppModel.FK_Multa_Empresa" />
+        <AssociationConnector Association="CityParkAppModel.FK_Parqueo_Empresa" />
+        <AssociationConnector Association="CityParkAppModel.FK_Plaza_Empresa" />
+        <AssociationConnector Association="CityParkAppModel.FK_Saldo_Empresa" />
+        <AssociationConnector Association="CityParkAppModel.FK_Sector_Empresa" />
+        <AssociationConnector Association="CityParkAppModel.FK_TipoMultas_Empresa" />
+        <AssociationConnector Association="CityParkAppModel.FK_Transaccion_Empresa" />
+        <AssociationConnector Association="CityParkAppModel.FK_Vendedor_Empresa" />
+        <AssociationConnector Association="CityParkAppModel.FK_Multa_TipoMultas" />
+        <AssociationConnector Association="CityParkAppModel.FK_PuntoSector_Sector" />
+        <EntityTypeShape EntityType="CityParkAppModel.Codigo" Width="1.5" PointX="12.25" PointY="12.5" />
+        <AssociationConnector Association="CityParkAppModel.FK_Codigo_Dispositivo" />
+        <AssociationConnector Association="CityParkAppModel.FK_Codigo_Usuario" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

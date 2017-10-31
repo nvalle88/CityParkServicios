@@ -298,11 +298,27 @@ namespace AppCityParkServices.Controllers.Api
                     UsuarioId = parqueoHelper.UsuarioId,
                     PlazaId = parqueoHelper.PlazaId,
                 };
+
                 db.Parqueo.Add(parqueo);
                 await db.SaveChangesAsync();
+
                 var carro = db.Carro.Where(c => c.CarroId == parqueo.CarroId).Include(c => c.Modelo.Marca).FirstOrDefault();
                 parqueo.Carro = carro;
                 parqueo.CarroId = carro.CarroId;
+
+            if (parqueoHelper.VendedorId > 0)
+            {
+                var transaccion = new Transaccion
+                {
+                    VendedorId = parqueoHelper.VendedorId,
+                    Monto = parqueoHelper.Monto,
+                    Fecha = parqueoHelper.Fecha,
+                    UsuarioId = parqueoHelper.UsuarioId,
+                };
+                db.Transaccion.Add(transaccion);
+                await db.SaveChangesAsync();
+            }
+
                 return Ok(parqueo);                       
         }
 

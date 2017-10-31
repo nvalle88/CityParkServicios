@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using AppCityParkServices.Models;
+using AppCityParkServices.Clases;
 
 namespace AppCityParkServices.Controllers.Api
 {
@@ -141,26 +142,7 @@ namespace AppCityParkServices.Controllers.Api
 
         #endregion
 
-        //Transaccion para Parquear
-        #region Parqueo Transaccion
-
-        public async Task<IHttpActionResult> PostParqueo(Parqueo parqueo)
-        {
-            db.Configuration.ProxyCreationEnabled = false;
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            db.Parqueo.Add(parqueo);
-            await db.SaveChangesAsync();
-            var carro = db.Carro.Where(c => c.CarroId == parqueo.CarroId).Include(c => c.Modelo.Marca).FirstOrDefault();
-            parqueo.Carro = carro;
-            parqueo.CarroId = carro.CarroId;
-            return Ok(parqueo);
-        }
-
-
-        #endregion
+        //La Transaccion para Parquear esta en ParqueController
 
 
         // DELETE: api/Transaccions/5

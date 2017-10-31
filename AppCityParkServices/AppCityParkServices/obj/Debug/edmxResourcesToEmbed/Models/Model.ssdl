@@ -1,5 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="CityParkAppModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Administrador">
+    <Key>
+      <PropertyRef Name="AdministradorId" />
+    </Key>
+    <Property Name="AdministradorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nchar" MaxLength="10" />
+    <Property Name="Apellido" Type="nchar" MaxLength="10" />
+    <Property Name="Contrasela" Type="nchar" MaxLength="10" />
+    <Property Name="EmpresaId" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Agente">
     <Key>
       <PropertyRef Name="AgenteId" />
@@ -8,6 +18,7 @@
     <Property Name="Nombre" Type="varchar" MaxLength="50" />
     <Property Name="Apellido" Type="varchar" MaxLength="50" />
     <Property Name="Contrasena" Type="varchar" MaxLength="50" />
+    <Property Name="EmpresaId" Type="int" />
   </EntityType>
   <EntityType Name="Carro">
     <Key>
@@ -18,6 +29,37 @@
     <Property Name="UsuarioId" Type="int" Nullable="false" />
     <Property Name="Placa" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="Color" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Codigo">
+    <Key>
+      <PropertyRef Name="CodigoId" />
+    </Key>
+    <Property Name="CodigoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Codigo" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="UsuarioId" Type="int" Nullable="false" />
+    <Property Name="DispositivoId" Type="int" Nullable="false" />
+    <Property Name="Usado" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Dispositivo">
+    <Key>
+      <PropertyRef Name="DispositivoId" />
+    </Key>
+    <Property Name="DispositivoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SOId" Type="int" />
+    <Property Name="UsuarioId" Type="int" />
+    <Property Name="UniqueId" Type="int" />
+    <Property Name="EmpresaId" Type="int" />
+  </EntityType>
+  <EntityType Name="Empresa">
+    <Key>
+      <PropertyRef Name="EmpresaId" />
+    </Key>
+    <Property Name="EmpresaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RazonSocial" Type="nchar" MaxLength="100" />
+    <Property Name="Ruc" Type="nchar" MaxLength="15" />
+    <Property Name="Direccion" Type="nchar" MaxLength="50" />
+    <Property Name="Telefono" Type="nchar" MaxLength="10" />
+    <Property Name="PersonaDeContacto" Type="nchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Marca">
     <Key>
@@ -47,6 +89,8 @@
     <Property Name="Placa" Type="varchar" MaxLength="50" />
     <Property Name="Plaza" Type="varchar" MaxLength="20" />
     <Property Name="Foto" Type="varchar" MaxLength="250" />
+    <Property Name="EmpresaId" Type="int" />
+    <Property Name="TipoMultaId" Type="int" />
   </EntityType>
   <EntityType Name="Parqueo">
     <Key>
@@ -61,6 +105,7 @@
     <Property Name="TarjetaCreditoId" Type="int" />
     <Property Name="CarroId" Type="int" />
     <Property Name="PlazaId" Type="int" />
+    <Property Name="EmpresaId" Type="int" />
   </EntityType>
   <EntityType Name="Plaza">
     <Key>
@@ -73,6 +118,7 @@
     <Property Name="Ocupado" Type="bit" />
     <Property Name="Longitud" Type="float" />
     <Property Name="Latitud" Type="float" />
+    <Property Name="EmpresaId" Type="int" />
   </EntityType>
   <EntityType Name="PuntoSector">
     <Key>
@@ -82,6 +128,7 @@
     <Property Name="NombreSector" Type="nchar" MaxLength="10" />
     <Property Name="Latitud" Type="float" />
     <Property Name="Longitud" Type="float" />
+    <Property Name="SectorId" Type="int" />
   </EntityType>
   <EntityType Name="Saldo">
     <Key>
@@ -90,6 +137,7 @@
     <Property Name="SaldoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Saldo" Type="decimal" Precision="18" Scale="0" />
     <Property Name="UsuarioId" Type="int" Nullable="false" />
+    <Property Name="EmpresaId" Type="int" />
   </EntityType>
   <EntityType Name="Sector">
     <Key>
@@ -98,6 +146,15 @@
     <Property Name="SectorId" Type="int" Nullable="false" />
     <Property Name="AgenteId" Type="int" />
     <Property Name="NombreSector" Type="nchar" MaxLength="10" />
+    <Property Name="EmpresaId" Type="int" />
+  </EntityType>
+  <EntityType Name="SO">
+    <Key>
+      <PropertyRef Name="SOId" />
+    </Key>
+    <Property Name="SOId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nchar" MaxLength="10" />
+    <Property Name="Version" Type="nchar" MaxLength="10" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -130,6 +187,15 @@
     <Property Name="FechaVence" Type="date" Nullable="false" />
     <Property Name="Activa" Type="bit" Nullable="false" />
   </EntityType>
+  <EntityType Name="TipoMultas">
+    <Key>
+      <PropertyRef Name="TipoMultaId" />
+    </Key>
+    <Property Name="TipoMultaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Multa" Type="nchar" MaxLength="10" />
+    <Property Name="Descripcion" Type="nchar" MaxLength="50" />
+    <Property Name="EmpresaId" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Transaccion">
     <Key>
       <PropertyRef Name="TransaccionId" />
@@ -139,6 +205,7 @@
     <Property Name="VendedorId" Type="int" />
     <Property Name="Monto" Type="float" />
     <Property Name="Fecha" Type="datetime" />
+    <Property Name="EmpresaId" Type="int" />
   </EntityType>
   <EntityType Name="Usuario">
     <Key>
@@ -164,7 +231,32 @@
     <Property Name="Nombre" Type="nchar" MaxLength="50" />
     <Property Name="Apellido" Type="nchar" MaxLength="50" />
     <Property Name="Contrasena" Type="nchar" MaxLength="50" />
+    <Property Name="EmpresaId" Type="int" />
   </EntityType>
+  <Association Name="FK_Administrador_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+    <End Role="Administrador" Type="Self.Administrador" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="EmpresaId" />
+      </Principal>
+      <Dependent Role="Administrador">
+        <PropertyRef Name="EmpresaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Agente_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+    <End Role="Agente" Type="Self.Agente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="EmpresaId" />
+      </Principal>
+      <Dependent Role="Agente">
+        <PropertyRef Name="EmpresaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Carro_Modelo">
     <End Role="Modelo" Type="Self.Modelo" Multiplicity="1" />
     <End Role="Carro" Type="Self.Carro" Multiplicity="*" />
@@ -186,6 +278,54 @@
       </Principal>
       <Dependent Role="Carro">
         <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Codigo_Dispositivo">
+    <End Role="Dispositivo" Type="Self.Dispositivo" Multiplicity="1" />
+    <End Role="Codigo" Type="Self.Codigo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dispositivo">
+        <PropertyRef Name="DispositivoId" />
+      </Principal>
+      <Dependent Role="Codigo">
+        <PropertyRef Name="DispositivoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Codigo_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Codigo" Type="Self.Codigo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Codigo">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Dispositivo_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+    <End Role="Dispositivo" Type="Self.Dispositivo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="EmpresaId" />
+      </Principal>
+      <Dependent Role="Dispositivo">
+        <PropertyRef Name="EmpresaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Dispositivo_SO">
+    <End Role="SO" Type="Self.SO" Multiplicity="0..1" />
+    <End Role="Dispositivo" Type="Self.Dispositivo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SO">
+        <PropertyRef Name="SOId" />
+      </Principal>
+      <Dependent Role="Dispositivo">
+        <PropertyRef Name="SOId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -213,6 +353,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Multa_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+    <End Role="Multa" Type="Self.Multa" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="EmpresaId" />
+      </Principal>
+      <Dependent Role="Multa">
+        <PropertyRef Name="EmpresaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Multa_TipoMultas">
+    <End Role="TipoMultas" Type="Self.TipoMultas" Multiplicity="0..1" />
+    <End Role="Multa" Type="Self.Multa" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoMultas">
+        <PropertyRef Name="TipoMultaId" />
+      </Principal>
+      <Dependent Role="Multa">
+        <PropertyRef Name="TipoMultaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Parqueo_Carro">
     <End Role="Carro" Type="Self.Carro" Multiplicity="0..1" />
     <End Role="Parqueo" Type="Self.Parqueo" Multiplicity="*" />
@@ -222,6 +386,18 @@
       </Principal>
       <Dependent Role="Parqueo">
         <PropertyRef Name="CarroId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parqueo_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+    <End Role="Parqueo" Type="Self.Parqueo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="EmpresaId" />
+      </Principal>
+      <Dependent Role="Parqueo">
+        <PropertyRef Name="EmpresaId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -249,6 +425,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Plaza_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+    <End Role="Plaza" Type="Self.Plaza" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="EmpresaId" />
+      </Principal>
+      <Dependent Role="Plaza">
+        <PropertyRef Name="EmpresaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PuntoSector_Sector">
+    <End Role="Sector" Type="Self.Sector" Multiplicity="0..1" />
+    <End Role="PuntoSector" Type="Self.PuntoSector" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sector">
+        <PropertyRef Name="SectorId" />
+      </Principal>
+      <Dependent Role="PuntoSector">
+        <PropertyRef Name="SectorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Saldo_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+    <End Role="Saldo" Type="Self.Saldo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="EmpresaId" />
+      </Principal>
+      <Dependent Role="Saldo">
+        <PropertyRef Name="EmpresaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Saldo_Usuario">
     <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
     <End Role="Saldo" Type="Self.Saldo" Multiplicity="*" />
@@ -273,6 +485,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Sector_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+    <End Role="Sector" Type="Self.Sector" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="EmpresaId" />
+      </Principal>
+      <Dependent Role="Sector">
+        <PropertyRef Name="EmpresaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_TarjetaCredito_Usuario">
     <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
     <End Role="TarjetaCredito" Type="Self.TarjetaCredito" Multiplicity="*" />
@@ -282,6 +506,30 @@
       </Principal>
       <Dependent Role="TarjetaCredito">
         <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TipoMultas_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+    <End Role="TipoMultas" Type="Self.TipoMultas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="EmpresaId" />
+      </Principal>
+      <Dependent Role="TipoMultas">
+        <PropertyRef Name="EmpresaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaccion_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="EmpresaId" />
+      </Principal>
+      <Dependent Role="Transaccion">
+        <PropertyRef Name="EmpresaId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -333,6 +581,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Vendedor_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+    <End Role="Vendedor" Type="Self.Vendedor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="EmpresaId" />
+      </Principal>
+      <Dependent Role="Vendedor">
+        <PropertyRef Name="EmpresaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
   <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -365,8 +625,12 @@
   </Function>
   <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <EntityContainer Name="CityParkAppModelStoreContainer">
+    <EntitySet Name="Administrador" EntityType="Self.Administrador" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Agente" EntityType="Self.Agente" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Carro" EntityType="Self.Carro" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Codigo" EntityType="Self.Codigo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Dispositivo" EntityType="Self.Dispositivo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Marca" EntityType="Self.Marca" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Modelo" EntityType="Self.Modelo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Multa" EntityType="Self.Multa" Schema="dbo" store:Type="Tables" />
@@ -375,13 +639,23 @@
     <EntitySet Name="PuntoSector" EntityType="Self.PuntoSector" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Saldo" EntityType="Self.Saldo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Sector" EntityType="Self.Sector" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SO" EntityType="Self.SO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TarjetaCredito" EntityType="Self.TarjetaCredito" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TarjetaPrepago" EntityType="Self.TarjetaPrepago" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TipoMultas" EntityType="Self.TipoMultas" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Transaccion" EntityType="Self.Transaccion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UsuarioTarjetaPrepago" EntityType="Self.UsuarioTarjetaPrepago" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Vendedor" EntityType="Self.Vendedor" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Administrador_Empresa" Association="Self.FK_Administrador_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="Administrador" EntitySet="Administrador" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Agente_Empresa" Association="Self.FK_Agente_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="Agente" EntitySet="Agente" />
+    </AssociationSet>
     <AssociationSet Name="FK_Carro_Modelo" Association="Self.FK_Carro_Modelo">
       <End Role="Modelo" EntitySet="Modelo" />
       <End Role="Carro" EntitySet="Carro" />
@@ -389,6 +663,22 @@
     <AssociationSet Name="FK_Carro_Usuario" Association="Self.FK_Carro_Usuario">
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="Carro" EntitySet="Carro" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Codigo_Dispositivo" Association="Self.FK_Codigo_Dispositivo">
+      <End Role="Dispositivo" EntitySet="Dispositivo" />
+      <End Role="Codigo" EntitySet="Codigo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Codigo_Usuario" Association="Self.FK_Codigo_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Codigo" EntitySet="Codigo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Dispositivo_Empresa" Association="Self.FK_Dispositivo_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="Dispositivo" EntitySet="Dispositivo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Dispositivo_SO" Association="Self.FK_Dispositivo_SO">
+      <End Role="SO" EntitySet="SO" />
+      <End Role="Dispositivo" EntitySet="Dispositivo" />
     </AssociationSet>
     <AssociationSet Name="FK_Modelo_Marca" Association="Self.FK_Modelo_Marca">
       <End Role="Marca" EntitySet="Marca" />
@@ -398,8 +688,20 @@
       <End Role="Agente" EntitySet="Agente" />
       <End Role="Multa" EntitySet="Multa" />
     </AssociationSet>
+    <AssociationSet Name="FK_Multa_Empresa" Association="Self.FK_Multa_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="Multa" EntitySet="Multa" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Multa_TipoMultas" Association="Self.FK_Multa_TipoMultas">
+      <End Role="TipoMultas" EntitySet="TipoMultas" />
+      <End Role="Multa" EntitySet="Multa" />
+    </AssociationSet>
     <AssociationSet Name="FK_Parqueo_Carro" Association="Self.FK_Parqueo_Carro">
       <End Role="Carro" EntitySet="Carro" />
+      <End Role="Parqueo" EntitySet="Parqueo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parqueo_Empresa" Association="Self.FK_Parqueo_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
       <End Role="Parqueo" EntitySet="Parqueo" />
     </AssociationSet>
     <AssociationSet Name="FK_Parqueo_TarjetaCredito" Association="Self.FK_Parqueo_TarjetaCredito">
@@ -410,6 +712,18 @@
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="Parqueo" EntitySet="Parqueo" />
     </AssociationSet>
+    <AssociationSet Name="FK_Plaza_Empresa" Association="Self.FK_Plaza_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="Plaza" EntitySet="Plaza" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PuntoSector_Sector" Association="Self.FK_PuntoSector_Sector">
+      <End Role="Sector" EntitySet="Sector" />
+      <End Role="PuntoSector" EntitySet="PuntoSector" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Saldo_Empresa" Association="Self.FK_Saldo_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="Saldo" EntitySet="Saldo" />
+    </AssociationSet>
     <AssociationSet Name="FK_Saldo_Usuario" Association="Self.FK_Saldo_Usuario">
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="Saldo" EntitySet="Saldo" />
@@ -418,9 +732,21 @@
       <End Role="Agente" EntitySet="Agente" />
       <End Role="Sector" EntitySet="Sector" />
     </AssociationSet>
+    <AssociationSet Name="FK_Sector_Empresa" Association="Self.FK_Sector_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="Sector" EntitySet="Sector" />
+    </AssociationSet>
     <AssociationSet Name="FK_TarjetaCredito_Usuario" Association="Self.FK_TarjetaCredito_Usuario">
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="TarjetaCredito" EntitySet="TarjetaCredito" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TipoMultas_Empresa" Association="Self.FK_TipoMultas_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="TipoMultas" EntitySet="TipoMultas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaccion_Empresa" Association="Self.FK_Transaccion_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="Transaccion" EntitySet="Transaccion" />
     </AssociationSet>
     <AssociationSet Name="FK_Transaccion_Usuario" Association="Self.FK_Transaccion_Usuario">
       <End Role="Usuario" EntitySet="Usuario" />
@@ -437,6 +763,10 @@
     <AssociationSet Name="FK_UsuarioTarjetaPrepago_Usuario" Association="Self.FK_UsuarioTarjetaPrepago_Usuario">
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="UsuarioTarjetaPrepago" EntitySet="UsuarioTarjetaPrepago" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Vendedor_Empresa" Association="Self.FK_Vendedor_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="Vendedor" EntitySet="Vendedor" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

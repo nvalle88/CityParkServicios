@@ -34,6 +34,8 @@ public partial class Usuario
 
         this.Transaccion = new HashSet<Transaccion>();
 
+        this.Codigo = new HashSet<Codigo>();
+
     }
 
 
@@ -68,6 +70,10 @@ public partial class Usuario
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
     public virtual ICollection<Transaccion> Transaccion { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<Codigo> Codigo { get; set; }
 
 }
 

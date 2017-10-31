@@ -35,11 +35,15 @@ public partial class Vendedor
 
     public string Contrasena { get; set; }
 
+    public Nullable<int> EmpresaId { get; set; }
+
 
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
     public virtual ICollection<Transaccion> Transaccion { get; set; }
+
+    public virtual Empresa Empresa { get; set; }
 
 }
 

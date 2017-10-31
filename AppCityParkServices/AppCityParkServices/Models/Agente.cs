@@ -37,6 +37,8 @@ public partial class Agente
 
     public string Contrasena { get; set; }
 
+    public Nullable<int> EmpresaId { get; set; }
+
 
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -46,6 +48,8 @@ public partial class Agente
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
     public virtual ICollection<Sector> Sector { get; set; }
+
+    public virtual Empresa Empresa { get; set; }
 
 }
 

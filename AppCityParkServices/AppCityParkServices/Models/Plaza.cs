@@ -32,6 +32,12 @@ public partial class Plaza
 
     public Nullable<double> Latitud { get; set; }
 
+    public Nullable<int> EmpresaId { get; set; }
+
+
+
+    public virtual Empresa Empresa { get; set; }
+
 }
 
 }

@@ -69,6 +69,18 @@ public partial class CityParkApp : DbContext
 
     public virtual DbSet<Vendedor> Vendedor { get; set; }
 
+    public virtual DbSet<Administrador> Administrador { get; set; }
+
+    public virtual DbSet<Dispositivo> Dispositivo { get; set; }
+
+    public virtual DbSet<Empresa> Empresa { get; set; }
+
+    public virtual DbSet<SO> SO { get; set; }
+
+    public virtual DbSet<TipoMultas> TipoMultas { get; set; }
+
+    public virtual DbSet<Codigo> Codigo { get; set; }
+
 
     public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
     {

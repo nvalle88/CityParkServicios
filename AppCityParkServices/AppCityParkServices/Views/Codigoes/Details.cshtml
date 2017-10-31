@@ -1,0 +1,50 @@
+﻿@model AppCityParkServices.Models.Codigo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Codigo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Codigo1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Codigo1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Usado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dispositivo.DispositivoId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dispositivo.DispositivoId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.Nombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CodigoId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

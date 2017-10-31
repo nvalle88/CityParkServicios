@@ -36,6 +36,8 @@ public partial class Parqueo
 
     public Nullable<int> PlazaId { get; set; }
 
+    public Nullable<int> EmpresaId { get; set; }
+
 
 
     public virtual Carro Carro { get; set; }
@@ -43,6 +45,8 @@ public partial class Parqueo
     public virtual TarjetaCredito TarjetaCredito { get; set; }
 
     public virtual Usuario Usuario { get; set; }
+
+    public virtual Empresa Empresa { get; set; }
 
 }
 

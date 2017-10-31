@@ -26,6 +26,12 @@ public partial class PuntoSector
 
     public Nullable<double> Longitud { get; set; }
 
+    public Nullable<int> SectorId { get; set; }
+
+
+
+    public virtual Sector Sector { get; set; }
+
 }
 
 }

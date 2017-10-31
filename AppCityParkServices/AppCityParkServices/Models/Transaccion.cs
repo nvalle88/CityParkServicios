@@ -28,11 +28,15 @@ public partial class Transaccion
 
     public Nullable<System.DateTime> Fecha { get; set; }
 
+    public Nullable<int> EmpresaId { get; set; }
+
 
 
     public virtual Usuario Usuario { get; set; }
 
     public virtual Vendedor Vendedor { get; set; }
+
+    public virtual Empresa Empresa { get; set; }
 
 }
 

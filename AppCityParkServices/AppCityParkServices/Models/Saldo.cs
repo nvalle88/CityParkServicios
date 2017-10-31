@@ -24,9 +24,13 @@ public partial class Saldo
 
     public int UsuarioId { get; set; }
 
+    public Nullable<int> EmpresaId { get; set; }
+
 
 
     public virtual Usuario Usuario { get; set; }
+
+    public virtual Empresa Empresa { get; set; }
 
 }
 

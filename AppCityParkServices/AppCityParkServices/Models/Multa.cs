@@ -36,9 +36,17 @@ public partial class Multa
 
     public string Plaza { get; set; }
 
+    public Nullable<int> EmpresaId { get; set; }
+
+    public Nullable<int> TipoMultaId { get; set; }
+
 
 
     public virtual Agente Agente { get; set; }
+
+    public virtual Empresa Empresa { get; set; }
+
+    public virtual TipoMultas TipoMultas { get; set; }
 
 }
 

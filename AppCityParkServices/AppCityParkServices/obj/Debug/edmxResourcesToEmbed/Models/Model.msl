@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Agente">
       <EntityTypeMapping TypeName="CityParkAppModel.Agente">
         <MappingFragment StoreEntitySet="Agente">
+          <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
           <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
           <ScalarProperty Name="Nombre" ColumnName="Nombre" />
           <ScalarProperty Name="Apellido" ColumnName="Apellido" />
@@ -42,6 +43,8 @@
     <EntitySetMapping Name="Multa">
       <EntityTypeMapping TypeName="CityParkAppModel.Multa">
         <MappingFragment StoreEntitySet="Multa">
+          <ScalarProperty Name="TipoMultaId" ColumnName="TipoMultaId" />
+          <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
           <ScalarProperty Name="Plaza" ColumnName="Plaza" />
           <ScalarProperty Name="MultaId" ColumnName="MultaId" />
           <ScalarProperty Name="Foto" ColumnName="Foto" />
@@ -57,6 +60,7 @@
     <EntitySetMapping Name="Parqueo">
       <EntityTypeMapping TypeName="CityParkAppModel.Parqueo">
         <MappingFragment StoreEntitySet="Parqueo">
+          <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
           <ScalarProperty Name="PlazaId" ColumnName="PlazaId" />
           <ScalarProperty Name="ParqueoId" ColumnName="ParqueoId" />
           <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
@@ -72,6 +76,7 @@
     <EntitySetMapping Name="Saldo">
       <EntityTypeMapping TypeName="CityParkAppModel.Saldo">
         <MappingFragment StoreEntitySet="Saldo">
+          <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
           <ScalarProperty Name="SaldoId" ColumnName="SaldoId" />
           <ScalarProperty Name="Saldo1" ColumnName="Saldo" />
           <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
@@ -122,6 +127,7 @@
     <EntitySetMapping Name="Plaza">
       <EntityTypeMapping TypeName="CityParkAppModel.Plaza">
         <MappingFragment StoreEntitySet="Plaza">
+          <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
           <ScalarProperty Name="Latitud" ColumnName="Latitud" />
           <ScalarProperty Name="Longitud" ColumnName="Longitud" />
           <ScalarProperty Name="Ocupado" ColumnName="Ocupado" />
@@ -153,6 +159,7 @@
     <EntitySetMapping Name="PuntoSector">
       <EntityTypeMapping TypeName="CityParkAppModel.PuntoSector">
         <MappingFragment StoreEntitySet="PuntoSector">
+          <ScalarProperty Name="SectorId" ColumnName="SectorId" />
           <ScalarProperty Name="Longitud" ColumnName="Longitud" />
           <ScalarProperty Name="Latitud" ColumnName="Latitud" />
           <ScalarProperty Name="NombreSector" ColumnName="NombreSector" />
@@ -163,6 +170,7 @@
     <EntitySetMapping Name="Sector">
       <EntityTypeMapping TypeName="CityParkAppModel.Sector">
         <MappingFragment StoreEntitySet="Sector">
+          <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
           <ScalarProperty Name="NombreSector" ColumnName="NombreSector" />
           <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
           <ScalarProperty Name="SectorId" ColumnName="SectorId" />
@@ -172,6 +180,7 @@
     <EntitySetMapping Name="Transaccion">
       <EntityTypeMapping TypeName="CityParkAppModel.Transaccion">
         <MappingFragment StoreEntitySet="Transaccion">
+          <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
           <ScalarProperty Name="Fecha" ColumnName="Fecha" />
           <ScalarProperty Name="Monto" ColumnName="Monto" />
           <ScalarProperty Name="VendedorId" ColumnName="VendedorId" />
@@ -183,10 +192,75 @@
     <EntitySetMapping Name="Vendedor">
       <EntityTypeMapping TypeName="CityParkAppModel.Vendedor">
         <MappingFragment StoreEntitySet="Vendedor">
+          <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
           <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
           <ScalarProperty Name="Apellido" ColumnName="Apellido" />
           <ScalarProperty Name="Nombre" ColumnName="Nombre" />
           <ScalarProperty Name="VendedorId" ColumnName="VendedorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Administrador">
+      <EntityTypeMapping TypeName="CityParkAppModel.Administrador">
+        <MappingFragment StoreEntitySet="Administrador">
+          <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
+          <ScalarProperty Name="Contrasela" ColumnName="Contrasela" />
+          <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="AdministradorId" ColumnName="AdministradorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Dispositivo">
+      <EntityTypeMapping TypeName="CityParkAppModel.Dispositivo">
+        <MappingFragment StoreEntitySet="Dispositivo">
+          <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
+          <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+          <ScalarProperty Name="SOId" ColumnName="SOId" />
+          <ScalarProperty Name="DispositivoId" ColumnName="DispositivoId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Empresa">
+      <EntityTypeMapping TypeName="CityParkAppModel.Empresa">
+        <MappingFragment StoreEntitySet="Empresa">
+          <ScalarProperty Name="PersonaDeContacto" ColumnName="PersonaDeContacto" />
+          <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="Ruc" ColumnName="Ruc" />
+          <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+          <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SO">
+      <EntityTypeMapping TypeName="CityParkAppModel.SO">
+        <MappingFragment StoreEntitySet="SO">
+          <ScalarProperty Name="Version" ColumnName="Version" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="SOId" ColumnName="SOId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TipoMultas">
+      <EntityTypeMapping TypeName="CityParkAppModel.TipoMultas">
+        <MappingFragment StoreEntitySet="TipoMultas">
+          <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Multa" ColumnName="Multa" />
+          <ScalarProperty Name="TipoMultaId" ColumnName="TipoMultaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Codigo">
+      <EntityTypeMapping TypeName="CityParkAppModel.Codigo">
+        <MappingFragment StoreEntitySet="Codigo">
+          <ScalarProperty Name="Usado" ColumnName="Usado" />
+          <ScalarProperty Name="DispositivoId" ColumnName="DispositivoId" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+          <ScalarProperty Name="Codigo1" ColumnName="Codigo" />
+          <ScalarProperty Name="CodigoId" ColumnName="CodigoId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
