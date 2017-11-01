@@ -10,12 +10,118 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using AppCityParkServices.Models;
+using Newtonsoft.Json.Linq;
+using AppCityParkServices.Clases;
 
 namespace AppCityParkServices.Controllers.Api
 {
+    [RoutePrefix("api/SOes")]
+
     public class SOesController : ApiController
     {
         private CityParkApp db = new CityParkApp();
+
+
+        /*
+         Este metodo nos permite verificar si existe el sistema operativo y la version del mismo, al no existir se guardara en nuestra base de datos*/
+        //Post api/SOes/SOCHeck
+        [HttpPost]
+        [Route("SOCheck")]
+        public async Task<Response>SOCheck(JObject form)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            var SO = string.Empty;
+            var Version = string.Empty;
+            var UniqueId = string.Empty;
+
+            dynamic jsonObject = form;
+
+            try
+            {
+                SO = jsonObject.OS.Value;
+                Version = jsonObject.Version.Value;
+                UniqueId = jsonObject.UniqueId.Value;
+            }
+
+            catch (Exception)
+            {
+
+                return
+                    new Response {
+                        IsSuccess = true,
+                        Message="Los objetos estan corruptos",                     
+                                                
+                    };
+            }
+
+            var existeSO= db.SO.
+                                Where(u => u.Nombre == SO )
+                                .FirstOrDefault();
+
+            if (existeSO != null)
+            {
+                if ((existeSO.Version.Replace(" ", ""))== (Version.Replace(" ", "")))
+                {
+                    return new Response
+                    {
+                        IsSuccess = true,
+                        Message = "El sistema y la version ya existen",
+                        Result = existeSO,
+                    };
+                }
+                else
+                {
+                    //añadir la version
+                    var _SO = new SO
+                    {
+                        Version = Version,
+                        Nombre = SO,
+                    };
+                    db.SO.Add(_SO);
+                    await db.SaveChangesAsync();
+                    CreatedAtRoute("DefaultApi", new { id = _SO.SOId }, _SO);
+                    return
+                    new Response
+                    {
+                        IsSuccess = true,
+                        Message = "Nueva version al Sistema",
+                        Result=_SO,
+                    };
+                }
+            }
+            else
+            {
+                var _SO = new SO
+                {
+                    Version = Version,
+                    Nombre = SO,
+                };
+                db.SO.Add(_SO);
+                await db.SaveChangesAsync();
+                CreatedAtRoute("DefaultApi", new { id = _SO.SOId }, _SO);
+                return
+                new Response
+                {
+                    IsSuccess = true,
+                    Message = "Se Agrego un Nuevo SO",
+                    Result=_SO,
+                };
+
+            }
+
+
+
+
+           return new Response
+            {
+                IsSuccess = true,
+                Message = "El sistema y la version ya existen",
+            };
+
+        }
+
+
+
 
         // GET: api/SOes
         public IQueryable<SO> GetSO()
@@ -71,20 +177,20 @@ namespace AppCityParkServices.Controllers.Api
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/SOes
-        [ResponseType(typeof(SO))]
-        public async Task<IHttpActionResult> PostSO(SO sO)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// POST: api/SOes
+        //[ResponseType(typeof(SO))]
+        //public async Task<IHttpActionResult> PostSO(SO sO)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            db.SO.Add(sO);
-            await db.SaveChangesAsync();
+        //    db.SO.Add(sO);
+        //    await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = sO.SOId }, sO);
-        }
+        //    return CreatedAtRoute("DefaultApi", new { id = sO.SOId }, sO);
+        //}
 
         // DELETE: api/SOes/5
         [ResponseType(typeof(SO))]

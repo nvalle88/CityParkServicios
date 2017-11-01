@@ -32,7 +32,6 @@ namespace AppCityParkServices.Controllers.Api
             {
                 return NotFound();
             }
-
             return Ok(dispositivo);
         }
 

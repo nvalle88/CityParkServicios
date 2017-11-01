@@ -26,8 +26,6 @@ public partial class Empresa
 
         this.Agente = new HashSet<Agente>();
 
-        this.Dispositivo = new HashSet<Dispositivo>();
-
         this.Multa = new HashSet<Multa>();
 
         this.Parqueo = new HashSet<Parqueo>();
@@ -43,6 +41,8 @@ public partial class Empresa
         this.Transaccion = new HashSet<Transaccion>();
 
         this.Vendedor = new HashSet<Vendedor>();
+
+        this.Dispositivo = new HashSet<Dispositivo>();
 
     }
 
@@ -68,10 +68,6 @@ public partial class Empresa
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
     public virtual ICollection<Agente> Agente { get; set; }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-
-    public virtual ICollection<Dispositivo> Dispositivo { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
@@ -104,6 +100,10 @@ public partial class Empresa
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
     public virtual ICollection<Vendedor> Vendedor { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<Dispositivo> Dispositivo { get; set; }
 
 }
 

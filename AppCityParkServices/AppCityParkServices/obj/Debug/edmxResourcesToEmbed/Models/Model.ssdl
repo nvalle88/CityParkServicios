@@ -47,7 +47,7 @@
     <Property Name="DispositivoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="SOId" Type="int" />
     <Property Name="UsuarioId" Type="int" />
-    <Property Name="UniqueId" Type="int" />
+    <Property Name="UniqueId" Type="varchar" MaxLength="40" />
     <Property Name="EmpresaId" Type="int" />
   </EntityType>
   <EntityType Name="Empresa">

@@ -33,19 +33,19 @@ public partial class Dispositivo
 
     public Nullable<int> UsuarioId { get; set; }
 
-    public Nullable<int> UniqueId { get; set; }
+    public string UniqueId { get; set; }
 
     public Nullable<int> EmpresaId { get; set; }
 
 
 
-    public virtual Empresa Empresa { get; set; }
-
-    public virtual SO SO { get; set; }
-
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
     public virtual ICollection<Codigo> Codigo { get; set; }
+
+    public virtual Empresa Empresa { get; set; }
+
+    public virtual SO SO { get; set; }
 
 }
 

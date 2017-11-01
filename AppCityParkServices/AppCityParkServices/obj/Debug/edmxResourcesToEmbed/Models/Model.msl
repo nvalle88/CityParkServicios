@@ -211,17 +211,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Dispositivo">
-      <EntityTypeMapping TypeName="CityParkAppModel.Dispositivo">
-        <MappingFragment StoreEntitySet="Dispositivo">
-          <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
-          <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
-          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
-          <ScalarProperty Name="SOId" ColumnName="SOId" />
-          <ScalarProperty Name="DispositivoId" ColumnName="DispositivoId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Empresa">
       <EntityTypeMapping TypeName="CityParkAppModel.Empresa">
         <MappingFragment StoreEntitySet="Empresa">
@@ -261,6 +250,17 @@
           <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
           <ScalarProperty Name="Codigo1" ColumnName="Codigo" />
           <ScalarProperty Name="CodigoId" ColumnName="CodigoId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Dispositivo">
+      <EntityTypeMapping TypeName="CityParkAppModel.Dispositivo">
+        <MappingFragment StoreEntitySet="Dispositivo">
+          <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
+          <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+          <ScalarProperty Name="SOId" ColumnName="SOId" />
+          <ScalarProperty Name="DispositivoId" ColumnName="DispositivoId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

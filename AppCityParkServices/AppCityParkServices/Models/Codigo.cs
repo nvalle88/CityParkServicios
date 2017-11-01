@@ -30,9 +30,9 @@ public partial class Codigo
 
 
 
-    public virtual Dispositivo Dispositivo { get; set; }
-
     public virtual Usuario Usuario { get; set; }
+
+    public virtual Dispositivo Dispositivo { get; set; }
 
 }
 

@@ -52,7 +52,7 @@
           <Property Name="DispositivoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SOId" Type="int" />
           <Property Name="UsuarioId" Type="int" />
-          <Property Name="UniqueId" Type="int" />
+          <Property Name="UniqueId" Type="varchar" MaxLength="40" />
           <Property Name="EmpresaId" Type="int" />
         </EntityType>
         <EntityType Name="Empresa">
@@ -1157,7 +1157,6 @@
             <End Role="Transaccion" EntitySet="Transaccion" />
           </AssociationSet>
           <EntitySet Name="Administrador" EntityType="CityParkAppModel.Administrador" />
-          <EntitySet Name="Dispositivo" EntityType="CityParkAppModel.Dispositivo" />
           <EntitySet Name="Empresa" EntityType="CityParkAppModel.Empresa" />
           <EntitySet Name="SO" EntityType="CityParkAppModel.SO" />
           <EntitySet Name="TipoMultas" EntityType="CityParkAppModel.TipoMultas" />
@@ -1168,14 +1167,6 @@
           <AssociationSet Name="FK_Agente_Empresa" Association="CityParkAppModel.FK_Agente_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="Agente" EntitySet="Agente" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Dispositivo_Empresa" Association="CityParkAppModel.FK_Dispositivo_Empresa">
-            <End Role="Empresa" EntitySet="Empresa" />
-            <End Role="Dispositivo" EntitySet="Dispositivo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Dispositivo_SO" Association="CityParkAppModel.FK_Dispositivo_SO">
-            <End Role="SO" EntitySet="SO" />
-            <End Role="Dispositivo" EntitySet="Dispositivo" />
           </AssociationSet>
           <AssociationSet Name="FK_Multa_Empresa" Association="CityParkAppModel.FK_Multa_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
@@ -1218,13 +1209,22 @@
             <End Role="PuntoSector" EntitySet="PuntoSector" />
           </AssociationSet>
           <EntitySet Name="Codigo" EntityType="CityParkAppModel.Codigo" />
+          <AssociationSet Name="FK_Codigo_Usuario" Association="CityParkAppModel.FK_Codigo_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Codigo" EntitySet="Codigo" />
+          </AssociationSet>
+          <EntitySet Name="Dispositivo" EntityType="CityParkAppModel.Dispositivo" />
           <AssociationSet Name="FK_Codigo_Dispositivo" Association="CityParkAppModel.FK_Codigo_Dispositivo">
             <End Role="Dispositivo" EntitySet="Dispositivo" />
             <End Role="Codigo" EntitySet="Codigo" />
           </AssociationSet>
-          <AssociationSet Name="FK_Codigo_Usuario" Association="CityParkAppModel.FK_Codigo_Usuario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="Codigo" EntitySet="Codigo" />
+          <AssociationSet Name="FK_Dispositivo_Empresa" Association="CityParkAppModel.FK_Dispositivo_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Dispositivo" EntitySet="Dispositivo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dispositivo_SO" Association="CityParkAppModel.FK_Dispositivo_SO">
+            <End Role="SO" EntitySet="SO" />
+            <End Role="Dispositivo" EntitySet="Dispositivo" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Plaza">
@@ -1347,19 +1347,6 @@
           <Property Name="EmpresaId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Empresa" Relationship="CityParkAppModel.FK_Administrador_Empresa" FromRole="Administrador" ToRole="Empresa" />
         </EntityType>
-        <EntityType Name="Dispositivo">
-          <Key>
-            <PropertyRef Name="DispositivoId" />
-          </Key>
-          <Property Name="DispositivoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SOId" Type="Int32" />
-          <Property Name="UsuarioId" Type="Int32" />
-          <Property Name="UniqueId" Type="Int32" />
-          <Property Name="EmpresaId" Type="Int32" />
-          <NavigationProperty Name="Empresa" Relationship="CityParkAppModel.FK_Dispositivo_Empresa" FromRole="Dispositivo" ToRole="Empresa" />
-          <NavigationProperty Name="SO" Relationship="CityParkAppModel.FK_Dispositivo_SO" FromRole="Dispositivo" ToRole="SO" />
-          <NavigationProperty Name="Codigo" Relationship="CityParkAppModel.FK_Codigo_Dispositivo" FromRole="Dispositivo" ToRole="Codigo" />
-        </EntityType>
         <EntityType Name="Empresa">
           <Key>
             <PropertyRef Name="EmpresaId" />
@@ -1372,7 +1359,6 @@
           <Property Name="PersonaDeContacto" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="Administrador" Relationship="CityParkAppModel.FK_Administrador_Empresa" FromRole="Empresa" ToRole="Administrador" />
           <NavigationProperty Name="Agente" Relationship="CityParkAppModel.FK_Agente_Empresa" FromRole="Empresa" ToRole="Agente" />
-          <NavigationProperty Name="Dispositivo" Relationship="CityParkAppModel.FK_Dispositivo_Empresa" FromRole="Empresa" ToRole="Dispositivo" />
           <NavigationProperty Name="Multa" Relationship="CityParkAppModel.FK_Multa_Empresa" FromRole="Empresa" ToRole="Multa" />
           <NavigationProperty Name="Parqueo" Relationship="CityParkAppModel.FK_Parqueo_Empresa" FromRole="Empresa" ToRole="Parqueo" />
           <NavigationProperty Name="Plaza" Relationship="CityParkAppModel.FK_Plaza_Empresa" FromRole="Empresa" ToRole="Plaza" />
@@ -1381,6 +1367,7 @@
           <NavigationProperty Name="TipoMultas" Relationship="CityParkAppModel.FK_TipoMultas_Empresa" FromRole="Empresa" ToRole="TipoMultas" />
           <NavigationProperty Name="Transaccion" Relationship="CityParkAppModel.FK_Transaccion_Empresa" FromRole="Empresa" ToRole="Transaccion" />
           <NavigationProperty Name="Vendedor" Relationship="CityParkAppModel.FK_Vendedor_Empresa" FromRole="Empresa" ToRole="Vendedor" />
+          <NavigationProperty Name="Dispositivo" Relationship="CityParkAppModel.FK_Dispositivo_Empresa" FromRole="Empresa" ToRole="Dispositivo" />
         </EntityType>
         <EntityType Name="SO">
           <Key>
@@ -1423,30 +1410,6 @@
             </Principal>
             <Dependent Role="Agente">
               <PropertyRef Name="EmpresaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Dispositivo_Empresa">
-          <End Type="CityParkAppModel.Empresa" Role="Empresa" Multiplicity="0..1" />
-          <End Type="CityParkAppModel.Dispositivo" Role="Dispositivo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empresa">
-              <PropertyRef Name="EmpresaId" />
-            </Principal>
-            <Dependent Role="Dispositivo">
-              <PropertyRef Name="EmpresaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Dispositivo_SO">
-          <End Type="CityParkAppModel.SO" Role="SO" Multiplicity="0..1" />
-          <End Type="CityParkAppModel.Dispositivo" Role="Dispositivo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SO">
-              <PropertyRef Name="SOId" />
-            </Principal>
-            <Dependent Role="Dispositivo">
-              <PropertyRef Name="SOId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1579,8 +1542,33 @@
           <Property Name="UsuarioId" Type="Int32" Nullable="false" />
           <Property Name="DispositivoId" Type="Int32" Nullable="false" />
           <Property Name="Usado" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Dispositivo" Relationship="CityParkAppModel.FK_Codigo_Dispositivo" FromRole="Codigo" ToRole="Dispositivo" />
           <NavigationProperty Name="Usuario" Relationship="CityParkAppModel.FK_Codigo_Usuario" FromRole="Codigo" ToRole="Usuario" />
+          <NavigationProperty Name="Dispositivo" Relationship="CityParkAppModel.FK_Codigo_Dispositivo" FromRole="Codigo" ToRole="Dispositivo" />
+        </EntityType>
+        <Association Name="FK_Codigo_Usuario">
+          <End Type="CityParkAppModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="CityParkAppModel.Codigo" Role="Codigo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Codigo">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Dispositivo">
+          <Key>
+            <PropertyRef Name="DispositivoId" />
+          </Key>
+          <Property Name="DispositivoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SOId" Type="Int32" />
+          <Property Name="UsuarioId" Type="Int32" />
+          <Property Name="UniqueId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="EmpresaId" Type="Int32" />
+          <NavigationProperty Name="Codigo" Relationship="CityParkAppModel.FK_Codigo_Dispositivo" FromRole="Dispositivo" ToRole="Codigo" />
+          <NavigationProperty Name="Empresa" Relationship="CityParkAppModel.FK_Dispositivo_Empresa" FromRole="Dispositivo" ToRole="Empresa" />
+          <NavigationProperty Name="SO" Relationship="CityParkAppModel.FK_Dispositivo_SO" FromRole="Dispositivo" ToRole="SO" />
         </EntityType>
         <Association Name="FK_Codigo_Dispositivo">
           <End Type="CityParkAppModel.Dispositivo" Role="Dispositivo" Multiplicity="1" />
@@ -1594,15 +1582,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Codigo_Usuario">
-          <End Type="CityParkAppModel.Usuario" Role="Usuario" Multiplicity="1" />
-          <End Type="CityParkAppModel.Codigo" Role="Codigo" Multiplicity="*" />
+        <Association Name="FK_Dispositivo_Empresa">
+          <End Type="CityParkAppModel.Empresa" Role="Empresa" Multiplicity="0..1" />
+          <End Type="CityParkAppModel.Dispositivo" Role="Dispositivo" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="UsuarioId" />
+            <Principal Role="Empresa">
+              <PropertyRef Name="EmpresaId" />
             </Principal>
-            <Dependent Role="Codigo">
-              <PropertyRef Name="UsuarioId" />
+            <Dependent Role="Dispositivo">
+              <PropertyRef Name="EmpresaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dispositivo_SO">
+          <End Type="CityParkAppModel.SO" Role="SO" Multiplicity="0..1" />
+          <End Type="CityParkAppModel.Dispositivo" Role="Dispositivo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SO">
+              <PropertyRef Name="SOId" />
+            </Principal>
+            <Dependent Role="Dispositivo">
+              <PropertyRef Name="SOId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1822,17 +1822,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Dispositivo">
-            <EntityTypeMapping TypeName="CityParkAppModel.Dispositivo">
-              <MappingFragment StoreEntitySet="Dispositivo">
-                <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
-                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
-                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
-                <ScalarProperty Name="SOId" ColumnName="SOId" />
-                <ScalarProperty Name="DispositivoId" ColumnName="DispositivoId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Empresa">
             <EntityTypeMapping TypeName="CityParkAppModel.Empresa">
               <MappingFragment StoreEntitySet="Empresa">
@@ -1872,6 +1861,17 @@
                 <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
                 <ScalarProperty Name="Codigo1" ColumnName="Codigo" />
                 <ScalarProperty Name="CodigoId" ColumnName="CodigoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dispositivo">
+            <EntityTypeMapping TypeName="CityParkAppModel.Dispositivo">
+              <MappingFragment StoreEntitySet="Dispositivo">
+                <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
+                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="SOId" ColumnName="SOId" />
+                <ScalarProperty Name="DispositivoId" ColumnName="DispositivoId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
