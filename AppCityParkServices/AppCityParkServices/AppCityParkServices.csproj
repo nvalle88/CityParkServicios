@@ -172,6 +172,7 @@
     <Compile Include="Clases\CodigoRequest.cs" />
     <Compile Include="Clases\FileHelper.cs" />
     <Compile Include="Clases\FotoRequest.cs" />
+    <Compile Include="Clases\LoginRequest.cs" />
     <Compile Include="Clases\MarcaRequest.cs" />
     <Compile Include="Clases\ModeloRequest.cs" />
     <Compile Include="Clases\ParqueoHelper.cs" />

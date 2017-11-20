@@ -10,9 +10,11 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using AppCityParkServices.Models;
+using AppCityParkServices.Clases;
 
 namespace AppCityParkServices.Controllers.Api
 {
+    [RoutePrefix("api/Administradores")]
     public class AdministradorsController : ApiController
     {
         private CityParkApp db = new CityParkApp();
@@ -22,6 +24,25 @@ namespace AppCityParkServices.Controllers.Api
         {
             return db.Administrador;
         }
+
+
+        [HttpPost]
+        [Route("Login")]
+        public async Task<Response> Login([FromBody] LoginRequest loginRequest)
+        {
+            if (string.IsNullOrEmpty(loginRequest.UserName)|| string.IsNullOrEmpty(loginRequest.Password))
+            {
+                return new Response { IsSuccess = false };
+            }
+
+            var login =await db.Administrador.Where(x => x.Nombre == loginRequest.UserName && x.Contrasela == loginRequest.Password).FirstOrDefaultAsync();
+            if (login==null)
+            {
+                return new Response { IsSuccess = true };
+            }
+            return new Response {IsSuccess=true,Result=login};
+        }
+
 
         // GET: api/Administradors/5
         [ResponseType(typeof(Administrador))]
