@@ -26,7 +26,7 @@ public partial class Transaccion
 
     public Nullable<double> Monto { get; set; }
 
-    public DateTime Fecha { get; set; }
+    public  DateTime Fecha { get; set; }
 
     public Nullable<int> EmpresaId { get; set; }
 

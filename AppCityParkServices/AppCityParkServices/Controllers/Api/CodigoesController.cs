@@ -40,12 +40,12 @@ namespace AppCityParkServices.Controllers.Api
         }
 
         // GET: api/Codigoes/5
-        [HttpGet]
+        [HttpPost]
         [Route("GetRandomCode")]
-        public async Task<Codigo> GetRandomCode(CodigoRequest usuario)
+        public async Task<Response> GetRandomCode(CodigoRequest usuario)
         {
-            int CodeLength = 5;
-            string _allowedChars = "abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ1234567890";
+            int CodeLength = 4;
+            string _allowedChars = "ABCDEFGHJKLMNPQRSTUVWXYZ1234567890";
             Byte[] randomBytes = new Byte[CodeLength];
             char[] chars = new char[CodeLength];
             int allowedCharCount = _allowedChars.Length;
@@ -56,6 +56,8 @@ namespace AppCityParkServices.Controllers.Api
                 chars[i] = _allowedChars[(int)randomBytes[i] % allowedCharCount];
             }
             //Verificar si existe el dispositivo caso contrario Registrarlo
+
+
             //
 
             Codigo _codigo = new Codigo
@@ -66,7 +68,21 @@ namespace AppCityParkServices.Controllers.Api
                 Usado = false,
             };
 
-            return _codigo;          
+
+            db.Codigo.Add(_codigo);
+            await db.SaveChangesAsync();
+
+            CreatedAtRoute("DefaultApi", new { id = _codigo.CodigoId },_codigo);
+            return
+            new Response
+            {
+                IsSuccess = true,
+                Message = "Gódigo generado con éxito",
+                Result = _codigo,
+            };
+
+
+            
         }
 
 

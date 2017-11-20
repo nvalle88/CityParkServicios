@@ -47,7 +47,7 @@ namespace AppCityParkServices.Controllers.MVC
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "AgenteId,Nombre,Apellido,Contrasena")] Agente agente)
+        public async Task<ActionResult> Create([Bind(Include = "AgenteId,Nombre,Apellido,Contrasena,EmpresaId")] Agente agente)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace AppCityParkServices.Controllers.MVC
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "AgenteId,Nombre,Apellido,Contrasena")] Agente agente)
+        public async Task<ActionResult> Edit([Bind(Include = "AgenteId,Nombre,Apellido,Contrasena,EmpresaId")] Agente agente)
         {
             if (ModelState.IsValid)
             {

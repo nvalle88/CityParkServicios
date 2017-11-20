@@ -47,6 +47,8 @@ public partial class Dispositivo
 
     public virtual SO SO { get; set; }
 
+    public virtual Usuario Usuario { get; set; }
+
 }
 
 }

@@ -20,7 +20,7 @@ public partial class Saldo
 
     public int SaldoId { get; set; }
 
-    public Nullable<decimal> Saldo1 { get; set; }
+    public double Saldo1 { get; set; }
 
     public int UsuarioId { get; set; }
 
@@ -28,9 +28,9 @@ public partial class Saldo
 
 
 
-    public virtual Usuario Usuario { get; set; }
-
     public virtual Empresa Empresa { get; set; }
+
+    public virtual Usuario Usuario { get; set; }
 
 }
 

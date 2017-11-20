@@ -140,7 +140,7 @@
             <PropertyRef Name="SaldoId" />
           </Key>
           <Property Name="SaldoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Saldo" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Saldo" Type="float" Nullable="false" />
           <Property Name="UsuarioId" Type="int" Nullable="false" />
           <Property Name="EmpresaId" Type="int" />
         </EntityType>
@@ -310,6 +310,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Codigo_Usuario1">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Codigo" Type="Self.Codigo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Codigo">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Dispositivo_Empresa">
           <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
           <End Role="Dispositivo" Type="Self.Dispositivo" Multiplicity="*" />
@@ -331,6 +343,18 @@
             </Principal>
             <Dependent Role="Dispositivo">
               <PropertyRef Name="SOId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dispositivo_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Dispositivo" Type="Self.Dispositivo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Dispositivo">
+              <PropertyRef Name="UsuarioId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -677,12 +701,20 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Codigo" EntitySet="Codigo" />
           </AssociationSet>
+          <AssociationSet Name="FK_Codigo_Usuario1" Association="Self.FK_Codigo_Usuario1">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Codigo" EntitySet="Codigo" />
+          </AssociationSet>
           <AssociationSet Name="FK_Dispositivo_Empresa" Association="Self.FK_Dispositivo_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="Dispositivo" EntitySet="Dispositivo" />
           </AssociationSet>
           <AssociationSet Name="FK_Dispositivo_SO" Association="Self.FK_Dispositivo_SO">
             <End Role="SO" EntitySet="SO" />
+            <End Role="Dispositivo" EntitySet="Dispositivo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dispositivo_Usuario" Association="Self.FK_Dispositivo_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Dispositivo" EntitySet="Dispositivo" />
           </AssociationSet>
           <AssociationSet Name="FK_Modelo_Marca" Association="Self.FK_Modelo_Marca">
@@ -860,17 +892,6 @@
           <Property Name="EmpresaId" Type="Int32" />
           <NavigationProperty Name="Empresa" Relationship="CityParkAppModel.FK_Parqueo_Empresa" FromRole="Parqueo" ToRole="Empresa" />
         </EntityType>
-        <EntityType Name="Saldo">
-          <Key>
-            <PropertyRef Name="SaldoId" />
-          </Key>
-          <Property Name="SaldoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Saldo1" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Usuario" Relationship="Self.FK_Saldo_Usuario" FromRole="Saldo" ToRole="Usuario" />
-          <Property Name="EmpresaId" Type="Int32" />
-          <NavigationProperty Name="Empresa" Relationship="CityParkAppModel.FK_Saldo_Empresa" FromRole="Saldo" ToRole="Empresa" />
-        </EntityType>
         <EntityType Name="TarjetaCredito">
           <Key>
             <PropertyRef Name="TarjetaCreditoId" />
@@ -904,11 +925,12 @@
           <Property Name="Contrasena" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Carro" Relationship="Self.FK_Carro_Usuario" FromRole="Usuario" ToRole="Carro" />
           <NavigationProperty Name="Parqueo" Relationship="Self.FK_Parqueo_Usuario" FromRole="Usuario" ToRole="Parqueo" />
-          <NavigationProperty Name="Saldo" Relationship="Self.FK_Saldo_Usuario" FromRole="Usuario" ToRole="Saldo" />
           <NavigationProperty Name="TarjetaCredito" Relationship="Self.FK_TarjetaCredito_Usuario" FromRole="Usuario" ToRole="TarjetaCredito" />
           <NavigationProperty Name="UsuarioTarjetaPrepago" Relationship="Self.FK_UsuarioTarjetaPrepago_Usuario" FromRole="Usuario" ToRole="UsuarioTarjetaPrepago" />
           <NavigationProperty Name="Transaccion" Relationship="CityParkAppModel.FK_Transaccion_Usuario" FromRole="Usuario" ToRole="Transaccion" />
           <NavigationProperty Name="Codigo" Relationship="CityParkAppModel.FK_Codigo_Usuario" FromRole="Usuario" ToRole="Codigo" />
+          <NavigationProperty Name="Dispositivo" Relationship="CityParkAppModel.FK_Dispositivo_Usuario" FromRole="Usuario" ToRole="Dispositivo" />
+          <NavigationProperty Name="Saldo" Relationship="CityParkAppModel.FK_Saldo_Usuario" FromRole="Usuario" ToRole="Saldo" />
         </EntityType>
         <EntityType Name="UsuarioTarjetaPrepago">
           <Key>
@@ -1004,18 +1026,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Saldo_Usuario">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
-          <End Role="Saldo" Type="Self.Saldo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="UsuarioId" />
-            </Principal>
-            <Dependent Role="Saldo">
-              <PropertyRef Name="UsuarioId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TarjetaCredito_Usuario">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
           <End Role="TarjetaCredito" Type="Self.TarjetaCredito" Multiplicity="*" />
@@ -1059,7 +1069,6 @@
           <EntitySet Name="Modelo" EntityType="Self.Modelo" />
           <EntitySet Name="Multa" EntityType="Self.Multa" />
           <EntitySet Name="Parqueo" EntityType="Self.Parqueo" />
-          <EntitySet Name="Saldo" EntityType="Self.Saldo" />
           <EntitySet Name="TarjetaCredito" EntityType="Self.TarjetaCredito" />
           <EntitySet Name="TarjetaPrepago" EntityType="Self.TarjetaPrepago" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" />
@@ -1091,10 +1100,6 @@
           <AssociationSet Name="FK_Parqueo_Usuario" Association="Self.FK_Parqueo_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Parqueo" EntitySet="Parqueo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Saldo_Usuario" Association="Self.FK_Saldo_Usuario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="Saldo" EntitySet="Saldo" />
           </AssociationSet>
           <AssociationSet Name="FK_TarjetaCredito_Usuario" Association="Self.FK_TarjetaCredito_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
@@ -1180,10 +1185,6 @@
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="Plaza" EntitySet="Plaza" />
           </AssociationSet>
-          <AssociationSet Name="FK_Saldo_Empresa" Association="CityParkAppModel.FK_Saldo_Empresa">
-            <End Role="Empresa" EntitySet="Empresa" />
-            <End Role="Saldo" EntitySet="Saldo" />
-          </AssociationSet>
           <AssociationSet Name="FK_Sector_Empresa" Association="CityParkAppModel.FK_Sector_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="Sector" EntitySet="Sector" />
@@ -1225,6 +1226,19 @@
           <AssociationSet Name="FK_Dispositivo_SO" Association="CityParkAppModel.FK_Dispositivo_SO">
             <End Role="SO" EntitySet="SO" />
             <End Role="Dispositivo" EntitySet="Dispositivo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dispositivo_Usuario" Association="CityParkAppModel.FK_Dispositivo_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Dispositivo" EntitySet="Dispositivo" />
+          </AssociationSet>
+          <EntitySet Name="Saldo" EntityType="CityParkAppModel.Saldo" />
+          <AssociationSet Name="FK_Saldo_Empresa" Association="CityParkAppModel.FK_Saldo_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Saldo" EntitySet="Saldo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Saldo_Usuario" Association="CityParkAppModel.FK_Saldo_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Saldo" EntitySet="Saldo" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Plaza">
@@ -1362,12 +1376,12 @@
           <NavigationProperty Name="Multa" Relationship="CityParkAppModel.FK_Multa_Empresa" FromRole="Empresa" ToRole="Multa" />
           <NavigationProperty Name="Parqueo" Relationship="CityParkAppModel.FK_Parqueo_Empresa" FromRole="Empresa" ToRole="Parqueo" />
           <NavigationProperty Name="Plaza" Relationship="CityParkAppModel.FK_Plaza_Empresa" FromRole="Empresa" ToRole="Plaza" />
-          <NavigationProperty Name="Saldo" Relationship="CityParkAppModel.FK_Saldo_Empresa" FromRole="Empresa" ToRole="Saldo" />
           <NavigationProperty Name="Sector" Relationship="CityParkAppModel.FK_Sector_Empresa" FromRole="Empresa" ToRole="Sector" />
           <NavigationProperty Name="TipoMultas" Relationship="CityParkAppModel.FK_TipoMultas_Empresa" FromRole="Empresa" ToRole="TipoMultas" />
           <NavigationProperty Name="Transaccion" Relationship="CityParkAppModel.FK_Transaccion_Empresa" FromRole="Empresa" ToRole="Transaccion" />
           <NavigationProperty Name="Vendedor" Relationship="CityParkAppModel.FK_Vendedor_Empresa" FromRole="Empresa" ToRole="Vendedor" />
           <NavigationProperty Name="Dispositivo" Relationship="CityParkAppModel.FK_Dispositivo_Empresa" FromRole="Empresa" ToRole="Dispositivo" />
+          <NavigationProperty Name="Saldo" Relationship="CityParkAppModel.FK_Saldo_Empresa" FromRole="Empresa" ToRole="Saldo" />
         </EntityType>
         <EntityType Name="SO">
           <Key>
@@ -1445,18 +1459,6 @@
               <PropertyRef Name="EmpresaId" />
             </Principal>
             <Dependent Role="Plaza">
-              <PropertyRef Name="EmpresaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Saldo_Empresa">
-          <End Type="CityParkAppModel.Empresa" Role="Empresa" Multiplicity="0..1" />
-          <End Type="CityParkAppModel.Saldo" Role="Saldo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empresa">
-              <PropertyRef Name="EmpresaId" />
-            </Principal>
-            <Dependent Role="Saldo">
               <PropertyRef Name="EmpresaId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1569,6 +1571,7 @@
           <NavigationProperty Name="Codigo" Relationship="CityParkAppModel.FK_Codigo_Dispositivo" FromRole="Dispositivo" ToRole="Codigo" />
           <NavigationProperty Name="Empresa" Relationship="CityParkAppModel.FK_Dispositivo_Empresa" FromRole="Dispositivo" ToRole="Empresa" />
           <NavigationProperty Name="SO" Relationship="CityParkAppModel.FK_Dispositivo_SO" FromRole="Dispositivo" ToRole="SO" />
+          <NavigationProperty Name="Usuario" Relationship="CityParkAppModel.FK_Dispositivo_Usuario" FromRole="Dispositivo" ToRole="Usuario" />
         </EntityType>
         <Association Name="FK_Codigo_Dispositivo">
           <End Type="CityParkAppModel.Dispositivo" Role="Dispositivo" Multiplicity="1" />
@@ -1603,6 +1606,53 @@
             </Principal>
             <Dependent Role="Dispositivo">
               <PropertyRef Name="SOId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dispositivo_Usuario">
+          <End Type="CityParkAppModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="CityParkAppModel.Dispositivo" Role="Dispositivo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Dispositivo">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Saldo">
+          <Key>
+            <PropertyRef Name="SaldoId" />
+          </Key>
+          <Property Name="SaldoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Saldo1" Type="Double" Nullable="false" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="EmpresaId" Type="Int32" />
+          <NavigationProperty Name="Empresa" Relationship="CityParkAppModel.FK_Saldo_Empresa" FromRole="Saldo" ToRole="Empresa" />
+          <NavigationProperty Name="Usuario" Relationship="CityParkAppModel.FK_Saldo_Usuario" FromRole="Saldo" ToRole="Usuario" />
+        </EntityType>
+        <Association Name="FK_Saldo_Empresa">
+          <End Type="CityParkAppModel.Empresa" Role="Empresa" Multiplicity="0..1" />
+          <End Type="CityParkAppModel.Saldo" Role="Saldo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="EmpresaId" />
+            </Principal>
+            <Dependent Role="Saldo">
+              <PropertyRef Name="EmpresaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Saldo_Usuario">
+          <End Type="CityParkAppModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="CityParkAppModel.Saldo" Role="Saldo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Saldo">
+              <PropertyRef Name="UsuarioId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1681,16 +1731,6 @@
                 <ScalarProperty Name="Longitud" ColumnName="Longitud" />
                 <ScalarProperty Name="TarjetaCreditoId" ColumnName="TarjetaCreditoId" />
                 <ScalarProperty Name="CarroId" ColumnName="CarroId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Saldo">
-            <EntityTypeMapping TypeName="CityParkAppModel.Saldo">
-              <MappingFragment StoreEntitySet="Saldo">
-                <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
-                <ScalarProperty Name="SaldoId" ColumnName="SaldoId" />
-                <ScalarProperty Name="Saldo1" ColumnName="Saldo" />
-                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1872,6 +1912,16 @@
                 <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
                 <ScalarProperty Name="SOId" ColumnName="SOId" />
                 <ScalarProperty Name="DispositivoId" ColumnName="DispositivoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Saldo">
+            <EntityTypeMapping TypeName="CityParkAppModel.Saldo">
+              <MappingFragment StoreEntitySet="Saldo">
+                <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="Saldo1" ColumnName="Saldo" />
+                <ScalarProperty Name="SaldoId" ColumnName="SaldoId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

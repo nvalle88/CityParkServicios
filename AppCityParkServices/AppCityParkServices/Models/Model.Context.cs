@@ -47,8 +47,6 @@ public partial class CityParkApp : DbContext
 
     public virtual DbSet<Parqueo> Parqueo { get; set; }
 
-    public virtual DbSet<Saldo> Saldo { get; set; }
-
     public virtual DbSet<TarjetaCredito> TarjetaCredito { get; set; }
 
     public virtual DbSet<TarjetaPrepago> TarjetaPrepago { get; set; }
@@ -80,6 +78,8 @@ public partial class CityParkApp : DbContext
     public virtual DbSet<Codigo> Codigo { get; set; }
 
     public virtual DbSet<Dispositivo> Dispositivo { get; set; }
+
+    public virtual DbSet<Saldo> Saldo { get; set; }
 
 
     public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)

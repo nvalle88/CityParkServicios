@@ -88,27 +88,24 @@ namespace AppCityParkServices.Controllers.Api
 
         // PUT: api/Usuarios/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutUsuario(int id, Usuario usuario)
+        public async Task<IHttpActionResult> PutUsuario(Usuario usuarioNew)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            if (id != usuario.UsuarioId)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(usuario).State = EntityState.Modified;
+           
 
             try
             {
+                Usuario usuario = await db.Usuario.FindAsync(usuarioNew.UsuarioId);
+                usuario.Contrasena = usuarioNew.Contrasena;
+                db.Entry(usuario).State = EntityState.Modified;
                 await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UsuarioExists(id))
+                if (!UsuarioExists(usuarioNew.UsuarioId))
                 {
                     return NotFound();
                 }

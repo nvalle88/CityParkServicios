@@ -48,17 +48,25 @@ namespace AppCityParkServices.Controllers.Api
         // GET: api/Plazas/GetPlazaByPosition
         [HttpPost]
         [Route("GetPlazaByPosition")]
-        public List<Plaza> GetPlazaByPosition(Position Position)
+        
+        public List<PlazaRequest> GetPlazaByPosition(Position Position)
         {
 
            var PlazaDB = db.Plaza.Where(x => x.Ocupado == false).ToList();
-            List<Plaza> _plazas = new List<Plaza>();
+            List<PlazaRequest> _plazas = new List<PlazaRequest>();
 
             foreach (var plaza in PlazaDB)
             {                              //Posicion del ususario, Plaza a comparar y la distancia que desamos comparar en KM
-                if (GeoUtils.EstaCercaDeMi(Position, plaza, 0.1))
+                if (GeoUtils.EstaCercaDeMi(Position, plaza, 0.5))
                 {
-                    _plazas.Add(plaza);
+                    _plazas.Add(
+                        new PlazaRequest {PlazaId= plaza.PlazaId,
+                        EmpresaId=plaza.EmpresaId,
+                        Latitud=plaza.Latitud,
+                        Longitud=plaza.Longitud,
+                        Nombre=plaza.Nombre,
+                        }
+                        );
                 }
             }
 
@@ -82,8 +90,6 @@ namespace AppCityParkServices.Controllers.Api
             return Barrios;
         }
 
-
-
         // GET: api/Plazas/5
         [ResponseType(typeof(Plaza))]
         public async Task<IHttpActionResult> GetPlaza(int id)
@@ -101,13 +107,14 @@ namespace AppCityParkServices.Controllers.Api
 
         // PUT: api/Plazas/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutPlaza(Plaza plaza)
+        public async Task<IHttpActionResult> PutPlaza(Plaza _plaza)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-          
+            Plaza plaza = await db.Plaza.FindAsync(_plaza.PlazaId);
+            plaza.Ocupado = _plaza.Ocupado;
             db.Entry(plaza).State = EntityState.Modified;
 
             try

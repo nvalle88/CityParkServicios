@@ -131,6 +131,7 @@
     <NavigationProperty Name="UsuarioTarjetaPrepago" Relationship="Self.FK_UsuarioTarjetaPrepago_Usuario" FromRole="Usuario" ToRole="UsuarioTarjetaPrepago" />
     <NavigationProperty Name="Transaccion" Relationship="CityParkAppModel.FK_Transaccion_Usuario" FromRole="Usuario" ToRole="Transaccion" />
     <NavigationProperty Name="Codigo" Relationship="CityParkAppModel.FK_Codigo_Usuario" FromRole="Usuario" ToRole="Codigo" />
+    <NavigationProperty Name="Dispositivo" Relationship="CityParkAppModel.FK_Dispositivo_Usuario" FromRole="Usuario" ToRole="Dispositivo" />
   </EntityType>
   <EntityType Name="UsuarioTarjetaPrepago">
     <Key>
@@ -446,6 +447,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_Dispositivo_SO" Association="CityParkAppModel.FK_Dispositivo_SO">
       <End Role="SO" EntitySet="SO" />
+      <End Role="Dispositivo" EntitySet="Dispositivo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Dispositivo_Usuario" Association="CityParkAppModel.FK_Dispositivo_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
       <End Role="Dispositivo" EntitySet="Dispositivo" />
     </AssociationSet>
   </EntityContainer>
@@ -791,6 +796,7 @@
     <NavigationProperty Name="Codigo" Relationship="CityParkAppModel.FK_Codigo_Dispositivo" FromRole="Dispositivo" ToRole="Codigo" />
     <NavigationProperty Name="Empresa" Relationship="CityParkAppModel.FK_Dispositivo_Empresa" FromRole="Dispositivo" ToRole="Empresa" />
     <NavigationProperty Name="SO" Relationship="CityParkAppModel.FK_Dispositivo_SO" FromRole="Dispositivo" ToRole="SO" />
+    <NavigationProperty Name="Usuario" Relationship="CityParkAppModel.FK_Dispositivo_Usuario" FromRole="Dispositivo" ToRole="Usuario" />
   </EntityType>
   <Association Name="FK_Codigo_Dispositivo">
     <End Type="CityParkAppModel.Dispositivo" Role="Dispositivo" Multiplicity="1" />
@@ -825,6 +831,18 @@
       </Principal>
       <Dependent Role="Dispositivo">
         <PropertyRef Name="SOId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Dispositivo_Usuario">
+    <End Type="CityParkAppModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+    <End Type="CityParkAppModel.Dispositivo" Role="Dispositivo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Dispositivo">
+        <PropertyRef Name="UsuarioId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

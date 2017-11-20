@@ -264,3 +264,5 @@ C:\Users\brian\Downloads\CityParkServicios-master (2)\CityParkServicios-master\A
 C:\Users\brian\source\repos\CityParkServicios\AppCityParkServices\AppCityParkServices\bin\HtmlAgilityPack.dll
 C:\Users\brian\source\repos\CityParkServicios\AppCityParkServices\AppCityParkServices\bin\HtmlAgilityPack.pdb
 C:\Users\brian\source\repos\CityParkServicios\AppCityParkServices\AppCityParkServices\bin\HtmlAgilityPack.xml
+C:\Users\brian\source\repos\CityParkServicios\AppCityParkServices\AppCityParkServices\bin\Microsoft.Azure.NotificationHubs.dll
+C:\Users\brian\source\repos\CityParkServicios\AppCityParkServices\AppCityParkServices\bin\Microsoft.Azure.NotificationHubs.xml

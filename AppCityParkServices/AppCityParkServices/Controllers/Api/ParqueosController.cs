@@ -92,76 +92,91 @@ namespace AppCityParkServices.Controllers.Api
                 return tiempos;
             }
             return null;
-        }       
+        }
 
         [HttpPost]
-        [Route("BuscarPlaca")]    
-        public  IHttpActionResult BuscarPlaca(JObject form)
+        [Route("BuscarPlaca")]
+        public IHttpActionResult BuscarPlaca(JObject form)
         {
             db.Configuration.ProxyCreationEnabled = false;
             var placa = string.Empty;
             var plazaNombre = string.Empty;
+            var AgenteId = 0;
 
             dynamic jsonObject = form;
 
-            try
-            {
-                placa = jsonObject.Placa.Value;
+        try
+        {
+                placa = (jsonObject.Placa.Value).Replace("-", "").ToUpper();
                 plazaNombre = jsonObject.Plaza.Value;
-            }
-            catch (Exception)
-            {
+                AgenteId = jsonObject.AgenteId.Value;
+            
 
-                return null;
-            }
+
 
             Response response;
-            var Plaza = db.Plaza.Where(x => x.Nombre == plazaNombre).FirstOrDefault();
-            if (Plaza == null)
+
+            var Plazas = db.Plaza.Where(x => x.Nombre == plazaNombre && x.Ocupado == true).ToList();
+            var Agente = db.Agente.Where(x => x.AgenteId == AgenteId).FirstOrDefault();
+            if (Plazas == null)
             {
                 response = new Response
                 {
                     IsSuccess = true,
-                    Message = "La Plaza de parqueo no Existe...",
+                    Message = "La plaza se encuentra desocupada o no existe",
+                    Result = null,
+                };
+                return Ok(response);
+            }
+            Plaza Plaza = new Plaza();
+            foreach (var ifplaza in Plazas)
+            { if (ifplaza.EmpresaId == Agente.EmpresaId)
+                {
+                    Plaza = ifplaza;
+                }
+            }
+
+            var parqueos = db.Parqueo.Where(s => s.Carro.Placa == placa && s.FechaFin.Day == DateTime.Now.Day
+                                             && s.FechaFin.Month == DateTime.Now.Month
+                                             && s.FechaFin.Year == DateTime.Now.Year
+                                             && s.PlazaId == Plaza.PlazaId)
+                                             .Include(s => s.Carro.Modelo.Marca)
+                                             .Include(s => s.Usuario)
+                                             .ToList();
+            if (parqueos.Count() == 0)
+            {
+                response = new Response
+                {
+                    IsSuccess = false,
+                    Message = "El vehículo no cuenta con tiempo de parqueo...",
                     Result = null,
                 };
                 return Ok(response);
             }
 
-            var parqueos = db.Parqueo.Where(s => s.Carro.Placa==placa && s.FechaFin.Day==DateTime.Now.Day 
-                                             && s.FechaFin.Month==DateTime.Now.Month && s.FechaFin.Year==DateTime.Now.Year && s.PlazaId==Plaza.PlazaId)
-                                             .Include(s=>s.Carro.Modelo.Marca)
-                                             .Include(s=>s.Usuario)
-                                             .ToList();
-            if (parqueos.Count()==0 )
-            {
-                 response = new Response
-                {
-                    IsSuccess=false,
-                    Message= "El vehículo no cuenta con tiempo de parqueo...",
-                    Result=null,
-                };
-                return Ok(response);
-            }
-
-            var pa = parqueos.Where(p => (p.FechaFin.TimeOfDay > DateTime.Now.TimeOfDay)&& p.FechaInicio.TimeOfDay<DateTime.Now.TimeOfDay).FirstOrDefault();
+            var pa = parqueos.Where(p => (p.FechaFin.TimeOfDay > DateTime.Now.TimeOfDay) && p.FechaInicio.TimeOfDay < DateTime.Now.TimeOfDay).FirstOrDefault();
 
 
-             
+
             if (pa == null)
             {
                 response = new Response
                 {
                     IsSuccess = false,
                     Message = "El vehículo no cuenta con tiempo de parqueo...",
-                    Result=null,
+                    Result = null,
                 };
                 return Ok(response);
             }
 
 
             return BadRequest("El vehículo cuenta con tiempo de parqueo..."); ;
-           
+
+        }
+             catch (Exception)
+            {
+                return null;
+            }
 
         }  
 
@@ -301,25 +316,26 @@ namespace AppCityParkServices.Controllers.Api
 
                 db.Parqueo.Add(parqueo);
                 await db.SaveChangesAsync();
-
                 var carro = db.Carro.Where(c => c.CarroId == parqueo.CarroId).Include(c => c.Modelo.Marca).FirstOrDefault();
                 parqueo.Carro = carro;
                 parqueo.CarroId = carro.CarroId;
-
-            if (parqueoHelper.VendedorId > 0)
-            {
-                var transaccion = new Transaccion
+                if (parqueoHelper.VendedorId > 0)
                 {
-                    VendedorId = parqueoHelper.VendedorId,
-                    Monto = parqueoHelper.Monto,
-                    Fecha = parqueoHelper.Fecha,
-                    UsuarioId = parqueoHelper.UsuarioId,
-                };
-                db.Transaccion.Add(transaccion);
-                await db.SaveChangesAsync();
-            }
-
-                return Ok(parqueo);                       
+                    var transaccion = new Transaccion
+                    {
+                        VendedorId = parqueoHelper.VendedorId,
+                        Monto = parqueoHelper.Monto,
+                        Fecha = parqueoHelper.Fecha,
+                        UsuarioId = parqueoHelper.UsuarioId,
+                    };
+                    db.Transaccion.Add(transaccion);
+                    await db.SaveChangesAsync();
+                }
+            else
+                {
+                //si no es un vendedor el que parquea, se procede a realizar el debito del saldo                                           
+                }
+            return Ok(parqueo);
         }
 
         // DELETE: api/Parqueos/5

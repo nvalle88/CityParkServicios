@@ -305,6 +305,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Codigo_Usuario1">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Codigo" Type="Self.Codigo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Codigo">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Dispositivo_Empresa">
     <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
     <End Role="Dispositivo" Type="Self.Dispositivo" Multiplicity="*" />
@@ -326,6 +338,18 @@
       </Principal>
       <Dependent Role="Dispositivo">
         <PropertyRef Name="SOId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Dispositivo_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="Dispositivo" Type="Self.Dispositivo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Dispositivo">
+        <PropertyRef Name="UsuarioId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -672,12 +696,20 @@
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="Codigo" EntitySet="Codigo" />
     </AssociationSet>
+    <AssociationSet Name="FK_Codigo_Usuario1" Association="Self.FK_Codigo_Usuario1">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Codigo" EntitySet="Codigo" />
+    </AssociationSet>
     <AssociationSet Name="FK_Dispositivo_Empresa" Association="Self.FK_Dispositivo_Empresa">
       <End Role="Empresa" EntitySet="Empresa" />
       <End Role="Dispositivo" EntitySet="Dispositivo" />
     </AssociationSet>
     <AssociationSet Name="FK_Dispositivo_SO" Association="Self.FK_Dispositivo_SO">
       <End Role="SO" EntitySet="SO" />
+      <End Role="Dispositivo" EntitySet="Dispositivo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Dispositivo_Usuario" Association="Self.FK_Dispositivo_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
       <End Role="Dispositivo" EntitySet="Dispositivo" />
     </AssociationSet>
     <AssociationSet Name="FK_Modelo_Marca" Association="Self.FK_Modelo_Marca">

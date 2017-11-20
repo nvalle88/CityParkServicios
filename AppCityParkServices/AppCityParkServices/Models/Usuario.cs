@@ -26,8 +26,6 @@ public partial class Usuario
 
         this.Parqueo = new HashSet<Parqueo>();
 
-        this.Saldo = new HashSet<Saldo>();
-
         this.TarjetaCredito = new HashSet<TarjetaCredito>();
 
         this.UsuarioTarjetaPrepago = new HashSet<UsuarioTarjetaPrepago>();
@@ -35,6 +33,10 @@ public partial class Usuario
         this.Transaccion = new HashSet<Transaccion>();
 
         this.Codigo = new HashSet<Codigo>();
+
+        this.Dispositivo = new HashSet<Dispositivo>();
+
+        this.Saldo = new HashSet<Saldo>();
 
     }
 
@@ -57,10 +59,6 @@ public partial class Usuario
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
-    public virtual ICollection<Saldo> Saldo { get; set; }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-
     public virtual ICollection<TarjetaCredito> TarjetaCredito { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -74,6 +72,14 @@ public partial class Usuario
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
     public virtual ICollection<Codigo> Codigo { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<Dispositivo> Dispositivo { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<Saldo> Saldo { get; set; }
 
 }
 

@@ -38,7 +38,7 @@
         <AssociationConnector Association="CityParkAppModel.FK_Transaccion_Vendedor" />
         <EntityTypeShape EntityType="CityParkAppModel.Administrador" Width="1.5" PointX="3" PointY="19.125" />
         <EntityTypeShape EntityType="CityParkAppModel.Empresa" Width="1.5" PointX="0.75" PointY="11.5" />
-        <EntityTypeShape EntityType="CityParkAppModel.SO" Width="1.5" PointX="7.75" PointY="20.75" />
+        <EntityTypeShape EntityType="CityParkAppModel.SO" Width="1.5" PointX="7.875" PointY="19.625" />
         <EntityTypeShape EntityType="CityParkAppModel.TipoMultas" Width="1.5" PointX="3" PointY="16.125" />
         <AssociationConnector Association="CityParkAppModel.FK_Administrador_Empresa" />
         <AssociationConnector Association="CityParkAppModel.FK_Agente_Empresa" />
@@ -58,6 +58,7 @@
         <AssociationConnector Association="CityParkAppModel.FK_Codigo_Dispositivo" />
         <AssociationConnector Association="CityParkAppModel.FK_Dispositivo_Empresa" />
         <AssociationConnector Association="CityParkAppModel.FK_Dispositivo_SO" />
+        <AssociationConnector Association="CityParkAppModel.FK_Dispositivo_Usuario" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

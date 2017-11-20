@@ -11,7 +11,6 @@
         <EntityTypeShape EntityType="CityParkAppModel.Modelo" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CityParkAppModel.Multa" Width="1.5" PointX="8" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CityParkAppModel.Parqueo" Width="1.5" PointX="5.25" PointY="10.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityParkAppModel.Saldo" Width="1.5" PointX="3" PointY="9.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CityParkAppModel.TarjetaCredito" Width="1.5" PointX="3" PointY="11.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CityParkAppModel.TarjetaPrepago" Width="1.5" PointX="3.75" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CityParkAppModel.Usuario" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
@@ -23,7 +22,6 @@
         <AssociationConnector Association="CityParkAppModel.FK_Modelo_Marca" ManuallyRouted="false" />
         <AssociationConnector Association="CityParkAppModel.FK_Parqueo_TarjetaCredito" ManuallyRouted="false" />
         <AssociationConnector Association="CityParkAppModel.FK_Parqueo_Usuario" ManuallyRouted="false" />
-        <AssociationConnector Association="CityParkAppModel.FK_Saldo_Usuario" ManuallyRouted="false" />
         <AssociationConnector Association="CityParkAppModel.FK_TarjetaCredito_Usuario" ManuallyRouted="false" />
         <AssociationConnector Association="CityParkAppModel.FK_UsuarioTarjetaPrepago_TarjetaPrepago" ManuallyRouted="false" />
         <AssociationConnector Association="CityParkAppModel.FK_UsuarioTarjetaPrepago_Usuario" ManuallyRouted="false" />
@@ -38,14 +36,13 @@
         <AssociationConnector Association="CityParkAppModel.FK_Transaccion_Vendedor" />
         <EntityTypeShape EntityType="CityParkAppModel.Administrador" Width="1.5" PointX="3" PointY="19.125" />
         <EntityTypeShape EntityType="CityParkAppModel.Empresa" Width="1.5" PointX="0.75" PointY="11.5" />
-        <EntityTypeShape EntityType="CityParkAppModel.SO" Width="1.5" PointX="7.75" PointY="20.75" />
+        <EntityTypeShape EntityType="CityParkAppModel.SO" Width="1.5" PointX="7.875" PointY="19.625" />
         <EntityTypeShape EntityType="CityParkAppModel.TipoMultas" Width="1.5" PointX="3" PointY="16.125" />
         <AssociationConnector Association="CityParkAppModel.FK_Administrador_Empresa" />
         <AssociationConnector Association="CityParkAppModel.FK_Agente_Empresa" />
         <AssociationConnector Association="CityParkAppModel.FK_Multa_Empresa" />
         <AssociationConnector Association="CityParkAppModel.FK_Parqueo_Empresa" />
         <AssociationConnector Association="CityParkAppModel.FK_Plaza_Empresa" />
-        <AssociationConnector Association="CityParkAppModel.FK_Saldo_Empresa" />
         <AssociationConnector Association="CityParkAppModel.FK_Sector_Empresa" />
         <AssociationConnector Association="CityParkAppModel.FK_TipoMultas_Empresa" />
         <AssociationConnector Association="CityParkAppModel.FK_Transaccion_Empresa" />
@@ -58,6 +55,10 @@
         <AssociationConnector Association="CityParkAppModel.FK_Codigo_Dispositivo" />
         <AssociationConnector Association="CityParkAppModel.FK_Dispositivo_Empresa" />
         <AssociationConnector Association="CityParkAppModel.FK_Dispositivo_SO" />
+        <AssociationConnector Association="CityParkAppModel.FK_Dispositivo_Usuario" />
+        <EntityTypeShape EntityType="CityParkAppModel.Saldo" Width="1.5" PointX="11" PointY="7.375" />
+        <AssociationConnector Association="CityParkAppModel.FK_Saldo_Empresa" />
+        <AssociationConnector Association="CityParkAppModel.FK_Saldo_Usuario" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

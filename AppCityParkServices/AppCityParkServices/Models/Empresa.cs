@@ -32,8 +32,6 @@ public partial class Empresa
 
         this.Plaza = new HashSet<Plaza>();
 
-        this.Saldo = new HashSet<Saldo>();
-
         this.Sector = new HashSet<Sector>();
 
         this.TipoMultas = new HashSet<TipoMultas>();
@@ -43,6 +41,8 @@ public partial class Empresa
         this.Vendedor = new HashSet<Vendedor>();
 
         this.Dispositivo = new HashSet<Dispositivo>();
+
+        this.Saldo = new HashSet<Saldo>();
 
     }
 
@@ -83,10 +83,6 @@ public partial class Empresa
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
-    public virtual ICollection<Saldo> Saldo { get; set; }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-
     public virtual ICollection<Sector> Sector { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -104,6 +100,10 @@ public partial class Empresa
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
     public virtual ICollection<Dispositivo> Dispositivo { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<Saldo> Saldo { get; set; }
 
 }
 

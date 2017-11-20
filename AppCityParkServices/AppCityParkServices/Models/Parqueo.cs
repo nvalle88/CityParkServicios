@@ -22,9 +22,9 @@ public partial class Parqueo
 
     public Nullable<int> UsuarioId { get; set; }
 
-    public DateTime FechaInicio { get; set; }
+    public  DateTime FechaInicio { get; set; }
 
-    public DateTime FechaFin { get; set; }
+    public  DateTime FechaFin { get; set; }
 
     public Nullable<double> Latitud { get; set; }
 

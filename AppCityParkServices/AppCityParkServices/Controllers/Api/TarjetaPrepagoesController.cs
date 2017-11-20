@@ -77,7 +77,7 @@ namespace AppCityParkServices.Controllers.Api
                         var nuevoSaldo = new Saldo
                         {
                             UsuarioId = usuario,
-                            Saldo1 = existeTarjeta.Saldo,
+                            Saldo1 =(double)existeTarjeta.Saldo,
                         };
 
                         db.Saldo.Add(nuevoSaldo);
@@ -87,7 +87,7 @@ namespace AppCityParkServices.Controllers.Api
 
                     }
 
-                    IngresarSaldo.Saldo1 = IngresarSaldo.Saldo1 + existeTarjeta.Saldo;
+                    IngresarSaldo.Saldo1 = IngresarSaldo.Saldo1 + (double)existeTarjeta.Saldo;
 
                     db.Entry(IngresarSaldo).State = EntityState.Modified;
 

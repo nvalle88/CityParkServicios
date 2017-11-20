@@ -24,7 +24,7 @@ public partial class Multa
 
     public Nullable<decimal> Valor { get; set; }
 
-    public DateTime Fecha { get; set; }
+    public  DateTime Fecha { get; set; }
 
     public Nullable<int> AgenteId { get; set; }
 
