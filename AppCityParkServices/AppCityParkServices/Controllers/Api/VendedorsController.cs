@@ -12,6 +12,7 @@ using System.Web.Http.Description;
 using AppCityParkServices.Models;
 using Newtonsoft.Json.Linq;
 using AppCityParkServices.Clases;
+using AppCityParkServices.Utils;
 
 namespace AppCityParkServices.Controllers.Api
 {
@@ -20,6 +21,146 @@ namespace AppCityParkServices.Controllers.Api
     public class VendedorsController : ApiController
     {
         private CityParkApp db = new CityParkApp();
+
+
+        [HttpPost]
+        [Route("ResetPassword")]
+        public async Task<Response> ResetPassword([FromBody] Vendedor vendedor)
+        {
+            try
+            {
+                db.Configuration.ProxyCreationEnabled = false;
+                var vendedorRequest = await db.Vendedor.Where(x => x.VendedorId == vendedor.VendedorId).FirstOrDefaultAsync();
+                if (vendedorRequest == null)
+                {
+                    return new Response { IsSuccess = false };
+                }
+                var cod = new Codificar
+                {
+                    Entrada = vendedorRequest.Nombre,
+                };
+
+                var codificar = CodificarHelper.SHA512(cod);
+                vendedorRequest.Contrasena = codificar.Salida;
+
+                db.Entry(vendedorRequest).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return new Response { IsSuccess = true };
+            }
+            catch (Exception)
+            {
+                return new Response { IsSuccess = false };
+            }
+        }
+
+        [HttpPost]
+        [Route("EditVendedor")]
+        public async Task<Response> EditAgente([FromBody]Vendedor vendedor)
+        {
+            try
+            {
+                var vendedorRequest = await db.Vendedor.Where(x => x.VendedorId == vendedor.VendedorId).FirstOrDefaultAsync();
+                if (vendedorRequest == null)
+                {
+                    return new Response { IsSuccess = false };
+                }
+                vendedorRequest.Nombre = vendedor.Nombre;
+                vendedorRequest.Apellido = vendedor.Apellido;
+
+                db.Entry(vendedorRequest).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+
+                return new Response { IsSuccess = true };
+            }
+            catch (Exception)
+            {
+                return new Response { IsSuccess = false };
+                throw;
+            }
+        }
+
+        [HttpPost]
+        [Route("GetVendedor")]
+        public async Task<Response> GetVendedor([FromBody]Vendedor vendedor)
+        {
+            try
+            {
+                db.Configuration.ProxyCreationEnabled = false;
+                var vendedorRequest = await db.Vendedor.Where(x => x.VendedorId == vendedor.VendedorId).FirstOrDefaultAsync();
+                if (vendedorRequest == null)
+                {
+                    return new Response { IsSuccess = false };
+                }
+
+                return new Response { IsSuccess = true, Result = vendedorRequest };
+            }
+            catch (Exception)
+            {
+                return new Response { IsSuccess = false };
+                throw;
+            }
+        }
+
+        [HttpPost]
+        [Route("DeleteVendedor")]
+        public async Task<Response> DeleteVendedor([FromBody]Vendedor vendedor)
+        {
+            try
+            {
+                var vendedorRequest = await db.Vendedor.Where(x => x.VendedorId == vendedor.VendedorId).FirstOrDefaultAsync();
+                if (vendedorRequest == null)
+                {
+                    return new Response { IsSuccess = false };
+                }
+
+                db.Vendedor.Remove(vendedorRequest);
+                await db.SaveChangesAsync();
+
+                return new Response { IsSuccess = true };
+            }
+            catch (Exception)
+            {
+                return new Response { IsSuccess = false };
+                throw;
+            }
+        }
+
+        [HttpPost]
+        [Route("GetVendedoresPorEmpresa")]
+        public async Task<IEnumerable<Vendedor>> GetVendedoresPorEmpresa([FromBody] Empresa empresa)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            var vendedores = await db.Vendedor.Where(x => x.EmpresaId == empresa.EmpresaId).Include(x => x.Empresa).ToListAsync();
+
+            if (vendedores == null)
+            {
+                return null;
+            }
+            return vendedores;
+        }
+
+        [HttpPost]
+        [Route("CreateVendedor")]
+        [ResponseType(typeof(Vendedor))]
+        public async Task<Response> CreateVendedor([FromBody]Vendedor vendedor)
+        {
+            try
+            {
+                if (vendedor == null)
+                {
+                    return new Response { IsSuccess = false };
+                }
+                db.Vendedor.Add(vendedor);
+                await db.SaveChangesAsync();
+                return new Response { IsSuccess = true, Result = vendedor };
+
+            }
+            catch (Exception ex)
+            {
+
+                return new Response { IsSuccess = false };
+            }
+        }
 
         // GET: api/Vendedors
         public IQueryable<Vendedor> GetVendedor()

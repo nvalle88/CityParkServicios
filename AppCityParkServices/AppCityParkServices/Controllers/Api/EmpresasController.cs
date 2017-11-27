@@ -10,20 +10,39 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using AppCityParkServices.Models;
+using AppCityParkServices.Clases;
 
 namespace AppCityParkServices.Controllers.Api
 {
+    [RoutePrefix("api/Empresas")]
     public class EmpresasController : ApiController
     {
+
         private CityParkApp db = new CityParkApp();
 
-        // GET: api/Empresas
+        [Route("GetEmpresas")]
         public IQueryable<Empresa> GetEmpresa()
         {
             return db.Empresa;
         }
 
         // GET: api/Empresas/5
+
+        [HttpPost]
+        [Route("GetEmpresaAdmin")]
+        [ResponseType(typeof(Empresa))]
+        public async Task<Response> GetEmpresa([FromBody] Administrador administrador)
+        {
+            var empresa = await db.Empresa.FindAsync(administrador.EmpresaId);
+            if (empresa == null)
+            {
+                return new Response { IsSuccess = false };
+            }
+
+            return new Response { IsSuccess = true, Result = empresa };
+        }
+
+
         [ResponseType(typeof(Empresa))]
         public async Task<IHttpActionResult> GetEmpresa(int id)
         {

@@ -320,7 +320,10 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\AzureHubUtils.cs" />
+    <Compile Include="Utils\Codificar.cs" />
+    <Compile Include="Utils\CodificarHelper.cs" />
     <Compile Include="Utils\GeoUtils.cs" />
+    <Compile Include="Utils\Mensaje.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -352,6 +355,7 @@
     <Content Include="Models\Model.edmx.diagram">
       <DependentUpon>Model.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\CityParkWS - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\CityParkWS - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />

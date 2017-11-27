@@ -1,5 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="CityParkAppModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+<Schema Namespace="CityParkDB" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Administrador">
+    <Key>
+      <PropertyRef Name="AdministradorId" />
+    </Key>
+    <Property Name="AdministradorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Apellido" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Contrasela" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="EmpresaId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Empresa" Relationship="Self.FK_Administrador_Empresa" FromRole="Administrador" ToRole="Empresa" />
+  </EntityType>
   <EntityType Name="Agente">
     <Key>
       <PropertyRef Name="AgenteId" />
@@ -7,11 +18,11 @@
     <Property Name="AgenteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Contrasena" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Multa" Relationship="Self.FK_Multa_Agente" FromRole="Agente" ToRole="Multa" />
-    <NavigationProperty Name="Sector" Relationship="CityParkAppModel.FK_Sector_Agente" FromRole="Agente" ToRole="Sector" />
+    <Property Name="Contrasena" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
     <Property Name="EmpresaId" Type="Int32" />
-    <NavigationProperty Name="Empresa" Relationship="CityParkAppModel.FK_Agente_Empresa" FromRole="Agente" ToRole="Empresa" />
+    <NavigationProperty Name="Empresa" Relationship="Self.FK_Agente_Empresa" FromRole="Agente" ToRole="Empresa" />
+    <NavigationProperty Name="Multa" Relationship="Self.FK_Multa_Agente" FromRole="Agente" ToRole="Multa" />
+    <NavigationProperty Name="Sector" Relationship="Self.FK_Sector_Agente" FromRole="Agente" ToRole="Sector" />
   </EntityType>
   <EntityType Name="Carro">
     <Key>
@@ -25,6 +36,55 @@
     <NavigationProperty Name="Modelo" Relationship="Self.FK_Carro_Modelo" FromRole="Carro" ToRole="Modelo" />
     <NavigationProperty Name="Usuario" Relationship="Self.FK_Carro_Usuario" FromRole="Carro" ToRole="Usuario" />
     <NavigationProperty Name="Parqueo" Relationship="Self.FK_Parqueo_Carro" FromRole="Carro" ToRole="Parqueo" />
+  </EntityType>
+  <EntityType Name="Codigo">
+    <Key>
+      <PropertyRef Name="CodigoId" />
+    </Key>
+    <Property Name="CodigoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Codigo1" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+    <Property Name="DispositivoId" Type="Int32" Nullable="false" />
+    <Property Name="Usado" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Dispositivo" Relationship="Self.FK_Codigo_Dispositivo" FromRole="Codigo" ToRole="Dispositivo" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_Codigo_Usuario" FromRole="Codigo" ToRole="Usuario" />
+    <NavigationProperty Name="Usuario1" Relationship="Self.FK_Codigo_Usuario1" FromRole="Codigo" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Dispositivo">
+    <Key>
+      <PropertyRef Name="DispositivoId" />
+    </Key>
+    <Property Name="DispositivoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SOId" Type="Int32" />
+    <Property Name="UsuarioId" Type="Int32" />
+    <Property Name="UniqueId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="EmpresaId" Type="Int32" />
+    <NavigationProperty Name="Codigo" Relationship="Self.FK_Codigo_Dispositivo" FromRole="Dispositivo" ToRole="Codigo" />
+    <NavigationProperty Name="Empresa" Relationship="Self.FK_Dispositivo_Empresa" FromRole="Dispositivo" ToRole="Empresa" />
+    <NavigationProperty Name="SO" Relationship="Self.FK_Dispositivo_SO" FromRole="Dispositivo" ToRole="SO" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_Dispositivo_Usuario" FromRole="Dispositivo" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Empresa">
+    <Key>
+      <PropertyRef Name="EmpresaId" />
+    </Key>
+    <Property Name="EmpresaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RazonSocial" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+    <Property Name="Ruc" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="Direccion" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="Telefono" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="PersonaDeContacto" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Administrador" Relationship="Self.FK_Administrador_Empresa" FromRole="Empresa" ToRole="Administrador" />
+    <NavigationProperty Name="Agente" Relationship="Self.FK_Agente_Empresa" FromRole="Empresa" ToRole="Agente" />
+    <NavigationProperty Name="Dispositivo" Relationship="Self.FK_Dispositivo_Empresa" FromRole="Empresa" ToRole="Dispositivo" />
+    <NavigationProperty Name="Multa" Relationship="Self.FK_Multa_Empresa" FromRole="Empresa" ToRole="Multa" />
+    <NavigationProperty Name="Parqueo" Relationship="Self.FK_Parqueo_Empresa" FromRole="Empresa" ToRole="Parqueo" />
+    <NavigationProperty Name="Plaza" Relationship="Self.FK_Plaza_Empresa" FromRole="Empresa" ToRole="Plaza" />
+    <NavigationProperty Name="Saldo" Relationship="Self.FK_Saldo_Empresa" FromRole="Empresa" ToRole="Saldo" />
+    <NavigationProperty Name="Sector" Relationship="Self.FK_Sector_Empresa" FromRole="Empresa" ToRole="Sector" />
+    <NavigationProperty Name="TipoMultas" Relationship="Self.FK_TipoMultas_Empresa" FromRole="Empresa" ToRole="TipoMultas" />
+    <NavigationProperty Name="Transaccion" Relationship="Self.FK_Transaccion_Empresa" FromRole="Empresa" ToRole="Transaccion" />
+    <NavigationProperty Name="Vendedor" Relationship="Self.FK_Vendedor_Empresa" FromRole="Empresa" ToRole="Vendedor" />
   </EntityType>
   <EntityType Name="Marca">
     <Key>
@@ -49,19 +109,19 @@
       <PropertyRef Name="MultaId" />
     </Key>
     <Property Name="MultaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Foto" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
     <Property Name="Valor" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="Fecha" Type="DateTime" Precision="0" />
     <Property Name="AgenteId" Type="Int32" />
     <Property Name="Longitud" Type="Double" />
     <Property Name="latitud" Type="Double" />
     <Property Name="Placa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Agente" Relationship="Self.FK_Multa_Agente" FromRole="Multa" ToRole="Agente" />
     <Property Name="Plaza" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Foto" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
     <Property Name="EmpresaId" Type="Int32" />
     <Property Name="TipoMultaId" Type="Int32" />
-    <NavigationProperty Name="Empresa" Relationship="CityParkAppModel.FK_Multa_Empresa" FromRole="Multa" ToRole="Empresa" />
-    <NavigationProperty Name="TipoMultas" Relationship="CityParkAppModel.FK_Multa_TipoMultas" FromRole="Multa" ToRole="TipoMultas" />
+    <NavigationProperty Name="Agente" Relationship="Self.FK_Multa_Agente" FromRole="Multa" ToRole="Agente" />
+    <NavigationProperty Name="Empresa" Relationship="Self.FK_Multa_Empresa" FromRole="Multa" ToRole="Empresa" />
+    <NavigationProperty Name="TipoMultas" Relationship="Self.FK_Multa_TipoMultas" FromRole="Multa" ToRole="TipoMultas" />
   </EntityType>
   <EntityType Name="Parqueo">
     <Key>
@@ -75,12 +135,79 @@
     <Property Name="Longitud" Type="Double" />
     <Property Name="TarjetaCreditoId" Type="Int32" />
     <Property Name="CarroId" Type="Int32" />
-    <NavigationProperty Name="Carro" Relationship="Self.FK_Parqueo_Carro" FromRole="Parqueo" ToRole="Carro" />
-    <NavigationProperty Name="TarjetaCredito" Relationship="Self.FK_Parqueo_TarjetaCredito" FromRole="Parqueo" ToRole="TarjetaCredito" />
-    <NavigationProperty Name="Usuario" Relationship="Self.FK_Parqueo_Usuario" FromRole="Parqueo" ToRole="Usuario" />
     <Property Name="PlazaId" Type="Int32" />
     <Property Name="EmpresaId" Type="Int32" />
-    <NavigationProperty Name="Empresa" Relationship="CityParkAppModel.FK_Parqueo_Empresa" FromRole="Parqueo" ToRole="Empresa" />
+    <NavigationProperty Name="Carro" Relationship="Self.FK_Parqueo_Carro" FromRole="Parqueo" ToRole="Carro" />
+    <NavigationProperty Name="Empresa" Relationship="Self.FK_Parqueo_Empresa" FromRole="Parqueo" ToRole="Empresa" />
+    <NavigationProperty Name="TarjetaCredito" Relationship="Self.FK_Parqueo_TarjetaCredito" FromRole="Parqueo" ToRole="TarjetaCredito" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_Parqueo_Usuario" FromRole="Parqueo" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Plaza">
+    <Key>
+      <PropertyRef Name="PlazaId" />
+    </Key>
+    <Property Name="PlazaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="Barrio" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="Direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Ocupado" Type="Boolean" />
+    <Property Name="Longitud" Type="Double" />
+    <Property Name="Latitud" Type="Double" />
+    <Property Name="EmpresaId" Type="Int32" />
+    <NavigationProperty Name="Empresa" Relationship="Self.FK_Plaza_Empresa" FromRole="Plaza" ToRole="Empresa" />
+  </EntityType>
+  <EntityType Name="PuntoSector">
+    <Key>
+      <PropertyRef Name="PuntoSectorId" />
+    </Key>
+    <Property Name="PuntoSectorId" Type="Int32" Nullable="false" />
+    <Property Name="NombreSector" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Latitud" Type="Double" />
+    <Property Name="Longitud" Type="Double" />
+    <Property Name="SectorId" Type="Int32" />
+    <NavigationProperty Name="Sector" Relationship="Self.FK_PuntoSector_Sector" FromRole="PuntoSector" ToRole="Sector" />
+  </EntityType>
+  <EntityType Name="Saldo">
+    <Key>
+      <PropertyRef Name="SaldoId" />
+    </Key>
+    <Property Name="SaldoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Saldo1" Type="Double" Nullable="false" />
+    <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+    <Property Name="EmpresaId" Type="Int32" />
+    <NavigationProperty Name="Empresa" Relationship="Self.FK_Saldo_Empresa" FromRole="Saldo" ToRole="Empresa" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_Saldo_Usuario" FromRole="Saldo" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Sector">
+    <Key>
+      <PropertyRef Name="SectorId" />
+    </Key>
+    <Property Name="SectorId" Type="Int32" Nullable="false" />
+    <Property Name="AgenteId" Type="Int32" />
+    <Property Name="NombreSector" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="EmpresaId" Type="Int32" />
+    <NavigationProperty Name="Agente" Relationship="Self.FK_Sector_Agente" FromRole="Sector" ToRole="Agente" />
+    <NavigationProperty Name="Empresa" Relationship="Self.FK_Sector_Empresa" FromRole="Sector" ToRole="Empresa" />
+    <NavigationProperty Name="PuntoSector" Relationship="Self.FK_PuntoSector_Sector" FromRole="Sector" ToRole="PuntoSector" />
+  </EntityType>
+  <EntityType Name="SO">
+    <Key>
+      <PropertyRef Name="SOId" />
+    </Key>
+    <Property Name="SOId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Version" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Dispositivo" Relationship="Self.FK_Dispositivo_SO" FromRole="SO" ToRole="Dispositivo" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <EntityType Name="TarjetaCredito">
     <Key>
@@ -106,6 +233,31 @@
     <Property Name="Activa" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="UsuarioTarjetaPrepago" Relationship="Self.FK_UsuarioTarjetaPrepago_TarjetaPrepago" FromRole="TarjetaPrepago" ToRole="UsuarioTarjetaPrepago" />
   </EntityType>
+  <EntityType Name="TipoMultas">
+    <Key>
+      <PropertyRef Name="TipoMultaId" />
+    </Key>
+    <Property Name="TipoMultaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Multa" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="EmpresaId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Empresa" Relationship="Self.FK_TipoMultas_Empresa" FromRole="TipoMultas" ToRole="Empresa" />
+    <NavigationProperty Name="Multa1" Relationship="Self.FK_Multa_TipoMultas" FromRole="TipoMultas" ToRole="Multa" />
+  </EntityType>
+  <EntityType Name="Transaccion">
+    <Key>
+      <PropertyRef Name="TransaccionId" />
+    </Key>
+    <Property Name="TransaccionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UsuarioId" Type="Int32" />
+    <Property Name="VendedorId" Type="Int32" />
+    <Property Name="Monto" Type="Double" />
+    <Property Name="Fecha" Type="DateTime" Precision="3" />
+    <Property Name="EmpresaId" Type="Int32" />
+    <NavigationProperty Name="Empresa" Relationship="Self.FK_Transaccion_Empresa" FromRole="Transaccion" ToRole="Empresa" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_Transaccion_Usuario" FromRole="Transaccion" ToRole="Usuario" />
+    <NavigationProperty Name="Vendedor" Relationship="Self.FK_Transaccion_Vendedor" FromRole="Transaccion" ToRole="Vendedor" />
+  </EntityType>
   <EntityType Name="Usuario">
     <Key>
       <PropertyRef Name="UsuarioId" />
@@ -114,13 +266,14 @@
     <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Contrasena" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Carro" Relationship="Self.FK_Carro_Usuario" FromRole="Usuario" ToRole="Carro" />
+    <NavigationProperty Name="Codigo" Relationship="Self.FK_Codigo_Usuario" FromRole="Usuario" ToRole="Codigo" />
+    <NavigationProperty Name="Codigo1" Relationship="Self.FK_Codigo_Usuario1" FromRole="Usuario" ToRole="Codigo" />
+    <NavigationProperty Name="Dispositivo" Relationship="Self.FK_Dispositivo_Usuario" FromRole="Usuario" ToRole="Dispositivo" />
     <NavigationProperty Name="Parqueo" Relationship="Self.FK_Parqueo_Usuario" FromRole="Usuario" ToRole="Parqueo" />
+    <NavigationProperty Name="Saldo" Relationship="Self.FK_Saldo_Usuario" FromRole="Usuario" ToRole="Saldo" />
     <NavigationProperty Name="TarjetaCredito" Relationship="Self.FK_TarjetaCredito_Usuario" FromRole="Usuario" ToRole="TarjetaCredito" />
+    <NavigationProperty Name="Transaccion" Relationship="Self.FK_Transaccion_Usuario" FromRole="Usuario" ToRole="Transaccion" />
     <NavigationProperty Name="UsuarioTarjetaPrepago" Relationship="Self.FK_UsuarioTarjetaPrepago_Usuario" FromRole="Usuario" ToRole="UsuarioTarjetaPrepago" />
-    <NavigationProperty Name="Transaccion" Relationship="CityParkAppModel.FK_Transaccion_Usuario" FromRole="Usuario" ToRole="Transaccion" />
-    <NavigationProperty Name="Codigo" Relationship="CityParkAppModel.FK_Codigo_Usuario" FromRole="Usuario" ToRole="Codigo" />
-    <NavigationProperty Name="Dispositivo" Relationship="CityParkAppModel.FK_Dispositivo_Usuario" FromRole="Usuario" ToRole="Dispositivo" />
-    <NavigationProperty Name="Saldo" Relationship="CityParkAppModel.FK_Saldo_Usuario" FromRole="Usuario" ToRole="Saldo" />
   </EntityType>
   <EntityType Name="UsuarioTarjetaPrepago">
     <Key>
@@ -132,6 +285,42 @@
     <NavigationProperty Name="TarjetaPrepago" Relationship="Self.FK_UsuarioTarjetaPrepago_TarjetaPrepago" FromRole="UsuarioTarjetaPrepago" ToRole="TarjetaPrepago" />
     <NavigationProperty Name="Usuario" Relationship="Self.FK_UsuarioTarjetaPrepago_Usuario" FromRole="UsuarioTarjetaPrepago" ToRole="Usuario" />
   </EntityType>
+  <EntityType Name="Vendedor">
+    <Key>
+      <PropertyRef Name="VendedorId" />
+    </Key>
+    <Property Name="VendedorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Contrasena" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="EmpresaId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Empresa" Relationship="Self.FK_Vendedor_Empresa" FromRole="Vendedor" ToRole="Empresa" />
+    <NavigationProperty Name="Transaccion" Relationship="Self.FK_Transaccion_Vendedor" FromRole="Vendedor" ToRole="Transaccion" />
+  </EntityType>
+  <Association Name="FK_Administrador_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+    <End Role="Administrador" Type="Self.Administrador" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="EmpresaId" />
+      </Principal>
+      <Dependent Role="Administrador">
+        <PropertyRef Name="EmpresaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Agente_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+    <End Role="Agente" Type="Self.Agente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="EmpresaId" />
+      </Principal>
+      <Dependent Role="Agente">
+        <PropertyRef Name="EmpresaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Multa_Agente">
     <End Role="Agente" Type="Self.Agente" Multiplicity="0..1" />
     <End Role="Multa" Type="Self.Multa" Multiplicity="*" />
@@ -140,6 +329,18 @@
         <PropertyRef Name="AgenteId" />
       </Principal>
       <Dependent Role="Multa">
+        <PropertyRef Name="AgenteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sector_Agente">
+    <End Role="Agente" Type="Self.Agente" Multiplicity="0..1" />
+    <End Role="Sector" Type="Self.Sector" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Agente">
+        <PropertyRef Name="AgenteId" />
+      </Principal>
+      <Dependent Role="Sector">
         <PropertyRef Name="AgenteId" />
       </Dependent>
     </ReferentialConstraint>
@@ -180,6 +381,174 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Codigo_Dispositivo">
+    <End Role="Dispositivo" Type="Self.Dispositivo" Multiplicity="1" />
+    <End Role="Codigo" Type="Self.Codigo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dispositivo">
+        <PropertyRef Name="DispositivoId" />
+      </Principal>
+      <Dependent Role="Codigo">
+        <PropertyRef Name="DispositivoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Codigo_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Codigo" Type="Self.Codigo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Codigo">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Codigo_Usuario1">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Codigo" Type="Self.Codigo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Codigo">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Dispositivo_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+    <End Role="Dispositivo" Type="Self.Dispositivo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="EmpresaId" />
+      </Principal>
+      <Dependent Role="Dispositivo">
+        <PropertyRef Name="EmpresaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Dispositivo_SO">
+    <End Role="SO" Type="Self.SO" Multiplicity="0..1" />
+    <End Role="Dispositivo" Type="Self.Dispositivo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SO">
+        <PropertyRef Name="SOId" />
+      </Principal>
+      <Dependent Role="Dispositivo">
+        <PropertyRef Name="SOId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Dispositivo_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="Dispositivo" Type="Self.Dispositivo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Dispositivo">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Multa_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+    <End Role="Multa" Type="Self.Multa" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="EmpresaId" />
+      </Principal>
+      <Dependent Role="Multa">
+        <PropertyRef Name="EmpresaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parqueo_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+    <End Role="Parqueo" Type="Self.Parqueo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="EmpresaId" />
+      </Principal>
+      <Dependent Role="Parqueo">
+        <PropertyRef Name="EmpresaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Plaza_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+    <End Role="Plaza" Type="Self.Plaza" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="EmpresaId" />
+      </Principal>
+      <Dependent Role="Plaza">
+        <PropertyRef Name="EmpresaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Saldo_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+    <End Role="Saldo" Type="Self.Saldo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="EmpresaId" />
+      </Principal>
+      <Dependent Role="Saldo">
+        <PropertyRef Name="EmpresaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sector_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+    <End Role="Sector" Type="Self.Sector" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="EmpresaId" />
+      </Principal>
+      <Dependent Role="Sector">
+        <PropertyRef Name="EmpresaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TipoMultas_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+    <End Role="TipoMultas" Type="Self.TipoMultas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="EmpresaId" />
+      </Principal>
+      <Dependent Role="TipoMultas">
+        <PropertyRef Name="EmpresaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaccion_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="EmpresaId" />
+      </Principal>
+      <Dependent Role="Transaccion">
+        <PropertyRef Name="EmpresaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Vendedor_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+    <End Role="Vendedor" Type="Self.Vendedor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="EmpresaId" />
+      </Principal>
+      <Dependent Role="Vendedor">
+        <PropertyRef Name="EmpresaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Modelo_Marca">
     <End Role="Marca" Type="Self.Marca" Multiplicity="1" />
     <End Role="Modelo" Type="Self.Modelo" Multiplicity="*" />
@@ -189,6 +558,18 @@
       </Principal>
       <Dependent Role="Modelo">
         <PropertyRef Name="MarcaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Multa_TipoMultas">
+    <End Role="TipoMultas" Type="Self.TipoMultas" Multiplicity="0..1" />
+    <End Role="Multa" Type="Self.Multa" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoMultas">
+        <PropertyRef Name="TipoMultaId" />
+      </Principal>
+      <Dependent Role="Multa">
+        <PropertyRef Name="TipoMultaId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -212,6 +593,30 @@
         <PropertyRef Name="UsuarioId" />
       </Principal>
       <Dependent Role="Parqueo">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PuntoSector_Sector">
+    <End Role="Sector" Type="Self.Sector" Multiplicity="0..1" />
+    <End Role="PuntoSector" Type="Self.PuntoSector" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sector">
+        <PropertyRef Name="SectorId" />
+      </Principal>
+      <Dependent Role="PuntoSector">
+        <PropertyRef Name="SectorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Saldo_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Saldo" Type="Self.Saldo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Saldo">
         <PropertyRef Name="UsuarioId" />
       </Dependent>
     </ReferentialConstraint>
@@ -240,6 +645,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Transaccion_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Transaccion">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaccion_Vendedor">
+    <End Role="Vendedor" Type="Self.Vendedor" Multiplicity="0..1" />
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendedor">
+        <PropertyRef Name="VendedorId" />
+      </Principal>
+      <Dependent Role="Transaccion">
+        <PropertyRef Name="VendedorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_UsuarioTarjetaPrepago_Usuario">
     <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
     <End Role="UsuarioTarjetaPrepago" Type="Self.UsuarioTarjetaPrepago" Multiplicity="*" />
@@ -253,19 +682,44 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="CityParkApp" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Administrador" EntityType="Self.Administrador" />
     <EntitySet Name="Agente" EntityType="Self.Agente" />
     <EntitySet Name="Carro" EntityType="Self.Carro" />
+    <EntitySet Name="Codigo" EntityType="Self.Codigo" />
+    <EntitySet Name="Dispositivo" EntityType="Self.Dispositivo" />
+    <EntitySet Name="Empresa" EntityType="Self.Empresa" />
     <EntitySet Name="Marca" EntityType="Self.Marca" />
     <EntitySet Name="Modelo" EntityType="Self.Modelo" />
     <EntitySet Name="Multa" EntityType="Self.Multa" />
     <EntitySet Name="Parqueo" EntityType="Self.Parqueo" />
+    <EntitySet Name="Plaza" EntityType="Self.Plaza" />
+    <EntitySet Name="PuntoSector" EntityType="Self.PuntoSector" />
+    <EntitySet Name="Saldo" EntityType="Self.Saldo" />
+    <EntitySet Name="Sector" EntityType="Self.Sector" />
+    <EntitySet Name="SO" EntityType="Self.SO" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
     <EntitySet Name="TarjetaCredito" EntityType="Self.TarjetaCredito" />
     <EntitySet Name="TarjetaPrepago" EntityType="Self.TarjetaPrepago" />
+    <EntitySet Name="TipoMultas" EntityType="Self.TipoMultas" />
+    <EntitySet Name="Transaccion" EntityType="Self.Transaccion" />
     <EntitySet Name="Usuario" EntityType="Self.Usuario" />
     <EntitySet Name="UsuarioTarjetaPrepago" EntityType="Self.UsuarioTarjetaPrepago" />
+    <EntitySet Name="Vendedor" EntityType="Self.Vendedor" />
+    <AssociationSet Name="FK_Administrador_Empresa" Association="Self.FK_Administrador_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="Administrador" EntitySet="Administrador" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Agente_Empresa" Association="Self.FK_Agente_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="Agente" EntitySet="Agente" />
+    </AssociationSet>
     <AssociationSet Name="FK_Multa_Agente" Association="Self.FK_Multa_Agente">
       <End Role="Agente" EntitySet="Agente" />
       <End Role="Multa" EntitySet="Multa" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sector_Agente" Association="Self.FK_Sector_Agente">
+      <End Role="Agente" EntitySet="Agente" />
+      <End Role="Sector" EntitySet="Sector" />
     </AssociationSet>
     <AssociationSet Name="FK_Carro_Modelo" Association="Self.FK_Carro_Modelo">
       <End Role="Modelo" EntitySet="Modelo" />
@@ -279,9 +733,69 @@
       <End Role="Carro" EntitySet="Carro" />
       <End Role="Parqueo" EntitySet="Parqueo" />
     </AssociationSet>
+    <AssociationSet Name="FK_Codigo_Dispositivo" Association="Self.FK_Codigo_Dispositivo">
+      <End Role="Dispositivo" EntitySet="Dispositivo" />
+      <End Role="Codigo" EntitySet="Codigo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Codigo_Usuario" Association="Self.FK_Codigo_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Codigo" EntitySet="Codigo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Codigo_Usuario1" Association="Self.FK_Codigo_Usuario1">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Codigo" EntitySet="Codigo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Dispositivo_Empresa" Association="Self.FK_Dispositivo_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="Dispositivo" EntitySet="Dispositivo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Dispositivo_SO" Association="Self.FK_Dispositivo_SO">
+      <End Role="SO" EntitySet="SO" />
+      <End Role="Dispositivo" EntitySet="Dispositivo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Dispositivo_Usuario" Association="Self.FK_Dispositivo_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Dispositivo" EntitySet="Dispositivo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Multa_Empresa" Association="Self.FK_Multa_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="Multa" EntitySet="Multa" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parqueo_Empresa" Association="Self.FK_Parqueo_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="Parqueo" EntitySet="Parqueo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Plaza_Empresa" Association="Self.FK_Plaza_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="Plaza" EntitySet="Plaza" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Saldo_Empresa" Association="Self.FK_Saldo_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="Saldo" EntitySet="Saldo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sector_Empresa" Association="Self.FK_Sector_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="Sector" EntitySet="Sector" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TipoMultas_Empresa" Association="Self.FK_TipoMultas_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="TipoMultas" EntitySet="TipoMultas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaccion_Empresa" Association="Self.FK_Transaccion_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="Transaccion" EntitySet="Transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Vendedor_Empresa" Association="Self.FK_Vendedor_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="Vendedor" EntitySet="Vendedor" />
+    </AssociationSet>
     <AssociationSet Name="FK_Modelo_Marca" Association="Self.FK_Modelo_Marca">
       <End Role="Marca" EntitySet="Marca" />
       <End Role="Modelo" EntitySet="Modelo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Multa_TipoMultas" Association="Self.FK_Multa_TipoMultas">
+      <End Role="TipoMultas" EntitySet="TipoMultas" />
+      <End Role="Multa" EntitySet="Multa" />
     </AssociationSet>
     <AssociationSet Name="FK_Parqueo_TarjetaCredito" Association="Self.FK_Parqueo_TarjetaCredito">
       <End Role="TarjetaCredito" EntitySet="TarjetaCredito" />
@@ -291,6 +805,14 @@
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="Parqueo" EntitySet="Parqueo" />
     </AssociationSet>
+    <AssociationSet Name="FK_PuntoSector_Sector" Association="Self.FK_PuntoSector_Sector">
+      <End Role="Sector" EntitySet="Sector" />
+      <End Role="PuntoSector" EntitySet="PuntoSector" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Saldo_Usuario" Association="Self.FK_Saldo_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Saldo" EntitySet="Saldo" />
+    </AssociationSet>
     <AssociationSet Name="FK_TarjetaCredito_Usuario" Association="Self.FK_TarjetaCredito_Usuario">
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="TarjetaCredito" EntitySet="TarjetaCredito" />
@@ -299,551 +821,17 @@
       <End Role="TarjetaPrepago" EntitySet="TarjetaPrepago" />
       <End Role="UsuarioTarjetaPrepago" EntitySet="UsuarioTarjetaPrepago" />
     </AssociationSet>
+    <AssociationSet Name="FK_Transaccion_Usuario" Association="Self.FK_Transaccion_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Transaccion" EntitySet="Transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaccion_Vendedor" Association="Self.FK_Transaccion_Vendedor">
+      <End Role="Vendedor" EntitySet="Vendedor" />
+      <End Role="Transaccion" EntitySet="Transaccion" />
+    </AssociationSet>
     <AssociationSet Name="FK_UsuarioTarjetaPrepago_Usuario" Association="Self.FK_UsuarioTarjetaPrepago_Usuario">
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="UsuarioTarjetaPrepago" EntitySet="UsuarioTarjetaPrepago" />
     </AssociationSet>
-    <EntitySet Name="Plaza" EntityType="CityParkAppModel.Plaza" />
-    <EntitySet Name="sysdiagrams" EntityType="CityParkAppModel.sysdiagrams" />
-    <FunctionImport Name="sp_alterdiagram">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-      <Parameter Name="version" Mode="In" Type="Int32" />
-      <Parameter Name="definition" Mode="In" Type="Binary" />
-    </FunctionImport>
-    <FunctionImport Name="sp_creatediagram">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-      <Parameter Name="version" Mode="In" Type="Int32" />
-      <Parameter Name="definition" Mode="In" Type="Binary" />
-    </FunctionImport>
-    <FunctionImport Name="sp_dropdiagram">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_helpdiagramdefinition">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_helpdiagrams">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_renamediagram">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-      <Parameter Name="new_diagramname" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="sp_upgraddiagrams" />
-    <EntitySet Name="PuntoSector" EntityType="CityParkAppModel.PuntoSector" />
-    <EntitySet Name="Sector" EntityType="CityParkAppModel.Sector" />
-    <AssociationSet Name="FK_Sector_Agente" Association="CityParkAppModel.FK_Sector_Agente">
-      <End Role="Agente" EntitySet="Agente" />
-      <End Role="Sector" EntitySet="Sector" />
-    </AssociationSet>
-    <EntitySet Name="Transaccion" EntityType="CityParkAppModel.Transaccion" />
-    <EntitySet Name="Vendedor" EntityType="CityParkAppModel.Vendedor" />
-    <AssociationSet Name="FK_Transaccion_Usuario" Association="CityParkAppModel.FK_Transaccion_Usuario">
-      <End Role="Usuario" EntitySet="Usuario" />
-      <End Role="Transaccion" EntitySet="Transaccion" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Transaccion_Vendedor" Association="CityParkAppModel.FK_Transaccion_Vendedor">
-      <End Role="Vendedor" EntitySet="Vendedor" />
-      <End Role="Transaccion" EntitySet="Transaccion" />
-    </AssociationSet>
-    <EntitySet Name="Administrador" EntityType="CityParkAppModel.Administrador" />
-    <EntitySet Name="Empresa" EntityType="CityParkAppModel.Empresa" />
-    <EntitySet Name="SO" EntityType="CityParkAppModel.SO" />
-    <EntitySet Name="TipoMultas" EntityType="CityParkAppModel.TipoMultas" />
-    <AssociationSet Name="FK_Administrador_Empresa" Association="CityParkAppModel.FK_Administrador_Empresa">
-      <End Role="Empresa" EntitySet="Empresa" />
-      <End Role="Administrador" EntitySet="Administrador" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Agente_Empresa" Association="CityParkAppModel.FK_Agente_Empresa">
-      <End Role="Empresa" EntitySet="Empresa" />
-      <End Role="Agente" EntitySet="Agente" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Multa_Empresa" Association="CityParkAppModel.FK_Multa_Empresa">
-      <End Role="Empresa" EntitySet="Empresa" />
-      <End Role="Multa" EntitySet="Multa" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Parqueo_Empresa" Association="CityParkAppModel.FK_Parqueo_Empresa">
-      <End Role="Empresa" EntitySet="Empresa" />
-      <End Role="Parqueo" EntitySet="Parqueo" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Plaza_Empresa" Association="CityParkAppModel.FK_Plaza_Empresa">
-      <End Role="Empresa" EntitySet="Empresa" />
-      <End Role="Plaza" EntitySet="Plaza" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Sector_Empresa" Association="CityParkAppModel.FK_Sector_Empresa">
-      <End Role="Empresa" EntitySet="Empresa" />
-      <End Role="Sector" EntitySet="Sector" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TipoMultas_Empresa" Association="CityParkAppModel.FK_TipoMultas_Empresa">
-      <End Role="Empresa" EntitySet="Empresa" />
-      <End Role="TipoMultas" EntitySet="TipoMultas" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Transaccion_Empresa" Association="CityParkAppModel.FK_Transaccion_Empresa">
-      <End Role="Empresa" EntitySet="Empresa" />
-      <End Role="Transaccion" EntitySet="Transaccion" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Vendedor_Empresa" Association="CityParkAppModel.FK_Vendedor_Empresa">
-      <End Role="Empresa" EntitySet="Empresa" />
-      <End Role="Vendedor" EntitySet="Vendedor" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Multa_TipoMultas" Association="CityParkAppModel.FK_Multa_TipoMultas">
-      <End Role="TipoMultas" EntitySet="TipoMultas" />
-      <End Role="Multa" EntitySet="Multa" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PuntoSector_Sector" Association="CityParkAppModel.FK_PuntoSector_Sector">
-      <End Role="Sector" EntitySet="Sector" />
-      <End Role="PuntoSector" EntitySet="PuntoSector" />
-    </AssociationSet>
-    <EntitySet Name="Codigo" EntityType="CityParkAppModel.Codigo" />
-    <AssociationSet Name="FK_Codigo_Usuario" Association="CityParkAppModel.FK_Codigo_Usuario">
-      <End Role="Usuario" EntitySet="Usuario" />
-      <End Role="Codigo" EntitySet="Codigo" />
-    </AssociationSet>
-    <EntitySet Name="Dispositivo" EntityType="CityParkAppModel.Dispositivo" />
-    <AssociationSet Name="FK_Codigo_Dispositivo" Association="CityParkAppModel.FK_Codigo_Dispositivo">
-      <End Role="Dispositivo" EntitySet="Dispositivo" />
-      <End Role="Codigo" EntitySet="Codigo" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Dispositivo_Empresa" Association="CityParkAppModel.FK_Dispositivo_Empresa">
-      <End Role="Empresa" EntitySet="Empresa" />
-      <End Role="Dispositivo" EntitySet="Dispositivo" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Dispositivo_SO" Association="CityParkAppModel.FK_Dispositivo_SO">
-      <End Role="SO" EntitySet="SO" />
-      <End Role="Dispositivo" EntitySet="Dispositivo" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Dispositivo_Usuario" Association="CityParkAppModel.FK_Dispositivo_Usuario">
-      <End Role="Usuario" EntitySet="Usuario" />
-      <End Role="Dispositivo" EntitySet="Dispositivo" />
-    </AssociationSet>
-    <EntitySet Name="Saldo" EntityType="CityParkAppModel.Saldo" />
-    <AssociationSet Name="FK_Saldo_Empresa" Association="CityParkAppModel.FK_Saldo_Empresa">
-      <End Role="Empresa" EntitySet="Empresa" />
-      <End Role="Saldo" EntitySet="Saldo" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Saldo_Usuario" Association="CityParkAppModel.FK_Saldo_Usuario">
-      <End Role="Usuario" EntitySet="Usuario" />
-      <End Role="Saldo" EntitySet="Saldo" />
-    </AssociationSet>
   </EntityContainer>
-  <EntityType Name="Plaza">
-    <Key>
-      <PropertyRef Name="PlazaId" />
-    </Key>
-    <Property Name="PlazaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Nombre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-    <Property Name="Barrio" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-    <Property Name="Direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="Ocupado" Type="Boolean" />
-    <Property Name="Longitud" Type="Double" />
-    <Property Name="Latitud" Type="Double" />
-    <Property Name="EmpresaId" Type="Int32" />
-    <NavigationProperty Name="Empresa" Relationship="CityParkAppModel.FK_Plaza_Empresa" FromRole="Plaza" ToRole="Empresa" />
-  </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-  </EntityType>
-  <EntityType Name="PuntoSector">
-    <Key>
-      <PropertyRef Name="PuntoSectorId" />
-    </Key>
-    <Property Name="PuntoSectorId" Type="Int32" Nullable="false" />
-    <Property Name="NombreSector" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-    <Property Name="Latitud" Type="Double" />
-    <Property Name="Longitud" Type="Double" />
-    <Property Name="SectorId" Type="Int32" />
-    <NavigationProperty Name="Sector" Relationship="CityParkAppModel.FK_PuntoSector_Sector" FromRole="PuntoSector" ToRole="Sector" />
-  </EntityType>
-  <EntityType Name="Sector">
-    <Key>
-      <PropertyRef Name="SectorId" />
-    </Key>
-    <Property Name="SectorId" Type="Int32" Nullable="false" />
-    <Property Name="AgenteId" Type="Int32" />
-    <Property Name="NombreSector" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-    <NavigationProperty Name="Agente" Relationship="CityParkAppModel.FK_Sector_Agente" FromRole="Sector" ToRole="Agente" />
-    <Property Name="EmpresaId" Type="Int32" />
-    <NavigationProperty Name="Empresa" Relationship="CityParkAppModel.FK_Sector_Empresa" FromRole="Sector" ToRole="Empresa" />
-    <NavigationProperty Name="PuntoSector" Relationship="CityParkAppModel.FK_PuntoSector_Sector" FromRole="Sector" ToRole="PuntoSector" />
-  </EntityType>
-  <Association Name="FK_Sector_Agente">
-    <End Type="CityParkAppModel.Agente" Role="Agente" Multiplicity="0..1" />
-    <End Type="CityParkAppModel.Sector" Role="Sector" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Agente">
-        <PropertyRef Name="AgenteId" />
-      </Principal>
-      <Dependent Role="Sector">
-        <PropertyRef Name="AgenteId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="Transaccion">
-    <Key>
-      <PropertyRef Name="TransaccionId" />
-    </Key>
-    <Property Name="TransaccionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="UsuarioId" Type="Int32" />
-    <Property Name="VendedorId" Type="Int32" />
-    <Property Name="Monto" Type="Double" />
-    <Property Name="Fecha" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="Usuario" Relationship="CityParkAppModel.FK_Transaccion_Usuario" FromRole="Transaccion" ToRole="Usuario" />
-    <NavigationProperty Name="Vendedor" Relationship="CityParkAppModel.FK_Transaccion_Vendedor" FromRole="Transaccion" ToRole="Vendedor" />
-    <Property Name="EmpresaId" Type="Int32" />
-    <NavigationProperty Name="Empresa" Relationship="CityParkAppModel.FK_Transaccion_Empresa" FromRole="Transaccion" ToRole="Empresa" />
-  </EntityType>
-  <EntityType Name="Vendedor">
-    <Key>
-      <PropertyRef Name="VendedorId" />
-    </Key>
-    <Property Name="VendedorId" Type="Int32" Nullable="false" />
-    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-    <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-    <Property Name="Contrasena" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-    <NavigationProperty Name="Transaccion" Relationship="CityParkAppModel.FK_Transaccion_Vendedor" FromRole="Vendedor" ToRole="Transaccion" />
-    <Property Name="EmpresaId" Type="Int32" />
-    <NavigationProperty Name="Empresa" Relationship="CityParkAppModel.FK_Vendedor_Empresa" FromRole="Vendedor" ToRole="Empresa" />
-  </EntityType>
-  <Association Name="FK_Transaccion_Usuario">
-    <End Type="CityParkAppModel.Usuario" Role="Usuario" Multiplicity="0..1" />
-    <End Type="CityParkAppModel.Transaccion" Role="Transaccion" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Usuario">
-        <PropertyRef Name="UsuarioId" />
-      </Principal>
-      <Dependent Role="Transaccion">
-        <PropertyRef Name="UsuarioId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Transaccion_Vendedor">
-    <End Type="CityParkAppModel.Vendedor" Role="Vendedor" Multiplicity="0..1" />
-    <End Type="CityParkAppModel.Transaccion" Role="Transaccion" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Vendedor">
-        <PropertyRef Name="VendedorId" />
-      </Principal>
-      <Dependent Role="Transaccion">
-        <PropertyRef Name="VendedorId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="Administrador">
-    <Key>
-      <PropertyRef Name="AdministradorId" />
-    </Key>
-    <Property Name="AdministradorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Nombre" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-    <Property Name="Apellido" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-    <Property Name="Contrasela" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-    <Property Name="EmpresaId" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Empresa" Relationship="CityParkAppModel.FK_Administrador_Empresa" FromRole="Administrador" ToRole="Empresa" />
-  </EntityType>
-  <EntityType Name="Empresa">
-    <Key>
-      <PropertyRef Name="EmpresaId" />
-    </Key>
-    <Property Name="EmpresaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="RazonSocial" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
-    <Property Name="Ruc" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-    <Property Name="Direccion" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-    <Property Name="Telefono" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-    <Property Name="PersonaDeContacto" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-    <NavigationProperty Name="Administrador" Relationship="CityParkAppModel.FK_Administrador_Empresa" FromRole="Empresa" ToRole="Administrador" />
-    <NavigationProperty Name="Agente" Relationship="CityParkAppModel.FK_Agente_Empresa" FromRole="Empresa" ToRole="Agente" />
-    <NavigationProperty Name="Multa" Relationship="CityParkAppModel.FK_Multa_Empresa" FromRole="Empresa" ToRole="Multa" />
-    <NavigationProperty Name="Parqueo" Relationship="CityParkAppModel.FK_Parqueo_Empresa" FromRole="Empresa" ToRole="Parqueo" />
-    <NavigationProperty Name="Plaza" Relationship="CityParkAppModel.FK_Plaza_Empresa" FromRole="Empresa" ToRole="Plaza" />
-    <NavigationProperty Name="Sector" Relationship="CityParkAppModel.FK_Sector_Empresa" FromRole="Empresa" ToRole="Sector" />
-    <NavigationProperty Name="TipoMultas" Relationship="CityParkAppModel.FK_TipoMultas_Empresa" FromRole="Empresa" ToRole="TipoMultas" />
-    <NavigationProperty Name="Transaccion" Relationship="CityParkAppModel.FK_Transaccion_Empresa" FromRole="Empresa" ToRole="Transaccion" />
-    <NavigationProperty Name="Vendedor" Relationship="CityParkAppModel.FK_Vendedor_Empresa" FromRole="Empresa" ToRole="Vendedor" />
-    <NavigationProperty Name="Dispositivo" Relationship="CityParkAppModel.FK_Dispositivo_Empresa" FromRole="Empresa" ToRole="Dispositivo" />
-    <NavigationProperty Name="Saldo" Relationship="CityParkAppModel.FK_Saldo_Empresa" FromRole="Empresa" ToRole="Saldo" />
-  </EntityType>
-  <EntityType Name="SO">
-    <Key>
-      <PropertyRef Name="SOId" />
-    </Key>
-    <Property Name="SOId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Nombre" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-    <Property Name="Version" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-    <NavigationProperty Name="Dispositivo" Relationship="CityParkAppModel.FK_Dispositivo_SO" FromRole="SO" ToRole="Dispositivo" />
-  </EntityType>
-  <EntityType Name="TipoMultas">
-    <Key>
-      <PropertyRef Name="TipoMultaId" />
-    </Key>
-    <Property Name="TipoMultaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Multa" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-    <Property Name="EmpresaId" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Empresa" Relationship="CityParkAppModel.FK_TipoMultas_Empresa" FromRole="TipoMultas" ToRole="Empresa" />
-    <NavigationProperty Name="Multa1" Relationship="CityParkAppModel.FK_Multa_TipoMultas" FromRole="TipoMultas" ToRole="Multa" />
-  </EntityType>
-  <Association Name="FK_Administrador_Empresa">
-    <End Type="CityParkAppModel.Empresa" Role="Empresa" Multiplicity="1" />
-    <End Type="CityParkAppModel.Administrador" Role="Administrador" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Empresa">
-        <PropertyRef Name="EmpresaId" />
-      </Principal>
-      <Dependent Role="Administrador">
-        <PropertyRef Name="EmpresaId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Agente_Empresa">
-    <End Type="CityParkAppModel.Empresa" Role="Empresa" Multiplicity="0..1" />
-    <End Type="CityParkAppModel.Agente" Role="Agente" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Empresa">
-        <PropertyRef Name="EmpresaId" />
-      </Principal>
-      <Dependent Role="Agente">
-        <PropertyRef Name="EmpresaId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Multa_Empresa">
-    <End Type="CityParkAppModel.Empresa" Role="Empresa" Multiplicity="0..1" />
-    <End Type="CityParkAppModel.Multa" Role="Multa" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Empresa">
-        <PropertyRef Name="EmpresaId" />
-      </Principal>
-      <Dependent Role="Multa">
-        <PropertyRef Name="EmpresaId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Parqueo_Empresa">
-    <End Type="CityParkAppModel.Empresa" Role="Empresa" Multiplicity="0..1" />
-    <End Type="CityParkAppModel.Parqueo" Role="Parqueo" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Empresa">
-        <PropertyRef Name="EmpresaId" />
-      </Principal>
-      <Dependent Role="Parqueo">
-        <PropertyRef Name="EmpresaId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Plaza_Empresa">
-    <End Type="CityParkAppModel.Empresa" Role="Empresa" Multiplicity="0..1" />
-    <End Type="CityParkAppModel.Plaza" Role="Plaza" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Empresa">
-        <PropertyRef Name="EmpresaId" />
-      </Principal>
-      <Dependent Role="Plaza">
-        <PropertyRef Name="EmpresaId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Sector_Empresa">
-    <End Type="CityParkAppModel.Empresa" Role="Empresa" Multiplicity="0..1" />
-    <End Type="CityParkAppModel.Sector" Role="Sector" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Empresa">
-        <PropertyRef Name="EmpresaId" />
-      </Principal>
-      <Dependent Role="Sector">
-        <PropertyRef Name="EmpresaId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TipoMultas_Empresa">
-    <End Type="CityParkAppModel.Empresa" Role="Empresa" Multiplicity="1" />
-    <End Type="CityParkAppModel.TipoMultas" Role="TipoMultas" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Empresa">
-        <PropertyRef Name="EmpresaId" />
-      </Principal>
-      <Dependent Role="TipoMultas">
-        <PropertyRef Name="EmpresaId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Transaccion_Empresa">
-    <End Type="CityParkAppModel.Empresa" Role="Empresa" Multiplicity="0..1" />
-    <End Type="CityParkAppModel.Transaccion" Role="Transaccion" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Empresa">
-        <PropertyRef Name="EmpresaId" />
-      </Principal>
-      <Dependent Role="Transaccion">
-        <PropertyRef Name="EmpresaId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Vendedor_Empresa">
-    <End Type="CityParkAppModel.Empresa" Role="Empresa" Multiplicity="0..1" />
-    <End Type="CityParkAppModel.Vendedor" Role="Vendedor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Empresa">
-        <PropertyRef Name="EmpresaId" />
-      </Principal>
-      <Dependent Role="Vendedor">
-        <PropertyRef Name="EmpresaId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Multa_TipoMultas">
-    <End Type="CityParkAppModel.TipoMultas" Role="TipoMultas" Multiplicity="0..1" />
-    <End Type="CityParkAppModel.Multa" Role="Multa" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TipoMultas">
-        <PropertyRef Name="TipoMultaId" />
-      </Principal>
-      <Dependent Role="Multa">
-        <PropertyRef Name="TipoMultaId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PuntoSector_Sector">
-    <End Type="CityParkAppModel.Sector" Role="Sector" Multiplicity="0..1" />
-    <End Type="CityParkAppModel.PuntoSector" Role="PuntoSector" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Sector">
-        <PropertyRef Name="SectorId" />
-      </Principal>
-      <Dependent Role="PuntoSector">
-        <PropertyRef Name="SectorId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="Codigo">
-    <Key>
-      <PropertyRef Name="CodigoId" />
-    </Key>
-    <Property Name="CodigoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Codigo1" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-    <Property Name="UsuarioId" Type="Int32" Nullable="false" />
-    <Property Name="DispositivoId" Type="Int32" Nullable="false" />
-    <Property Name="Usado" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="Usuario" Relationship="CityParkAppModel.FK_Codigo_Usuario" FromRole="Codigo" ToRole="Usuario" />
-    <NavigationProperty Name="Dispositivo" Relationship="CityParkAppModel.FK_Codigo_Dispositivo" FromRole="Codigo" ToRole="Dispositivo" />
-  </EntityType>
-  <Association Name="FK_Codigo_Usuario">
-    <End Type="CityParkAppModel.Usuario" Role="Usuario" Multiplicity="1" />
-    <End Type="CityParkAppModel.Codigo" Role="Codigo" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Usuario">
-        <PropertyRef Name="UsuarioId" />
-      </Principal>
-      <Dependent Role="Codigo">
-        <PropertyRef Name="UsuarioId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="Dispositivo">
-    <Key>
-      <PropertyRef Name="DispositivoId" />
-    </Key>
-    <Property Name="DispositivoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="SOId" Type="Int32" />
-    <Property Name="UsuarioId" Type="Int32" />
-    <Property Name="UniqueId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-    <Property Name="EmpresaId" Type="Int32" />
-    <NavigationProperty Name="Codigo" Relationship="CityParkAppModel.FK_Codigo_Dispositivo" FromRole="Dispositivo" ToRole="Codigo" />
-    <NavigationProperty Name="Empresa" Relationship="CityParkAppModel.FK_Dispositivo_Empresa" FromRole="Dispositivo" ToRole="Empresa" />
-    <NavigationProperty Name="SO" Relationship="CityParkAppModel.FK_Dispositivo_SO" FromRole="Dispositivo" ToRole="SO" />
-    <NavigationProperty Name="Usuario" Relationship="CityParkAppModel.FK_Dispositivo_Usuario" FromRole="Dispositivo" ToRole="Usuario" />
-  </EntityType>
-  <Association Name="FK_Codigo_Dispositivo">
-    <End Type="CityParkAppModel.Dispositivo" Role="Dispositivo" Multiplicity="1" />
-    <End Type="CityParkAppModel.Codigo" Role="Codigo" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Dispositivo">
-        <PropertyRef Name="DispositivoId" />
-      </Principal>
-      <Dependent Role="Codigo">
-        <PropertyRef Name="DispositivoId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Dispositivo_Empresa">
-    <End Type="CityParkAppModel.Empresa" Role="Empresa" Multiplicity="0..1" />
-    <End Type="CityParkAppModel.Dispositivo" Role="Dispositivo" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Empresa">
-        <PropertyRef Name="EmpresaId" />
-      </Principal>
-      <Dependent Role="Dispositivo">
-        <PropertyRef Name="EmpresaId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Dispositivo_SO">
-    <End Type="CityParkAppModel.SO" Role="SO" Multiplicity="0..1" />
-    <End Type="CityParkAppModel.Dispositivo" Role="Dispositivo" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="SO">
-        <PropertyRef Name="SOId" />
-      </Principal>
-      <Dependent Role="Dispositivo">
-        <PropertyRef Name="SOId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Dispositivo_Usuario">
-    <End Type="CityParkAppModel.Usuario" Role="Usuario" Multiplicity="0..1" />
-    <End Type="CityParkAppModel.Dispositivo" Role="Dispositivo" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Usuario">
-        <PropertyRef Name="UsuarioId" />
-      </Principal>
-      <Dependent Role="Dispositivo">
-        <PropertyRef Name="UsuarioId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="Saldo">
-    <Key>
-      <PropertyRef Name="SaldoId" />
-    </Key>
-    <Property Name="SaldoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Saldo1" Type="Double" Nullable="false" />
-    <Property Name="UsuarioId" Type="Int32" Nullable="false" />
-    <Property Name="EmpresaId" Type="Int32" />
-    <NavigationProperty Name="Empresa" Relationship="CityParkAppModel.FK_Saldo_Empresa" FromRole="Saldo" ToRole="Empresa" />
-    <NavigationProperty Name="Usuario" Relationship="CityParkAppModel.FK_Saldo_Usuario" FromRole="Saldo" ToRole="Usuario" />
-  </EntityType>
-  <Association Name="FK_Saldo_Empresa">
-    <End Type="CityParkAppModel.Empresa" Role="Empresa" Multiplicity="0..1" />
-    <End Type="CityParkAppModel.Saldo" Role="Saldo" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Empresa">
-        <PropertyRef Name="EmpresaId" />
-      </Principal>
-      <Dependent Role="Saldo">
-        <PropertyRef Name="EmpresaId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Saldo_Usuario">
-    <End Type="CityParkAppModel.Usuario" Role="Usuario" Multiplicity="1" />
-    <End Type="CityParkAppModel.Saldo" Role="Saldo" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Usuario">
-        <PropertyRef Name="UsuarioId" />
-      </Principal>
-      <Dependent Role="Saldo">
-        <PropertyRef Name="UsuarioId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
 </Schema>

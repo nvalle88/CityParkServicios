@@ -11,6 +11,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using AppCityParkServices.Models;
 using AppCityParkServices.Clases;
+using AppCityParkServices.Utils;
 
 namespace AppCityParkServices.Controllers.Api
 {
@@ -25,22 +26,48 @@ namespace AppCityParkServices.Controllers.Api
             return db.Administrador;
         }
 
+        [HttpPost]
+        [Route("GetUserAdmin")]
+        public async Task<Response> GetUserAdmin([FromBody] Administrador administrador)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            if (administrador==null)
+            {
+                return new Response { IsSuccess = false };
+            }
+
+            var userAdmin = await db.Administrador.Where(x=>x.Nombre==administrador.Nombre).FirstOrDefaultAsync();
+            if (userAdmin == null)
+            {
+                return new Response { IsSuccess = false, Message = Mensaje.RegistroNoEncontrado };
+            }
+            return new Response { IsSuccess = true, Result = userAdmin};
+        }
 
         [HttpPost]
         [Route("Login")]
         public async Task<Response> Login([FromBody] LoginRequest loginRequest)
         {
-            if (string.IsNullOrEmpty(loginRequest.UserName)|| string.IsNullOrEmpty(loginRequest.Password))
+            db.Configuration.ProxyCreationEnabled = false;
+            try
             {
-                return new Response { IsSuccess = false };
-            }
+                if (string.IsNullOrEmpty(loginRequest.UserName) || string.IsNullOrEmpty(loginRequest.Password))
+                {
+                    return new Response { IsSuccess = false };
+                }
 
-            var login =await db.Administrador.Where(x => x.Nombre == loginRequest.UserName && x.Contrasela == loginRequest.Password).FirstOrDefaultAsync();
-            if (login==null)
-            {
-                return new Response { IsSuccess = true };
+                var login = await db.Administrador.Where(x => x.Nombre == loginRequest.UserName && x.Contrasela == loginRequest.Password).FirstOrDefaultAsync();
+                if (login == null)
+                {
+                    return new Response { IsSuccess = false, Message = Mensaje.UsuarioContrasenaInvalido };
+                }
+                return new Response { IsSuccess = true, Result = login };
             }
-            return new Response {IsSuccess=true,Result=login};
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
 

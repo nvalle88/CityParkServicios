@@ -11,6 +11,8 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using AppCityParkServices.Models;
 using Newtonsoft.Json.Linq;
+using AppCityParkServices.Clases;
+using AppCityParkServices.Utils;
 
 namespace AppCityParkServices.Controllers.Api
 {
@@ -64,8 +66,122 @@ namespace AppCityParkServices.Controllers.Api
 
         }
 
+        [HttpPost]
+        [Route("ResetPassword")]
+        public async Task<Response> ResetPassword([FromBody] Agente agente)
+        {
+            try
+            {
+                db.Configuration.ProxyCreationEnabled = false;
+                var agenteRequest = await db.Agente.Where(x => x.AgenteId == agente.AgenteId).FirstOrDefaultAsync();
+                if (agenteRequest == null)
+                {
+                    return new Response { IsSuccess = false };
+                }
+                var cod = new Codificar
+                {
+                    Entrada= agenteRequest.Nombre,
+                };
+                   
+                var codificar = CodificarHelper.SHA512(cod);
+                agenteRequest.Contrasena = codificar.Salida;
+
+                db.Entry(agenteRequest).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return new Response { IsSuccess = true };
+            }
+            catch (Exception)
+            {
+                return new Response { IsSuccess = false };
+            }
+        }
+
+        [HttpPost]
+        [Route("EditAgente")]
+        public async Task<Response> EditAgente([FromBody]Agente agente)
+        {
+            try
+            {
+                var agenteRequest = await db.Agente.Where(x => x.AgenteId == agente.AgenteId).FirstOrDefaultAsync();
+                if (agenteRequest == null)
+                {
+                    return new Response { IsSuccess = false };
+                }
+                agenteRequest.Nombre = agente.Nombre;
+                agenteRequest.Apellido = agente.Apellido;
+
+                db.Entry(agenteRequest).State=EntityState.Modified;
+                await db.SaveChangesAsync();
+
+                return new Response { IsSuccess = true };
+            }
+            catch (Exception)
+            {
+                return new Response { IsSuccess = false };
+                throw;
+            }
+        }
+
+        [HttpPost]
+        [Route("GetAgente")]
+        public async Task<Response> GetAgente([FromBody]Agente agente)
+        {
+            try
+            {
+                db.Configuration.ProxyCreationEnabled = false;
+                var agenteRequest = await db.Agente.Where(x => x.AgenteId == agente.AgenteId).FirstOrDefaultAsync();
+                if (agenteRequest == null)
+                {
+                    return new Response { IsSuccess = false };
+                }
+
+                return new Response { IsSuccess = true,Result=agenteRequest };
+            }
+            catch (Exception)
+            {
+                return new Response { IsSuccess = false };
+                throw;
+            }
+        }
+
+        [HttpPost]
+        [Route("DeleteAgente")]
+        public async Task<Response> DeleteAgente([FromBody]Agente agente)
+        {
+            try
+            {
+                var agenteRequest = await db.Agente.Where(x => x.AgenteId == agente.AgenteId).FirstOrDefaultAsync();
+                if (agenteRequest == null)
+                {
+                    return new Response { IsSuccess = false };
+                }
+
+                db.Agente.Remove(agenteRequest);
+                await db.SaveChangesAsync();
+
+                return new Response { IsSuccess=true};
+            }
+            catch (Exception)
+            {
+                return new Response { IsSuccess = false };
+                throw;
+            }
+        }
 
 
+        [HttpPost]
+        [Route("GetAgentesPorEmpresa")]
+        public async Task<IEnumerable<Agente>> GetAgentesPorEmpresa([FromBody] Empresa empresa)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            var agentes =await db.Agente.Where(x => x.EmpresaId == empresa.EmpresaId).Include(x=>x.Empresa).ToListAsync();
+
+            if (agentes==null)
+            {
+                return null;
+            }
+            return agentes;
+        }
         // GET: api/Agentes
         public IQueryable<Agente> GetAgente()
         {
@@ -121,6 +237,29 @@ namespace AppCityParkServices.Controllers.Api
         }
 
         // POST: api/Agentes
+        [HttpPost]
+        [Route("CreateAgente")]
+        [ResponseType(typeof(Agente))]
+        public async Task<Response> CreateAgente([FromBody]Agente agente)
+        {
+            try
+            {
+                if (agente == null)
+                {
+                    return new Response { IsSuccess = false };
+                }
+                db.Agente.Add(agente);
+                await db.SaveChangesAsync();
+                return new Response {IsSuccess=true,Result=agente};
+               
+            }
+            catch (Exception ex)
+            {
+
+                return new Response { IsSuccess = false };
+            }
+        }
+
         [ResponseType(typeof(Agente))]
         public async Task<IHttpActionResult> PostAgente(Agente agente)
         {
