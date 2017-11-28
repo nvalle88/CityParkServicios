@@ -23,12 +23,9 @@ namespace AppCityParkServices.Utils
                 {
                     return false;
                 }
-
                 bool inside = false;
                 Position p1, p2;
-
                 Position oldPoint = Sector[Sector.Count - 1];
-
                 foreach (Position newPoint in Sector)
                 {
                     //Oredenamos los puntos  p1.lat <= p2.lat;
@@ -43,7 +40,7 @@ namespace AppCityParkServices.Utils
                         p2 = oldPoint;
                     }
 
-                   // verifica si el punto esta dentro .
+                   // verifica si el punto esta dentro de ese poligono.
                 
                     if ((newPoint.latitude < parqueo.Latitud) == (parqueo.Latitud <= oldPoint.latitude)
                         && (parqueo.Longitud - p1.longitude) * (p2.latitude - p1.latitude)
@@ -54,10 +51,7 @@ namespace AppCityParkServices.Utils
 
                     oldPoint = newPoint;
                 }
-
                 return inside;
-
-
             }
 
         public static  bool  EstaCercaDeMi (Position MyPosition, Plaza Plaza, double radio)

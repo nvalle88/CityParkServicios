@@ -21,8 +21,6 @@ namespace AppCityParkServices.Controllers.Api
     public class VendedorsController : ApiController
     {
         private CityParkApp db = new CityParkApp();
-
-
         [HttpPost]
         [Route("ResetPassword")]
         public async Task<Response> ResetPassword([FromBody] Vendedor vendedor)
@@ -52,7 +50,6 @@ namespace AppCityParkServices.Controllers.Api
                 return new Response { IsSuccess = false };
             }
         }
-
         [HttpPost]
         [Route("EditVendedor")]
         public async Task<Response> EditAgente([FromBody]Vendedor vendedor)

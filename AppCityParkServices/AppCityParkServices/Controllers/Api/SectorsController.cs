@@ -16,6 +16,7 @@ namespace AppCityParkServices.Controllers.Api
 {
     [RoutePrefix("api/Sectors")]
 
+
     public class SectorsController : ApiController
     {
         private CityParkApp db = new CityParkApp();
@@ -28,14 +29,17 @@ namespace AppCityParkServices.Controllers.Api
 
         [HttpPost]
         [Route("GetMyPolygon")]
-        public List<PuntoSector> GetMyPolygon(Agente _agente)
+        public List<PuntoSector> GetMyPolygon(Agente agente)
         {
-            var _Sector = db.Sector.Where(x => x.AgenteId == _agente.AgenteId).FirstOrDefault();
-            var _MyPolygon = db.PuntoSector.Where(x => x.NombreSector == _Sector.NombreSector).ToList();
-            return _MyPolygon;
+            db.Configuration.ProxyCreationEnabled = false;
 
-            
+            var _agente = db.Agente.Where(x => x.AgenteId == agente.AgenteId).FirstOrDefault();
 
+            var _Sector = db.Sector.Where(x => x.SectorId == _agente.SectorId).FirstOrDefault();
+
+            var _MyPolygon = db.PuntoSector.Where(x => x.SectorId == _Sector.SectorId).ToList();
+
+            return _MyPolygon;                      
         }
 
         // GET: api/Sectors/5

@@ -19,6 +19,7 @@
     <Property Name="Apellido" Type="varchar" MaxLength="50" />
     <Property Name="Contrasena" Type="varchar" MaxLength="500" />
     <Property Name="EmpresaId" Type="int" />
+    <Property Name="SectorId" Type="int" />
   </EntityType>
   <EntityType Name="Carro">
     <Key>
@@ -125,7 +126,6 @@
       <PropertyRef Name="PuntoSectorId" />
     </Key>
     <Property Name="PuntoSectorId" Type="int" Nullable="false" />
-    <Property Name="NombreSector" Type="nchar" MaxLength="10" />
     <Property Name="Latitud" Type="float" />
     <Property Name="Longitud" Type="float" />
     <Property Name="SectorId" Type="int" />
@@ -144,7 +144,6 @@
       <PropertyRef Name="SectorId" />
     </Key>
     <Property Name="SectorId" Type="int" Nullable="false" />
-    <Property Name="AgenteId" Type="int" />
     <Property Name="NombreSector" Type="nchar" MaxLength="10" />
     <Property Name="EmpresaId" Type="int" />
   </EntityType>
@@ -213,7 +212,8 @@
     </Key>
     <Property Name="UsuarioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="Contrasena" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Contrasena" Type="varchar" MaxLength="500" />
+    <Property Name="Correo" Type="varchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="UsuarioTarjetaPrepago">
     <Key>
@@ -254,6 +254,18 @@
       </Principal>
       <Dependent Role="Agente">
         <PropertyRef Name="EmpresaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Agente_Sector">
+    <End Role="Sector" Type="Self.Sector" Multiplicity="0..1" />
+    <End Role="Agente" Type="Self.Agente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sector">
+        <PropertyRef Name="SectorId" />
+      </Principal>
+      <Dependent Role="Agente">
+        <PropertyRef Name="SectorId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -497,18 +509,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Sector_Agente">
-    <End Role="Agente" Type="Self.Agente" Multiplicity="0..1" />
-    <End Role="Sector" Type="Self.Sector" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Agente">
-        <PropertyRef Name="AgenteId" />
-      </Principal>
-      <Dependent Role="Sector">
-        <PropertyRef Name="AgenteId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Sector_Empresa">
     <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
     <End Role="Sector" Type="Self.Sector" Multiplicity="*" />
@@ -649,6 +649,10 @@
       <End Role="Empresa" EntitySet="Empresa" />
       <End Role="Agente" EntitySet="Agente" />
     </AssociationSet>
+    <AssociationSet Name="FK_Agente_Sector" Association="Self.FK_Agente_Sector">
+      <End Role="Sector" EntitySet="Sector" />
+      <End Role="Agente" EntitySet="Agente" />
+    </AssociationSet>
     <AssociationSet Name="FK_Carro_Modelo" Association="Self.FK_Carro_Modelo">
       <End Role="Modelo" EntitySet="Modelo" />
       <End Role="Carro" EntitySet="Carro" />
@@ -728,10 +732,6 @@
     <AssociationSet Name="FK_Saldo_Usuario" Association="Self.FK_Saldo_Usuario">
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="Saldo" EntitySet="Saldo" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Sector_Agente" Association="Self.FK_Sector_Agente">
-      <End Role="Agente" EntitySet="Agente" />
-      <End Role="Sector" EntitySet="Sector" />
     </AssociationSet>
     <AssociationSet Name="FK_Sector_Empresa" Association="Self.FK_Sector_Empresa">
       <End Role="Empresa" EntitySet="Empresa" />

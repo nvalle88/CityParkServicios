@@ -12,17 +12,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Agente">
-      <EntityTypeMapping TypeName="CityParkDB.Agente">
-        <MappingFragment StoreEntitySet="Agente">
-          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-          <ScalarProperty Name="Apellido" ColumnName="Apellido" />
-          <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
-          <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Carro">
       <EntityTypeMapping TypeName="CityParkDB.Carro">
         <MappingFragment StoreEntitySet="Carro">
@@ -132,33 +121,12 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PuntoSector">
-      <EntityTypeMapping TypeName="CityParkDB.PuntoSector">
-        <MappingFragment StoreEntitySet="PuntoSector">
-          <ScalarProperty Name="PuntoSectorId" ColumnName="PuntoSectorId" />
-          <ScalarProperty Name="NombreSector" ColumnName="NombreSector" />
-          <ScalarProperty Name="Latitud" ColumnName="Latitud" />
-          <ScalarProperty Name="Longitud" ColumnName="Longitud" />
-          <ScalarProperty Name="SectorId" ColumnName="SectorId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Saldo">
       <EntityTypeMapping TypeName="CityParkDB.Saldo">
         <MappingFragment StoreEntitySet="Saldo">
           <ScalarProperty Name="SaldoId" ColumnName="SaldoId" />
           <ScalarProperty Name="Saldo1" ColumnName="Saldo" />
           <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
-          <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Sector">
-      <EntityTypeMapping TypeName="CityParkDB.Sector">
-        <MappingFragment StoreEntitySet="Sector">
-          <ScalarProperty Name="SectorId" ColumnName="SectorId" />
-          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
-          <ScalarProperty Name="NombreSector" ColumnName="NombreSector" />
           <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -228,15 +196,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Usuario">
-      <EntityTypeMapping TypeName="CityParkDB.Usuario">
-        <MappingFragment StoreEntitySet="Usuario">
-          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
-          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-          <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="UsuarioTarjetaPrepago">
       <EntityTypeMapping TypeName="CityParkDB.UsuarioTarjetaPrepago">
         <MappingFragment StoreEntitySet="UsuarioTarjetaPrepago">
@@ -254,6 +213,47 @@
           <ScalarProperty Name="Apellido" ColumnName="Apellido" />
           <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
           <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuario">
+      <EntityTypeMapping TypeName="CityParkDB.Usuario">
+        <MappingFragment StoreEntitySet="Usuario">
+          <ScalarProperty Name="Correo" ColumnName="Correo" />
+          <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Agente">
+      <EntityTypeMapping TypeName="CityParkDB.Agente">
+        <MappingFragment StoreEntitySet="Agente">
+          <ScalarProperty Name="SectorId" ColumnName="SectorId" />
+          <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
+          <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
+          <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PuntoSector">
+      <EntityTypeMapping TypeName="CityParkDB.PuntoSector">
+        <MappingFragment StoreEntitySet="PuntoSector">
+          <ScalarProperty Name="SectorId" ColumnName="SectorId" />
+          <ScalarProperty Name="Longitud" ColumnName="Longitud" />
+          <ScalarProperty Name="Latitud" ColumnName="Latitud" />
+          <ScalarProperty Name="PuntoSectorId" ColumnName="PuntoSectorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sector">
+      <EntityTypeMapping TypeName="CityParkDB.Sector">
+        <MappingFragment StoreEntitySet="Sector">
+          <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
+          <ScalarProperty Name="NombreSector" ColumnName="NombreSector" />
+          <ScalarProperty Name="SectorId" ColumnName="SectorId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

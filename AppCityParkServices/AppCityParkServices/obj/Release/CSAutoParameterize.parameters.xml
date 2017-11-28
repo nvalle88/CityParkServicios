@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <parameters>
   <parameter name="CityParkApp-Web.config Connection String" description="CityParkApp Cadena de conexión que usa la aplicación en web.config para obtener acceso a la base de datos." defaultValue="metadata=res://*/Models.Model.csdl|res://*/Models.Model.ssdl|res://*/Models.Model.msl;provider=System.Data.SqlClient;provider connection string=&quot;workstation id=CityParkDB.mssql.somee.com;packet size=4096;user id=brian593_SQLLogin_1;pwd=mo7j3u6mjt;data source=CityParkDB.mssql.somee.com;persist security info=False;initial catalog=CityParkDB;multipleactiveresultsets=True;application name=EntityFramework&quot;" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="C:\\Users\\Nestor\ Yasmani\ Valle\\source\\repos\\CityParkServicios\\AppCityParkServices\\AppCityParkServices\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='CityParkApp']/@connectionString" />
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\brian\\Dropbox\\CityPark\\CityParkServicios-master\\AppCityParkServices\\AppCityParkServices\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='CityParkApp']/@connectionString" />
   </parameter>
 </parameters>

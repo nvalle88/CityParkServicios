@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.NombreSector)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Agente.Nombre)
+            @Html.DisplayNameFor(model => model.Empresa.RazonSocial)
         </th>
         <th></th>
     </tr>
@@ -26,7 +26,7 @@
             @Html.DisplayFor(modelItem => item.NombreSector)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Agente.Nombre)
+            @Html.DisplayFor(modelItem => item.Empresa.RazonSocial)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.SectorId }) |

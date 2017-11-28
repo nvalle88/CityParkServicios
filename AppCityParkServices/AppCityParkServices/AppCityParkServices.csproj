@@ -179,12 +179,14 @@
     <Compile Include="Clases\PinRequest.cs" />
     <Compile Include="Clases\PlazaRequest.cs" />
     <Compile Include="Clases\Position.cs" />
+    <Compile Include="Clases\PuntoSectorHelper.cs" />
     <Compile Include="Clases\RefillRequest.cs" />
     <Compile Include="Clases\Response.cs" />
     <Compile Include="Clases\TiempoRequest.cs" />
     <Compile Include="Clases\UsuarioRequest.cs" />
     <Compile Include="Clases\VendedorRequest.cs" />
     <Compile Include="Constants\Constants.cs" />
+    <Compile Include="Controllers\MVC\AgentesController.cs" />
     <Compile Include="Controllers\Api\AdministradorsController.cs" />
     <Compile Include="Controllers\Api\AgentesController.cs" />
     <Compile Include="Controllers\Api\CarroesController.cs" />
@@ -207,9 +209,8 @@
     <Compile Include="Controllers\Api\UsuariosController.cs" />
     <Compile Include="Controllers\Api\UsuarioTarjetaPrepagoesController.cs" />
     <Compile Include="Controllers\Api\VendedorsController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MVC\HomeController.cs" />
     <Compile Include="Controllers\MVC\AdministradorsController.cs" />
-    <Compile Include="Controllers\MVC\AgentesController.cs" />
     <Compile Include="Controllers\MVC\CarroesController.cs" />
     <Compile Include="Controllers\MVC\CodigoesController.cs" />
     <Compile Include="Controllers\MVC\DispositivoesController.cs" />
@@ -220,9 +221,7 @@
     <Compile Include="Controllers\MVC\ParqueosController.cs" />
     <Compile Include="Controllers\MVC\Plazas2Controller.cs" />
     <Compile Include="Controllers\MVC\PlazasController.cs" />
-    <Compile Include="Controllers\MVC\PuntoSectorsController.cs" />
     <Compile Include="Controllers\MVC\SaldoesController.cs" />
-    <Compile Include="Controllers\MVC\SectorsController.cs" />
     <Compile Include="Controllers\MVC\SOesController.cs" />
     <Compile Include="Controllers\MVC\TarjetaCreditoesController.cs" />
     <Compile Include="Controllers\MVC\TarjetaPrepagoesController.cs" />
@@ -231,6 +230,8 @@
     <Compile Include="Controllers\MVC\UsuariosController.cs" />
     <Compile Include="Controllers\MVC\UsuarioTarjetaPrepagoesController.cs" />
     <Compile Include="Controllers\MVC\VendedorsController.cs" />
+    <Compile Include="Controllers\MVC\PuntoSectorsController.cs" />
+    <Compile Include="Controllers\MVC\SectorsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -431,11 +432,6 @@
     <Content Include="Views\Parqueos\Details.cshtml" />
     <Content Include="Views\Parqueos\Edit.cshtml" />
     <Content Include="Views\Parqueos\Index.cshtml" />
-    <Content Include="Views\Agentes\Create.cshtml" />
-    <Content Include="Views\Agentes\Delete.cshtml" />
-    <Content Include="Views\Agentes\Details.cshtml" />
-    <Content Include="Views\Agentes\Edit.cshtml" />
-    <Content Include="Views\Agentes\Index.cshtml" />
     <Content Include="Views\Multas\Create.cshtml" />
     <Content Include="Views\Multas\Delete.cshtml" />
     <Content Include="Views\Multas\Details.cshtml" />
@@ -446,16 +442,6 @@
     <Content Include="Views\Plazas\Details.cshtml" />
     <Content Include="Views\Plazas\Edit.cshtml" />
     <Content Include="Views\Plazas\Index.cshtml" />
-    <Content Include="Views\Sectors\Create.cshtml" />
-    <Content Include="Views\Sectors\Delete.cshtml" />
-    <Content Include="Views\Sectors\Details.cshtml" />
-    <Content Include="Views\Sectors\Edit.cshtml" />
-    <Content Include="Views\Sectors\Index.cshtml" />
-    <Content Include="Views\PuntoSectors\Create.cshtml" />
-    <Content Include="Views\PuntoSectors\Delete.cshtml" />
-    <Content Include="Views\PuntoSectors\Details.cshtml" />
-    <Content Include="Views\PuntoSectors\Edit.cshtml" />
-    <Content Include="Views\PuntoSectors\Index.cshtml" />
     <Content Include="Views\Vendedors\Create.cshtml" />
     <Content Include="Views\Vendedors\Delete.cshtml" />
     <Content Include="Views\Vendedors\Details.cshtml" />
@@ -501,6 +487,21 @@
     <Content Include="Views\Plazas2\Details.cshtml" />
     <Content Include="Views\Plazas2\Edit.cshtml" />
     <Content Include="Views\Plazas2\Index.cshtml" />
+    <Content Include="Views\Sectors\Create.cshtml" />
+    <Content Include="Views\Sectors\Delete.cshtml" />
+    <Content Include="Views\Sectors\Details.cshtml" />
+    <Content Include="Views\Sectors\Edit.cshtml" />
+    <Content Include="Views\Sectors\Index.cshtml" />
+    <Content Include="Views\PuntoSectors\Create.cshtml" />
+    <Content Include="Views\PuntoSectors\Delete.cshtml" />
+    <Content Include="Views\PuntoSectors\Details.cshtml" />
+    <Content Include="Views\PuntoSectors\Edit.cshtml" />
+    <Content Include="Views\PuntoSectors\Index.cshtml" />
+    <Content Include="Views\Agentes\Create.cshtml" />
+    <Content Include="Views\Agentes\Delete.cshtml" />
+    <Content Include="Views\Agentes\Details.cshtml" />
+    <Content Include="Views\Agentes\Edit.cshtml" />
+    <Content Include="Views\Agentes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

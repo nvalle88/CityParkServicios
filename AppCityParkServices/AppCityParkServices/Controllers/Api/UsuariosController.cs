@@ -11,6 +11,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using AppCityParkServices.Models;
 using Newtonsoft.Json.Linq;
+using AppCityParkServices.Utils;
 
 namespace AppCityParkServices.Controllers.Api
 {
@@ -36,9 +37,10 @@ namespace AppCityParkServices.Controllers.Api
 
             try
             {
-
                 Nombreusuario = jsonObject.Usuario.Value;
-                contrasena = jsonObject.Contrasena.Value;
+                Codificar codificar = new Codificar { Entrada = jsonObject.Contrasena.Value, };
+                codificar = CodificarHelper.SHA512(codificar);
+                contrasena = codificar.Salida;
             }
             catch (Exception)
             {
@@ -99,7 +101,13 @@ namespace AppCityParkServices.Controllers.Api
             try
             {
                 Usuario usuario = await db.Usuario.FindAsync(usuarioNew.UsuarioId);
-                usuario.Contrasena = usuarioNew.Contrasena;
+                Codificar codificar = new Codificar
+                {
+                    Entrada = usuarioNew.Contrasena
+                };
+                codificar = CodificarHelper.SHA512(codificar);
+
+                usuario.Contrasena = codificar.Salida;
                 db.Entry(usuario).State = EntityState.Modified;
                 await db.SaveChangesAsync();
             }
@@ -126,10 +134,21 @@ namespace AppCityParkServices.Controllers.Api
             {
                 return BadRequest(ModelState);
             }
+           
+            //Creamos creamos e instanciamos el objeto codificar con la contraseña del usuario
+            Codificar codificar = new Codificar
+            {
+                Entrada=usuario.Contrasena,
+            };
+            //al objeto codificar le pasamos el metodo utils para que nos devuelva la contraseña codificacada
+            codificar = CodificarHelper.SHA512(codificar);
+            //Agregamos la contraseña codificada a nuestro objeto usuario.
+            usuario.Contrasena = codificar.Salida;
+
 
             db.Usuario.Add(usuario);
             await db.SaveChangesAsync();
-
+            
             return CreatedAtRoute("DefaultApi", new { id = usuario.UsuarioId }, usuario);
         }
 

@@ -18,7 +18,7 @@ namespace AppCityParkServices.Controllers.MVC
         // GET: Sectors
         public async Task<ActionResult> Index()
         {
-            var sector = db.Sector.Include(s => s.Agente);
+            var sector = db.Sector.Include(s => s.Empresa);
             return View(await sector.ToListAsync());
         }
 
@@ -40,7 +40,7 @@ namespace AppCityParkServices.Controllers.MVC
         // GET: Sectors/Create
         public ActionResult Create()
         {
-            ViewBag.AgenteId = new SelectList(db.Agente, "AgenteId", "Nombre");
+            ViewBag.EmpresaId = new SelectList(db.Empresa, "EmpresaId", "RazonSocial");
             return View();
         }
 
@@ -49,7 +49,7 @@ namespace AppCityParkServices.Controllers.MVC
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "SectorId,AgenteId,NombreSector")] Sector sector)
+        public async Task<ActionResult> Create([Bind(Include = "SectorId,NombreSector,EmpresaId")] Sector sector)
         {
             if (ModelState.IsValid)
             {
@@ -58,7 +58,7 @@ namespace AppCityParkServices.Controllers.MVC
                 return RedirectToAction("Index");
             }
 
-            ViewBag.AgenteId = new SelectList(db.Agente, "AgenteId", "Nombre", sector.AgenteId);
+            ViewBag.EmpresaId = new SelectList(db.Empresa, "EmpresaId", "RazonSocial", sector.EmpresaId);
             return View(sector);
         }
 
@@ -74,7 +74,7 @@ namespace AppCityParkServices.Controllers.MVC
             {
                 return HttpNotFound();
             }
-            ViewBag.AgenteId = new SelectList(db.Agente, "AgenteId", "Nombre", sector.AgenteId);
+            ViewBag.EmpresaId = new SelectList(db.Empresa, "EmpresaId", "RazonSocial", sector.EmpresaId);
             return View(sector);
         }
 
@@ -83,7 +83,7 @@ namespace AppCityParkServices.Controllers.MVC
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "SectorId,AgenteId,NombreSector")] Sector sector)
+        public async Task<ActionResult> Edit([Bind(Include = "SectorId,NombreSector,EmpresaId")] Sector sector)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace AppCityParkServices.Controllers.MVC
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.AgenteId = new SelectList(db.Agente, "AgenteId", "Nombre", sector.AgenteId);
+            ViewBag.EmpresaId = new SelectList(db.Empresa, "EmpresaId", "RazonSocial", sector.EmpresaId);
             return View(sector);
         }
 

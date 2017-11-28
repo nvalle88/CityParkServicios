@@ -18,7 +18,8 @@ namespace AppCityParkServices.Controllers.MVC
         // GET: PuntoSectors
         public async Task<ActionResult> Index()
         {
-            return View(await db.PuntoSector.ToListAsync());
+            var puntoSector = db.PuntoSector.Include(p => p.Sector);
+            return View(await puntoSector.ToListAsync());
         }
 
         // GET: PuntoSectors/Details/5
@@ -39,6 +40,7 @@ namespace AppCityParkServices.Controllers.MVC
         // GET: PuntoSectors/Create
         public ActionResult Create()
         {
+            ViewBag.SectorId = new SelectList(db.Sector, "SectorId", "NombreSector");
             return View();
         }
 
@@ -47,7 +49,7 @@ namespace AppCityParkServices.Controllers.MVC
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "PuntoSectorId,NombreSector,Latitud,Longitud")] PuntoSector puntoSector)
+        public async Task<ActionResult> Create([Bind(Include = "PuntoSectorId,Latitud,Longitud,SectorId")] PuntoSector puntoSector)
         {
             if (ModelState.IsValid)
             {
@@ -56,6 +58,7 @@ namespace AppCityParkServices.Controllers.MVC
                 return RedirectToAction("Index");
             }
 
+            ViewBag.SectorId = new SelectList(db.Sector, "SectorId", "NombreSector", puntoSector.SectorId);
             return View(puntoSector);
         }
 
@@ -71,6 +74,7 @@ namespace AppCityParkServices.Controllers.MVC
             {
                 return HttpNotFound();
             }
+            ViewBag.SectorId = new SelectList(db.Sector, "SectorId", "NombreSector", puntoSector.SectorId);
             return View(puntoSector);
         }
 
@@ -79,7 +83,7 @@ namespace AppCityParkServices.Controllers.MVC
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "PuntoSectorId,NombreSector,Latitud,Longitud")] PuntoSector puntoSector)
+        public async Task<ActionResult> Edit([Bind(Include = "PuntoSectorId,Latitud,Longitud,SectorId")] PuntoSector puntoSector)
         {
             if (ModelState.IsValid)
             {
@@ -87,6 +91,7 @@ namespace AppCityParkServices.Controllers.MVC
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+            ViewBag.SectorId = new SelectList(db.Sector, "SectorId", "NombreSector", puntoSector.SectorId);
             return View(puntoSector);
         }
 
