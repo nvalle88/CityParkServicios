@@ -42,6 +42,19 @@ namespace AppCityParkServices.Controllers.Api
             return _MyPolygon;                      
         }
 
+        [HttpPost]
+        [Route("GetSectoresPorEmpresa")]
+        public async Task<IEnumerable<Sector>> GetAgentesPorEmpresa([FromBody] Empresa empresa)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            var agentes = await db.Sector.Where(x => x.EmpresaId == empresa.EmpresaId).Include(x => x.Empresa).ToListAsync();
+
+            if (agentes == null)
+            {
+                return null;
+            }
+            return agentes;
+        }
 
         [HttpPost]
         [Route("InsertarSector")]

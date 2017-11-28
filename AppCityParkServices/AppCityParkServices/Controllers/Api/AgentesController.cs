@@ -118,6 +118,7 @@ namespace AppCityParkServices.Controllers.Api
                 }
                 agenteRequest.Nombre = agente.Nombre;
                 agenteRequest.Apellido = agente.Apellido;
+                agenteRequest.SectorId = agente.SectorId;
 
                 db.Entry(agenteRequest).State=EntityState.Modified;
                 await db.SaveChangesAsync();
@@ -183,7 +184,7 @@ namespace AppCityParkServices.Controllers.Api
         public async Task<IEnumerable<Agente>> GetAgentesPorEmpresa([FromBody] Empresa empresa)
         {
             db.Configuration.ProxyCreationEnabled = false;
-            var agentes =await db.Agente.Where(x => x.EmpresaId == empresa.EmpresaId).Include(x=>x.Empresa).ToListAsync();
+            var agentes =await db.Agente.Where(x => x.EmpresaId == empresa.EmpresaId).Include(x=>x.Empresa).Include(x=>x.Sector).ToListAsync();
 
             if (agentes==null)
             {
