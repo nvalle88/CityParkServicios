@@ -148,8 +148,8 @@
           <Key>
             <PropertyRef Name="SectorId" />
           </Key>
-          <Property Name="SectorId" Type="int" Nullable="false" />
-          <Property Name="NombreSector" Type="nchar" MaxLength="10" />
+          <Property Name="SectorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreSector" Type="varchar" MaxLength="50" />
           <Property Name="EmpresaId" Type="int" />
         </EntityType>
         <EntityType Name="SO">
@@ -1547,7 +1547,7 @@
             <PropertyRef Name="SectorId" />
           </Key>
           <Property Name="SectorId" Type="Int32" Nullable="false" />
-          <Property Name="NombreSector" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="NombreSector" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EmpresaId" Type="Int32" />
           <NavigationProperty Name="Agente" Relationship="CityParkDB.FK_Agente_Sector" FromRole="Sector" ToRole="Agente" />
           <NavigationProperty Name="Empresa" Relationship="CityParkDB.FK_Sector_Empresa" FromRole="Sector" ToRole="Empresa" />
