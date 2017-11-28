@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using AppCityParkServices.Models;
-
+using AppCityParkServices.Clases;
 
 namespace AppCityParkServices.Controllers.Api
 {
@@ -40,6 +40,45 @@ namespace AppCityParkServices.Controllers.Api
             var _MyPolygon = db.PuntoSector.Where(x => x.SectorId == _Sector.SectorId).ToList();
 
             return _MyPolygon;                      
+        }
+
+
+        [HttpPost]
+        [Route("InsertarSector")]
+        public async Task<Response> InsertarSector(SectorViewModel model)
+        {
+            if (model == null)
+            {
+                return new Response { IsSuccess = false };
+            }
+
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var sector = new Sector { NombreSector = model.Sector.NombreSector, EmpresaId = model.Sector.EmpresaId };
+
+                    db.Sector.Add(sector);
+                    await db.SaveChangesAsync();
+
+                    foreach (var item in model.PuntoSector)
+                    {
+                        db.PuntoSector.Add(new PuntoSector { Latitud = item.Latitud, Longitud = item.Longitud, SectorId = sector.SectorId });
+                        await db.SaveChangesAsync();
+                    }
+
+                    transaction.Commit();
+
+                    return new Response { IsSuccess = true };
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    return new Response { IsSuccess = false };
+                    throw;
+                }
+            }
+
         }
 
         // GET: api/Sectors/5

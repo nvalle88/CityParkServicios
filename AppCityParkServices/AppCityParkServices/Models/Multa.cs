@@ -16,7 +16,7 @@ namespace AppCityParkServices.Models
     {
         public int MultaId { get; set; }
         public Nullable<decimal> Valor { get; set; }
-        public Nullable<System.DateTime> Fecha { get; set; }
+        public System.DateTime Fecha { get; set; }
         public Nullable<int> AgenteId { get; set; }
         public Nullable<double> Longitud { get; set; }
         public Nullable<double> latitud { get; set; }

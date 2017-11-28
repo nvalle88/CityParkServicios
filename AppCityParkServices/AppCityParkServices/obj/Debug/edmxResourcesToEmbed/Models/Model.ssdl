@@ -125,7 +125,7 @@
     <Key>
       <PropertyRef Name="PuntoSectorId" />
     </Key>
-    <Property Name="PuntoSectorId" Type="int" Nullable="false" />
+    <Property Name="PuntoSectorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Latitud" Type="float" />
     <Property Name="Longitud" Type="float" />
     <Property Name="SectorId" Type="int" />
@@ -143,8 +143,8 @@
     <Key>
       <PropertyRef Name="SectorId" />
     </Key>
-    <Property Name="SectorId" Type="int" Nullable="false" />
-    <Property Name="NombreSector" Type="nchar" MaxLength="10" />
+    <Property Name="SectorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NombreSector" Type="varchar" MaxLength="50" />
     <Property Name="EmpresaId" Type="int" />
   </EntityType>
   <EntityType Name="SO">

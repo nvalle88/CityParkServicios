@@ -18,7 +18,7 @@ namespace AppCityParkServices.Models
         public Nullable<int> UsuarioId { get; set; }
         public Nullable<int> VendedorId { get; set; }
         public Nullable<double> Monto { get; set; }
-        public Nullable<System.DateTime> Fecha { get; set; }
+        public System.DateTime Fecha { get; set; }
         public Nullable<int> EmpresaId { get; set; }
     
         public virtual Empresa Empresa { get; set; }

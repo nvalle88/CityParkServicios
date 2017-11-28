@@ -46,7 +46,7 @@ namespace AppCityParkServices.Models
         public virtual DbSet<Vendedor> Vendedor { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<Agente> Agente { get; set; }
-        public virtual DbSet<PuntoSector> PuntoSector { get; set; }
         public virtual DbSet<Sector> Sector { get; set; }
+        public virtual DbSet<PuntoSector> PuntoSector { get; set; }
     }
 }

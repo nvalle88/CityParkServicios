@@ -238,6 +238,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Sector">
+      <EntityTypeMapping TypeName="CityParkDB.Sector">
+        <MappingFragment StoreEntitySet="Sector">
+          <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
+          <ScalarProperty Name="NombreSector" ColumnName="NombreSector" />
+          <ScalarProperty Name="SectorId" ColumnName="SectorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="PuntoSector">
       <EntityTypeMapping TypeName="CityParkDB.PuntoSector">
         <MappingFragment StoreEntitySet="PuntoSector">
@@ -245,15 +254,6 @@
           <ScalarProperty Name="Longitud" ColumnName="Longitud" />
           <ScalarProperty Name="Latitud" ColumnName="Latitud" />
           <ScalarProperty Name="PuntoSectorId" ColumnName="PuntoSectorId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Sector">
-      <EntityTypeMapping TypeName="CityParkDB.Sector">
-        <MappingFragment StoreEntitySet="Sector">
-          <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
-          <ScalarProperty Name="NombreSector" ColumnName="NombreSector" />
-          <ScalarProperty Name="SectorId" ColumnName="SectorId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

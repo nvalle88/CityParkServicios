@@ -130,7 +130,7 @@
           <Key>
             <PropertyRef Name="PuntoSectorId" />
           </Key>
-          <Property Name="PuntoSectorId" Type="int" Nullable="false" />
+          <Property Name="PuntoSectorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Latitud" Type="float" />
           <Property Name="Longitud" Type="float" />
           <Property Name="SectorId" Type="int" />
@@ -1369,29 +1369,29 @@
             <End Role="UsuarioTarjetaPrepago" EntitySet="UsuarioTarjetaPrepago" />
           </AssociationSet>
           <EntitySet Name="Agente" EntityType="CityParkDB.Agente" />
-          <EntitySet Name="PuntoSector" EntityType="CityParkDB.PuntoSector" />
-          <EntitySet Name="Sector" EntityType="CityParkDB.Sector" />
           <AssociationSet Name="FK_Agente_Empresa" Association="CityParkDB.FK_Agente_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
-            <End Role="Agente" EntitySet="Agente" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Agente_Sector" Association="CityParkDB.FK_Agente_Sector">
-            <End Role="Sector" EntitySet="Sector" />
             <End Role="Agente" EntitySet="Agente" />
           </AssociationSet>
           <AssociationSet Name="FK_Multa_Agente" Association="CityParkDB.FK_Multa_Agente">
             <End Role="Agente" EntitySet="Agente" />
             <End Role="Multa" EntitySet="Multa" />
           </AssociationSet>
+          <EntitySet Name="Sector" EntityType="CityParkDB.Sector" />
+          <AssociationSet Name="FK_Agente_Sector" Association="CityParkDB.FK_Agente_Sector">
+            <End Role="Sector" EntitySet="Sector" />
+            <End Role="Agente" EntitySet="Agente" />
+          </AssociationSet>
           <AssociationSet Name="FK_Sector_Empresa" Association="CityParkDB.FK_Sector_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="Sector" EntitySet="Sector" />
           </AssociationSet>
+          <EntitySet Name="PuntoSector" EntityType="CityParkDB.PuntoSector" />
           <AssociationSet Name="FK_PuntoSector_Sector" Association="CityParkDB.FK_PuntoSector_Sector">
             <End Role="Sector" EntitySet="Sector" />
             <End Role="PuntoSector" EntitySet="PuntoSector" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
             <PropertyRef Name="UsuarioId" />
@@ -1529,29 +1529,8 @@
           <Property Name="EmpresaId" Type="Int32" />
           <Property Name="SectorId" Type="Int32" />
           <NavigationProperty Name="Empresa" Relationship="CityParkDB.FK_Agente_Empresa" FromRole="Agente" ToRole="Empresa" />
-          <NavigationProperty Name="Sector" Relationship="CityParkDB.FK_Agente_Sector" FromRole="Agente" ToRole="Sector" />
           <NavigationProperty Name="Multa" Relationship="CityParkDB.FK_Multa_Agente" FromRole="Agente" ToRole="Multa" />
-        </EntityType>
-        <EntityType Name="PuntoSector">
-          <Key>
-            <PropertyRef Name="PuntoSectorId" />
-          </Key>
-          <Property Name="PuntoSectorId" Type="Int32" Nullable="false" />
-          <Property Name="Latitud" Type="Double" />
-          <Property Name="Longitud" Type="Double" />
-          <Property Name="SectorId" Type="Int32" />
-          <NavigationProperty Name="Sector" Relationship="CityParkDB.FK_PuntoSector_Sector" FromRole="PuntoSector" ToRole="Sector" />
-        </EntityType>
-        <EntityType Name="Sector">
-          <Key>
-            <PropertyRef Name="SectorId" />
-          </Key>
-          <Property Name="SectorId" Type="Int32" Nullable="false" />
-          <Property Name="NombreSector" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EmpresaId" Type="Int32" />
-          <NavigationProperty Name="Agente" Relationship="CityParkDB.FK_Agente_Sector" FromRole="Sector" ToRole="Agente" />
-          <NavigationProperty Name="Empresa" Relationship="CityParkDB.FK_Sector_Empresa" FromRole="Sector" ToRole="Empresa" />
-          <NavigationProperty Name="PuntoSector" Relationship="CityParkDB.FK_PuntoSector_Sector" FromRole="Sector" ToRole="PuntoSector" />
+          <NavigationProperty Name="Sector" Relationship="CityParkDB.FK_Agente_Sector" FromRole="Agente" ToRole="Sector" />
         </EntityType>
         <Association Name="FK_Agente_Empresa">
           <End Type="CityParkDB.Empresa" Role="Empresa" Multiplicity="0..1" />
@@ -1562,18 +1541,6 @@
             </Principal>
             <Dependent Role="Agente">
               <PropertyRef Name="EmpresaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Agente_Sector">
-          <End Type="CityParkDB.Sector" Role="Sector" Multiplicity="0..1" />
-          <End Type="CityParkDB.Agente" Role="Agente" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sector">
-              <PropertyRef Name="SectorId" />
-            </Principal>
-            <Dependent Role="Agente">
-              <PropertyRef Name="SectorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1589,6 +1556,29 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Sector">
+          <Key>
+            <PropertyRef Name="SectorId" />
+          </Key>
+          <Property Name="SectorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreSector" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmpresaId" Type="Int32" />
+          <NavigationProperty Name="Agente" Relationship="CityParkDB.FK_Agente_Sector" FromRole="Sector" ToRole="Agente" />
+          <NavigationProperty Name="Empresa" Relationship="CityParkDB.FK_Sector_Empresa" FromRole="Sector" ToRole="Empresa" />
+          <NavigationProperty Name="PuntoSector" Relationship="CityParkDB.FK_PuntoSector_Sector" FromRole="Sector" ToRole="PuntoSector" />
+        </EntityType>
+        <Association Name="FK_Agente_Sector">
+          <End Type="CityParkDB.Sector" Role="Sector" Multiplicity="0..1" />
+          <End Type="CityParkDB.Agente" Role="Agente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sector">
+              <PropertyRef Name="SectorId" />
+            </Principal>
+            <Dependent Role="Agente">
+              <PropertyRef Name="SectorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Sector_Empresa">
           <End Type="CityParkDB.Empresa" Role="Empresa" Multiplicity="0..1" />
           <End Type="CityParkDB.Sector" Role="Sector" Multiplicity="*" />
@@ -1601,6 +1591,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="PuntoSector">
+          <Key>
+            <PropertyRef Name="PuntoSectorId" />
+          </Key>
+          <Property Name="PuntoSectorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Latitud" Type="Double" />
+          <Property Name="Longitud" Type="Double" />
+          <Property Name="SectorId" Type="Int32" />
+          <NavigationProperty Name="Sector" Relationship="CityParkDB.FK_PuntoSector_Sector" FromRole="PuntoSector" ToRole="Sector" />
+        </EntityType>
         <Association Name="FK_PuntoSector_Sector">
           <End Type="CityParkDB.Sector" Role="Sector" Multiplicity="0..1" />
           <End Type="CityParkDB.PuntoSector" Role="PuntoSector" Multiplicity="*" />
@@ -1613,7 +1613,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1856,6 +1856,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Sector">
+            <EntityTypeMapping TypeName="CityParkDB.Sector">
+              <MappingFragment StoreEntitySet="Sector">
+                <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
+                <ScalarProperty Name="NombreSector" ColumnName="NombreSector" />
+                <ScalarProperty Name="SectorId" ColumnName="SectorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="PuntoSector">
             <EntityTypeMapping TypeName="CityParkDB.PuntoSector">
               <MappingFragment StoreEntitySet="PuntoSector">
@@ -1863,15 +1872,6 @@
                 <ScalarProperty Name="Longitud" ColumnName="Longitud" />
                 <ScalarProperty Name="Latitud" ColumnName="Latitud" />
                 <ScalarProperty Name="PuntoSectorId" ColumnName="PuntoSectorId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Sector">
-            <EntityTypeMapping TypeName="CityParkDB.Sector">
-              <MappingFragment StoreEntitySet="Sector">
-                <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
-                <ScalarProperty Name="NombreSector" ColumnName="NombreSector" />
-                <ScalarProperty Name="SectorId" ColumnName="SectorId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

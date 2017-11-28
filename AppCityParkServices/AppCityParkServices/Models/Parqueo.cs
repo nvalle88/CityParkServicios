@@ -16,8 +16,8 @@ namespace AppCityParkServices.Models
     {
         public int ParqueoId { get; set; }
         public Nullable<int> UsuarioId { get; set; }
-        public Nullable<System.DateTime> FechaInicio { get; set; }
-        public Nullable<System.DateTime> FechaFin { get; set; }
+        public System.DateTime FechaInicio { get; set; }
+        public System.DateTime FechaFin { get; set; }
         public Nullable<double> Latitud { get; set; }
         public Nullable<double> Longitud { get; set; }
         public Nullable<int> TarjetaCreditoId { get; set; }
