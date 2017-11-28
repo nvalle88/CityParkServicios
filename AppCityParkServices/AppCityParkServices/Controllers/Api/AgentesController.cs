@@ -35,7 +35,16 @@ namespace AppCityParkServices.Controllers.Api
             {
 
                 Nombreusuario = jsonObject.Agente.Value;
-                contrasena = jsonObject.Contrasena.Value;
+
+                Codificar codificar = new Codificar
+                {
+                    Entrada = jsonObject.Contrasena.Value
+                };
+                codificar = CodificarHelper.SHA512(codificar);
+
+
+                contrasena = codificar.Salida;
+
             }
             catch (Exception)
             {
