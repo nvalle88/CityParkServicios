@@ -182,6 +182,7 @@
     <Compile Include="Clases\PuntoSectorHelper.cs" />
     <Compile Include="Clases\RefillRequest.cs" />
     <Compile Include="Clases\Response.cs" />
+    <Compile Include="Clases\SectorViewModel.cs" />
     <Compile Include="Clases\TiempoRequest.cs" />
     <Compile Include="Clases\UsuarioPasswordRequest.cs" />
     <Compile Include="Clases\UsuarioRequest.cs" />
