@@ -183,6 +183,7 @@
     <Compile Include="Clases\RefillRequest.cs" />
     <Compile Include="Clases\Response.cs" />
     <Compile Include="Clases\TiempoRequest.cs" />
+    <Compile Include="Clases\UsuarioPasswordRequest.cs" />
     <Compile Include="Clases\UsuarioRequest.cs" />
     <Compile Include="Clases\VendedorRequest.cs" />
     <Compile Include="Constants\Constants.cs" />

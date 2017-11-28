@@ -12,6 +12,7 @@ using System.Web.Http.Description;
 using AppCityParkServices.Models;
 using Newtonsoft.Json.Linq;
 using AppCityParkServices.Utils;
+using AppCityParkServices.Clases;
 
 namespace AppCityParkServices.Controllers.Api
 {
@@ -84,20 +85,18 @@ namespace AppCityParkServices.Controllers.Api
             {
                 return NotFound();
             }
-
             return Ok(usuario);
         }
 
-        // PUT: api/Usuarios/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutUsuario(Usuario usuarioNew)
+        //Metodo PUT para Cambiar Contraseña 
+        [HttpPut]
+        [Route("PasswordUpdate")]
+        public async Task<IHttpActionResult> PutUsuario(UsuarioPasswordRequest usuarioNew)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-           
-
             try
             {
                 Usuario usuario = await db.Usuario.FindAsync(usuarioNew.UsuarioId);
@@ -106,10 +105,25 @@ namespace AppCityParkServices.Controllers.Api
                     Entrada = usuarioNew.Contrasena
                 };
                 codificar = CodificarHelper.SHA512(codificar);
+                if (usuario.Contrasena == codificar.Salida)
+                {
+                    codificar = new Codificar
+                    {
+                        Entrada = usuarioNew.ContrasenaNueva
+                    };
+                    codificar = CodificarHelper.SHA512(codificar);
+                    usuario.Contrasena = codificar.Salida;
+                    db.Entry(usuario).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
 
-                usuario.Contrasena = codificar.Salida;
-                db.Entry(usuario).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                    return Ok("Se actualizo correctamente");
+
+                }
+                else
+                {
+                    return NotFound();
+                }
+
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -122,9 +136,48 @@ namespace AppCityParkServices.Controllers.Api
                     throw;
                 }
             }
-
             return StatusCode(HttpStatusCode.NoContent);
         }
+
+
+
+        // PUT: api/Usuarios/5
+        //[ResponseType(typeof(void))]
+        //public async Task<IHttpActionResult> PutUsuario(Usuario usuarioNew)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+           
+
+        //    try
+        //    {
+        //        Usuario usuario = await db.Usuario.FindAsync(usuarioNew.UsuarioId);
+        //        Codificar codificar = new Codificar
+        //        {
+        //            Entrada = usuarioNew.Contrasena
+        //        };
+        //        codificar = CodificarHelper.SHA512(codificar);
+
+        //        usuario.Contrasena = codificar.Salida;
+        //        db.Entry(usuario).State = EntityState.Modified;
+        //        await db.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!UsuarioExists(usuarioNew.UsuarioId))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
 
         // POST: api/Usuarios
         [ResponseType(typeof(Usuario))]
