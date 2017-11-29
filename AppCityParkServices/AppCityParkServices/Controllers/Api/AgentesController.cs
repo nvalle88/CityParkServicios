@@ -280,6 +280,56 @@ namespace AppCityParkServices.Controllers.Api
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        [HttpPut]
+        [Route("PasswordUpdate")]
+        public async Task<IHttpActionResult> PasswordUpdate(UsuarioPasswordRequest usuarioNew)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                Agente agente = await db.Agente.FindAsync(usuarioNew.UsuarioId);
+                Codificar codificar = new Codificar
+                {
+                    Entrada = usuarioNew.Contrasena
+                };
+                codificar = CodificarHelper.SHA512(codificar);
+                if (agente.Contrasena == codificar.Salida)
+                {
+                    codificar = new Codificar
+                    {
+                        Entrada = usuarioNew.ContrasenaNueva
+                    };
+                    codificar = CodificarHelper.SHA512(codificar);
+                    agente.Contrasena = codificar.Salida;
+                    db.Entry(agente).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+
+                    return Ok("Se actualizo correctamente");
+                }
+                else
+                {
+                    return NotFound();
+                }
+
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AgenteExists(usuarioNew.UsuarioId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+
         // POST: api/Agentes
         [HttpPost]
         [Route("CreateAgente")]
