@@ -167,6 +167,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Clases\AgenteRequest.cs" />
     <Compile Include="Clases\Barrios.cs" />
     <Compile Include="Clases\CarroRequest.cs" />
     <Compile Include="Clases\CodigoRequest.cs" />
@@ -360,8 +361,6 @@
     </Content>
     <None Include="Properties\PublishProfiles\CityParkWS - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\CityParkWS - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
-    <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

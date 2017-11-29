@@ -181,16 +181,50 @@ namespace AppCityParkServices.Controllers.Api
 
         [HttpPost]
         [Route("GetAgentesPorEmpresa")]
-        public async Task<IEnumerable<Agente>> GetAgentesPorEmpresa([FromBody] Empresa empresa)
+        public async Task<IEnumerable<AgenteRequest>> GetAgentesPorEmpresa([FromBody] Empresa empresa)
         {
-            db.Configuration.ProxyCreationEnabled = false;
+           
             var agentes =await db.Agente.Where(x => x.EmpresaId == empresa.EmpresaId).Include(x=>x.Empresa).Include(x=>x.Sector).ToListAsync();
 
             if (agentes==null)
             {
                 return null;
             }
-            return agentes;
+
+            var listaSalida = new List<AgenteRequest>();
+
+            foreach (var agente in agentes)
+            {
+                if (agente.SectorId==null)
+                {
+                    listaSalida.Add(new AgenteRequest
+                    {
+                        AgenteId = agente.AgenteId,
+                        Apellido = agente.Apellido,
+                        Direccion = agente.Empresa.Direccion,
+                        Nombre = agente.Nombre,
+                        NombreSector = Constants.Constants.ValorNull,
+                        RazonSocial = agente.Empresa.RazonSocial,
+                        Ruc = agente.Empresa.Ruc,
+                    });
+                }
+                else
+                {
+                    listaSalida.Add(new AgenteRequest
+                    {
+                        AgenteId = agente.AgenteId,
+                        Apellido = agente.Apellido,
+                        Direccion = agente.Empresa.Direccion,
+                        Nombre = agente.Nombre,
+                        NombreSector = agente.Sector.NombreSector,
+                        RazonSocial = agente.Empresa.RazonSocial,
+                        Ruc = agente.Empresa.Ruc,
+                    });
+                }
+                
+            }
+
+            return listaSalida;
         }
         // GET: api/Agentes
         public IQueryable<Agente> GetAgente()

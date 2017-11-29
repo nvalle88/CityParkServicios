@@ -22,7 +22,7 @@ namespace AppCityParkServices.Models
         public Nullable<int> EmpresaId { get; set; }
     
         public virtual Empresa Empresa { get; set; }
-        public virtual Vendedor Vendedor { get; set; }
         public virtual Usuario Usuario { get; set; }
+        public virtual Vendedor Vendedor { get; set; }
     }
 }

@@ -10,6 +10,8 @@ namespace AppCityParkServices.Constants
     public class Constants
 
     {
+        public static string ValorNull { get { return "No asignago"; } }
+
         public static  ObservableCollection<Position> polygonEMOV= new ObservableCollection<Position>
         {
             new Position{latitude=-2.908594,longitude= -79.039565},

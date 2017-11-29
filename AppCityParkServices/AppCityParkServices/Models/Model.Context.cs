@@ -26,6 +26,7 @@ namespace AppCityParkServices.Models
         }
     
         public virtual DbSet<Administrador> Administrador { get; set; }
+        public virtual DbSet<Agente> Agente { get; set; }
         public virtual DbSet<Carro> Carro { get; set; }
         public virtual DbSet<Codigo> Codigo { get; set; }
         public virtual DbSet<Dispositivo> Dispositivo { get; set; }
@@ -35,18 +36,17 @@ namespace AppCityParkServices.Models
         public virtual DbSet<Multa> Multa { get; set; }
         public virtual DbSet<Parqueo> Parqueo { get; set; }
         public virtual DbSet<Plaza> Plaza { get; set; }
+        public virtual DbSet<PuntoSector> PuntoSector { get; set; }
         public virtual DbSet<Saldo> Saldo { get; set; }
+        public virtual DbSet<Sector> Sector { get; set; }
         public virtual DbSet<SO> SO { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TarjetaCredito> TarjetaCredito { get; set; }
         public virtual DbSet<TarjetaPrepago> TarjetaPrepago { get; set; }
         public virtual DbSet<TipoMultas> TipoMultas { get; set; }
         public virtual DbSet<Transaccion> Transaccion { get; set; }
+        public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<UsuarioTarjetaPrepago> UsuarioTarjetaPrepago { get; set; }
         public virtual DbSet<Vendedor> Vendedor { get; set; }
-        public virtual DbSet<Usuario> Usuario { get; set; }
-        public virtual DbSet<Agente> Agente { get; set; }
-        public virtual DbSet<Sector> Sector { get; set; }
-        public virtual DbSet<PuntoSector> PuntoSector { get; set; }
     }
 }

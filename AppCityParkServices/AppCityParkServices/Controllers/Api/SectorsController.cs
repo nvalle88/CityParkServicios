@@ -28,6 +28,64 @@ namespace AppCityParkServices.Controllers.Api
         }
 
         [HttpPost]
+        [Route("DeleteSector")]
+        public async Task<Response> DeleteSector(Sector sector)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var _Sector = await db.Sector.Where(x => x.SectorId == sector.SectorId).FirstOrDefaultAsync();
+
+                    var agentes = await db.Agente.Where(x => x.SectorId == _Sector.SectorId).ToListAsync();
+
+                    foreach (var agente in agentes)
+                    {
+                        agente.SectorId = null;
+                        db.Entry(agente).State = EntityState.Modified;
+                        await db.SaveChangesAsync();
+                    }
+
+                    var _MyPolygon = await db.PuntoSector.Where(x => x.SectorId == _Sector.SectorId).ToListAsync();
+                    db.PuntoSector.RemoveRange(_MyPolygon);
+                    await db.SaveChangesAsync();
+
+                    db.Sector.Remove(_Sector);
+                    await db.SaveChangesAsync();
+
+                    transaction.Commit();
+
+                    return new Response { IsSuccess = true };
+                }
+                catch (Exception)
+                {
+                    return new Response { IsSuccess = false };
+
+                } 
+            }
+
+            
+        }
+
+
+        [HttpPost]
+        [Route("GetPuntoSectorPorSector")]
+        public async Task< List<PuntoSector>> GetPuntoSectorPorSector(Sector sector)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            if (sector==null)
+            {
+                return  null;
+            }
+
+            var _MyPolygon =await db.PuntoSector.Where(x => x.SectorId == sector.SectorId).ToListAsync();
+
+            return _MyPolygon;
+        }
+
+        [HttpPost]
         [Route("GetMyPolygon")]
         public List<PuntoSector> GetMyPolygon(Agente agente)
         {
@@ -40,6 +98,28 @@ namespace AppCityParkServices.Controllers.Api
             var _MyPolygon = db.PuntoSector.Where(x => x.SectorId == _Sector.SectorId).ToList();
 
             return _MyPolygon;                      
+        }
+
+        [HttpPost]
+        [Route("GetSector")]
+        public async Task<Response> GetAgente([FromBody]Sector sector)
+        {
+            try
+            {
+                db.Configuration.ProxyCreationEnabled = false;
+                var agenteRequest = await db.Sector.Where(x => x.SectorId == sector.SectorId).FirstOrDefaultAsync();
+                if (agenteRequest == null)
+                {
+                    return new Response { IsSuccess = false };
+                }
+
+                return new Response { IsSuccess = true, Result = agenteRequest };
+            }
+            catch (Exception)
+            {
+                return new Response { IsSuccess = false };
+                throw;
+            }
         }
 
         [HttpPost]
@@ -57,8 +137,8 @@ namespace AppCityParkServices.Controllers.Api
         }
 
         [HttpPost]
-        [Route("InsertarSector")]
-        public async Task<Response> InsertarSector(SectorViewModel model)
+        [Route("EditarSector")]
+        public async Task<Response> EditarSector(SectorViewModel model)
         {
             if (model == null)
             {
@@ -69,9 +149,16 @@ namespace AppCityParkServices.Controllers.Api
             {
                 try
                 {
-                    var sector = new Sector { NombreSector = model.Sector.NombreSector, EmpresaId = model.Sector.EmpresaId };
 
-                    db.Sector.Add(sector);
+                    var puntosEliminar =await db.PuntoSector.Where(x => x.SectorId == model.Sector.SectorId).ToListAsync();
+                    db.PuntoSector.RemoveRange(puntosEliminar);
+                    await db.SaveChangesAsync();
+
+                    var sector = await db.Sector.Where(x=>x.SectorId==model.Sector.SectorId).FirstOrDefaultAsync();
+
+                    sector.NombreSector = model.Sector.NombreSector;
+
+                    db.Entry(sector).State=EntityState.Modified;
                     await db.SaveChangesAsync();
 
                     foreach (var item in model.PuntoSector)
@@ -88,6 +175,48 @@ namespace AppCityParkServices.Controllers.Api
                 {
                     transaction.Rollback();
                     return new Response { IsSuccess = false };
+                    throw;
+                }
+            }
+
+        }
+
+
+        [HttpPost]
+        [Route("InsertarSector")]
+        public async Task<Response> InsertarSector([FromBody]SectorViewModel model)
+        {
+            if (model == null)
+            {
+                return new Response { IsSuccess = false ,Message="Modelo nulo"};
+            }
+
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                var a = "";
+                try
+                {
+                    var sector = new Sector {NombreSector = model.Sector.NombreSector, EmpresaId = model.Sector.EmpresaId };
+                    a = "antes de insertar sector";
+                    db.Sector.Add(sector);
+                    await db.SaveChangesAsync();
+                    a = "Insertar sector";
+                    foreach (var item in model.PuntoSector)
+                    {
+                        db.PuntoSector.Add(new PuntoSector { Latitud = item.Latitud, Longitud = item.Longitud, SectorId = sector.SectorId });
+                        a = a+"Antes de insertar punto";
+                        await db.SaveChangesAsync();
+                        a = a + "despues insertarpunto";
+                    }
+
+                    transaction.Commit();
+
+                    return new Response { IsSuccess = true };
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    return new Response { IsSuccess = false , Message=ex.Message+a , Result=model};
                     throw;
                 }
             }

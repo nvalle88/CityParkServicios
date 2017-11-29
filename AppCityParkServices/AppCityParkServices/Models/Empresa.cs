@@ -18,16 +18,16 @@ namespace AppCityParkServices.Models
         public Empresa()
         {
             this.Administrador = new HashSet<Administrador>();
+            this.Agente = new HashSet<Agente>();
             this.Dispositivo = new HashSet<Dispositivo>();
             this.Multa = new HashSet<Multa>();
             this.Parqueo = new HashSet<Parqueo>();
             this.Plaza = new HashSet<Plaza>();
             this.Saldo = new HashSet<Saldo>();
+            this.Sector = new HashSet<Sector>();
             this.TipoMultas = new HashSet<TipoMultas>();
             this.Transaccion = new HashSet<Transaccion>();
             this.Vendedor = new HashSet<Vendedor>();
-            this.Agente = new HashSet<Agente>();
-            this.Sector = new HashSet<Sector>();
         }
     
         public int EmpresaId { get; set; }
@@ -40,6 +40,8 @@ namespace AppCityParkServices.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Administrador> Administrador { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Agente> Agente { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Dispositivo> Dispositivo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Multa> Multa { get; set; }
@@ -50,14 +52,12 @@ namespace AppCityParkServices.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Saldo> Saldo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Sector> Sector { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TipoMultas> TipoMultas { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaccion> Transaccion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Vendedor> Vendedor { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Agente> Agente { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Sector> Sector { get; set; }
     }
 }
