@@ -245,40 +245,40 @@ namespace AppCityParkServices.Controllers.Api
             return Ok(agente);
         }
 
-        // PUT: api/Agentes/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutAgente(int id, Agente agente)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// PUT: api/Agentes/5
+        //[ResponseType(typeof(void))]
+        //public async Task<IHttpActionResult> PutAgente(int id, Agente agente)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            if (id != agente.AgenteId)
-            {
-                return BadRequest();
-            }
+        //    if (id != agente.AgenteId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            db.Entry(agente).State = EntityState.Modified;
+        //    db.Entry(agente).State = EntityState.Modified;
 
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AgenteExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await db.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!AgenteExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
 
         [HttpPut]
         [Route("PasswordUpdate")]
