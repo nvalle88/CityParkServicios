@@ -37,6 +37,7 @@ namespace AppCityParkServices.Models
         public virtual DbSet<Parqueo> Parqueo { get; set; }
         public virtual DbSet<Plaza> Plaza { get; set; }
         public virtual DbSet<PuntoSector> PuntoSector { get; set; }
+        public virtual DbSet<SalarioBasico> SalarioBasico { get; set; }
         public virtual DbSet<Saldo> Saldo { get; set; }
         public virtual DbSet<Sector> Sector { get; set; }
         public virtual DbSet<SO> SO { get; set; }

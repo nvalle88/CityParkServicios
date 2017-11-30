@@ -26,13 +26,16 @@ namespace AppCityParkServices.Controllers.Api
         // GET: api/Parqueos/GetParqueados
         [HttpPost]
         [Route("GetParqueados")]
-        public List<PinRequest> GetParqueados(Agente _agente)
+        public List<PinRequest> GetParqueados(Agente agente_)
         {
+            var _agente = db.Agente.Where(x => x.AgenteId == agente_.AgenteId).FirstOrDefault();
+
+
             List<Parqueo> ParqueoDB = db.Parqueo.Where(x => x.FechaFin >= DateTime.Now).ToList();
 
             var _sector = db.Sector.Where(x => x.SectorId == _agente.SectorId).FirstOrDefault();
-
-            List<PuntoSector> _PolygonSector = db.PuntoSector.Where(x => x.SectorId == _sector.SectorId).ToList();
+            List<PuntoSector> _PolygonSector = new List<PuntoSector>();
+            _PolygonSector = db.PuntoSector.Where(x => x.SectorId == _sector.SectorId).ToList();
             ObservableCollection<Position> PoligonoAgente = new ObservableCollection<Position>();
              foreach ( var a in _PolygonSector)
             {
@@ -109,7 +112,7 @@ namespace AppCityParkServices.Controllers.Api
         {
                 placa = (jsonObject.Placa.Value).Replace("-", "").ToUpper();
                 plazaNombre = jsonObject.Plaza.Value;
-                AgenteId = jsonObject.AgenteId.Value;
+                AgenteId = (int)jsonObject.AgenteId.Value;
             
 
 

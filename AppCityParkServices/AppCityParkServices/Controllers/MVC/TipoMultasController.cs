@@ -18,7 +18,7 @@ namespace AppCityParkServices.Controllers.MVC
         // GET: TipoMultas
         public async Task<ActionResult> Index()
         {
-            var tipoMultas = db.TipoMultas.Include(t => t.Empresa);
+            var tipoMultas = db.TipoMultas.Include(t => t.Empresa).Include(t => t.SalarioBasico);
             return View(await tipoMultas.ToListAsync());
         }
 
@@ -41,6 +41,7 @@ namespace AppCityParkServices.Controllers.MVC
         public ActionResult Create()
         {
             ViewBag.EmpresaId = new SelectList(db.Empresa, "EmpresaId", "RazonSocial");
+            ViewBag.SalarioBasicoId = new SelectList(db.SalarioBasico, "SalarioBasicoId", "SalarioBasicoId");
             return View();
         }
 
@@ -49,7 +50,7 @@ namespace AppCityParkServices.Controllers.MVC
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "TipoMultaId,Multa,Descripcion,EmpresaId")] TipoMultas tipoMultas)
+        public async Task<ActionResult> Create([Bind(Include = "TipoMultaId,Multa,Descripcion,EmpresaId,Porcentaje,SalarioBasicoId")] TipoMultas tipoMultas)
         {
             if (ModelState.IsValid)
             {
@@ -59,6 +60,7 @@ namespace AppCityParkServices.Controllers.MVC
             }
 
             ViewBag.EmpresaId = new SelectList(db.Empresa, "EmpresaId", "RazonSocial", tipoMultas.EmpresaId);
+            ViewBag.SalarioBasicoId = new SelectList(db.SalarioBasico, "SalarioBasicoId", "SalarioBasicoId", tipoMultas.SalarioBasicoId);
             return View(tipoMultas);
         }
 
@@ -75,6 +77,7 @@ namespace AppCityParkServices.Controllers.MVC
                 return HttpNotFound();
             }
             ViewBag.EmpresaId = new SelectList(db.Empresa, "EmpresaId", "RazonSocial", tipoMultas.EmpresaId);
+            ViewBag.SalarioBasicoId = new SelectList(db.SalarioBasico, "SalarioBasicoId", "SalarioBasicoId", tipoMultas.SalarioBasicoId);
             return View(tipoMultas);
         }
 
@@ -83,7 +86,7 @@ namespace AppCityParkServices.Controllers.MVC
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "TipoMultaId,Multa,Descripcion,EmpresaId")] TipoMultas tipoMultas)
+        public async Task<ActionResult> Edit([Bind(Include = "TipoMultaId,Multa,Descripcion,EmpresaId,Porcentaje,SalarioBasicoId")] TipoMultas tipoMultas)
         {
             if (ModelState.IsValid)
             {
@@ -92,6 +95,7 @@ namespace AppCityParkServices.Controllers.MVC
                 return RedirectToAction("Index");
             }
             ViewBag.EmpresaId = new SelectList(db.Empresa, "EmpresaId", "RazonSocial", tipoMultas.EmpresaId);
+            ViewBag.SalarioBasicoId = new SelectList(db.SalarioBasico, "SalarioBasicoId", "SalarioBasicoId", tipoMultas.SalarioBasicoId);
             return View(tipoMultas);
         }
 

@@ -18,7 +18,13 @@
             @Html.DisplayNameFor(model => model.Descripcion)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Porcentaje)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Empresa.RazonSocial)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SalarioBasico.SalarioBasicoId)
         </th>
         <th></th>
     </tr>
@@ -32,7 +38,13 @@
             @Html.DisplayFor(modelItem => item.Descripcion)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Porcentaje)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Empresa.RazonSocial)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SalarioBasico.SalarioBasicoId)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.TipoMultaId }) |
