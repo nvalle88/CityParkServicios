@@ -115,6 +115,7 @@ namespace AppCityParkServices.Controllers.Api
             }
             Plaza plaza = await db.Plaza.FindAsync(_plaza.PlazaId);
             plaza.Ocupado = _plaza.Ocupado;
+            
             db.Entry(plaza).State = EntityState.Modified;
 
             try
