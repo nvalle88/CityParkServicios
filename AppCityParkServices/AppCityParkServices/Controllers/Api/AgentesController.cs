@@ -144,7 +144,11 @@ namespace AppCityParkServices.Controllers.Api
                 {
                     return new Response { IsSuccess = false };
                 }
-
+                if (agenteRequest.SectorId==null)
+                {
+                    agenteRequest.SectorId = 0;
+                }
+                
                 return new Response { IsSuccess = true,Result=agenteRequest };
             }
             catch (Exception)
