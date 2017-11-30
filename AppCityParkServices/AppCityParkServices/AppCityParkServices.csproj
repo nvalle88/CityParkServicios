@@ -189,6 +189,7 @@
     <Compile Include="Clases\UsuarioRequest.cs" />
     <Compile Include="Clases\VendedorRequest.cs" />
     <Compile Include="Constants\Constants.cs" />
+    <Compile Include="Controllers\Api\SalarioBasicoesController.cs" />
     <Compile Include="Controllers\MVC\AgentesController.cs" />
     <Compile Include="Controllers\Api\AdministradorsController.cs" />
     <Compile Include="Controllers\Api\AgentesController.cs" />
@@ -224,6 +225,7 @@
     <Compile Include="Controllers\MVC\ParqueosController.cs" />
     <Compile Include="Controllers\MVC\Plazas2Controller.cs" />
     <Compile Include="Controllers\MVC\PlazasController.cs" />
+    <Compile Include="Controllers\MVC\SalarioBasicoesController.cs" />
     <Compile Include="Controllers\MVC\SaldoesController.cs" />
     <Compile Include="Controllers\MVC\SOesController.cs" />
     <Compile Include="Controllers\MVC\TarjetaCreditoesController.cs" />
@@ -287,6 +289,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PuntoSector.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SalarioBasico.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Saldo.cs">
@@ -473,11 +478,6 @@
     <Content Include="Views\Administradors\Details.cshtml" />
     <Content Include="Views\Administradors\Edit.cshtml" />
     <Content Include="Views\Administradors\Index.cshtml" />
-    <Content Include="Views\TipoMultas\Create.cshtml" />
-    <Content Include="Views\TipoMultas\Delete.cshtml" />
-    <Content Include="Views\TipoMultas\Details.cshtml" />
-    <Content Include="Views\TipoMultas\Edit.cshtml" />
-    <Content Include="Views\TipoMultas\Index.cshtml" />
     <Content Include="Views\Codigoes\Create.cshtml" />
     <Content Include="Views\Codigoes\Delete.cshtml" />
     <Content Include="Views\Codigoes\Details.cshtml" />
@@ -503,6 +503,16 @@
     <Content Include="Views\Agentes\Details.cshtml" />
     <Content Include="Views\Agentes\Edit.cshtml" />
     <Content Include="Views\Agentes\Index.cshtml" />
+    <Content Include="Views\SalarioBasicoes\Create.cshtml" />
+    <Content Include="Views\SalarioBasicoes\Delete.cshtml" />
+    <Content Include="Views\SalarioBasicoes\Details.cshtml" />
+    <Content Include="Views\SalarioBasicoes\Edit.cshtml" />
+    <Content Include="Views\SalarioBasicoes\Index.cshtml" />
+    <Content Include="Views\TipoMultas\Create.cshtml" />
+    <Content Include="Views\TipoMultas\Delete.cshtml" />
+    <Content Include="Views\TipoMultas\Details.cshtml" />
+    <Content Include="Views\TipoMultas\Edit.cshtml" />
+    <Content Include="Views\TipoMultas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

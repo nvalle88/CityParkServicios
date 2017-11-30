@@ -627,7 +627,6 @@ C:\Users\brian\source\repos\CityParkServicios\AppCityParkServices\AppCityParkSer
 C:\Users\brian\source\repos\CityParkServicios\AppCityParkServices\AppCityParkServices\bin\es\System.Net.Http.Formatting.resources.dll
 C:\Users\brian\source\repos\CityParkServicios\AppCityParkServices\AppCityParkServices\bin\es\System.Web.Http.resources.dll
 C:\Users\brian\source\repos\CityParkServicios\AppCityParkServices\AppCityParkServices\bin\es\System.Web.Http.WebHost.resources.dll
-C:\Users\brian\source\repos\CityParkServicios\AppCityParkServices\AppCityParkServices\obj\Debug\AppCityParkServices.csprojResolveAssemblyReference.cache
 C:\Users\brian\source\repos\CityParkServicios\AppCityParkServices\AppCityParkServices\obj\Debug\AppCityParkServices.csproj.CoreCompileInputs.cache
 C:\Users\brian\source\repos\CityParkServicios\AppCityParkServices\AppCityParkServices\obj\Debug\AppCityParkServices.dll
 C:\Users\brian\source\repos\CityParkServicios\AppCityParkServices\AppCityParkServices\obj\Debug\AppCityParkServices.pdb

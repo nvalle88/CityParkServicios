@@ -135,6 +135,14 @@
           <Property Name="Longitud" Type="float" />
           <Property Name="SectorId" Type="int" />
         </EntityType>
+        <EntityType Name="SalarioBasico">
+          <Key>
+            <PropertyRef Name="SalarioBasicoId" />
+          </Key>
+          <Property Name="SalarioBasicoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Monto" Type="float" />
+          <Property Name="Fecha" Type="datetime" />
+        </EntityType>
         <EntityType Name="Saldo">
           <Key>
             <PropertyRef Name="SaldoId" />
@@ -197,8 +205,10 @@
           </Key>
           <Property Name="TipoMultaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Multa" Type="nchar" MaxLength="10" />
-          <Property Name="Descripcion" Type="nchar" MaxLength="50" />
-          <Property Name="EmpresaId" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="EmpresaId" Type="int" />
+          <Property Name="Porcentaje" Type="float" />
+          <Property Name="SalarioBasicoId" Type="int" />
         </EntityType>
         <EntityType Name="Transaccion">
           <Key>
@@ -539,7 +549,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TipoMultas_Empresa">
-          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
           <End Role="TipoMultas" Type="Self.TipoMultas" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Empresa">
@@ -547,6 +557,18 @@
             </Principal>
             <Dependent Role="TipoMultas">
               <PropertyRef Name="EmpresaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TipoMultas_SalarioBasico">
+          <End Role="SalarioBasico" Type="Self.SalarioBasico" Multiplicity="0..1" />
+          <End Role="TipoMultas" Type="Self.TipoMultas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalarioBasico">
+              <PropertyRef Name="SalarioBasicoId" />
+            </Principal>
+            <Dependent Role="TipoMultas">
+              <PropertyRef Name="SalarioBasicoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -635,6 +657,7 @@
           <EntitySet Name="Parqueo" EntityType="Self.Parqueo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Plaza" EntityType="Self.Plaza" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PuntoSector" EntityType="Self.PuntoSector" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SalarioBasico" EntityType="Self.SalarioBasico" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Saldo" EntityType="Self.Saldo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sector" EntityType="Self.Sector" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SO" EntityType="Self.SO" Schema="dbo" store:Type="Tables" />
@@ -748,6 +771,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_TipoMultas_Empresa" Association="Self.FK_TipoMultas_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="TipoMultas" EntitySet="TipoMultas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TipoMultas_SalarioBasico" Association="Self.FK_TipoMultas_SalarioBasico">
+            <End Role="SalarioBasico" EntitySet="SalarioBasico" />
             <End Role="TipoMultas" EntitySet="TipoMultas" />
           </AssociationSet>
           <AssociationSet Name="FK_Transaccion_Empresa" Association="Self.FK_Transaccion_Empresa">
@@ -947,6 +974,15 @@
           <Property Name="SectorId" Type="Int32" />
           <NavigationProperty Name="Sector" Relationship="Self.FK_PuntoSector_Sector" FromRole="PuntoSector" ToRole="Sector" />
         </EntityType>
+        <EntityType Name="SalarioBasico">
+          <Key>
+            <PropertyRef Name="SalarioBasicoId" />
+          </Key>
+          <Property Name="SalarioBasicoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Monto" Type="Double" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TipoMultas" Relationship="Self.FK_TipoMultas_SalarioBasico" FromRole="SalarioBasico" ToRole="TipoMultas" />
+        </EntityType>
         <EntityType Name="Saldo">
           <Key>
             <PropertyRef Name="SaldoId" />
@@ -1018,10 +1054,13 @@
           </Key>
           <Property Name="TipoMultaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Multa" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="EmpresaId" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EmpresaId" Type="Int32" />
+          <Property Name="Porcentaje" Type="Double" />
+          <Property Name="SalarioBasicoId" Type="Int32" />
           <NavigationProperty Name="Empresa" Relationship="Self.FK_TipoMultas_Empresa" FromRole="TipoMultas" ToRole="Empresa" />
           <NavigationProperty Name="Multa1" Relationship="Self.FK_Multa_TipoMultas" FromRole="TipoMultas" ToRole="Multa" />
+          <NavigationProperty Name="SalarioBasico" Relationship="Self.FK_TipoMultas_SalarioBasico" FromRole="TipoMultas" ToRole="SalarioBasico" />
         </EntityType>
         <EntityType Name="Transaccion">
           <Key>
@@ -1294,7 +1333,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TipoMultas_Empresa">
-          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
           <End Role="TipoMultas" Type="Self.TipoMultas" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Empresa">
@@ -1389,6 +1428,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TipoMultas_SalarioBasico">
+          <End Role="SalarioBasico" Type="Self.SalarioBasico" Multiplicity="0..1" />
+          <End Role="TipoMultas" Type="Self.TipoMultas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalarioBasico">
+              <PropertyRef Name="SalarioBasicoId" />
+            </Principal>
+            <Dependent Role="TipoMultas">
+              <PropertyRef Name="SalarioBasicoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Saldo_Usuario">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
           <End Role="Saldo" Type="Self.Saldo" Multiplicity="*" />
@@ -1474,6 +1525,7 @@
           <EntitySet Name="Parqueo" EntityType="Self.Parqueo" />
           <EntitySet Name="Plaza" EntityType="Self.Plaza" />
           <EntitySet Name="PuntoSector" EntityType="Self.PuntoSector" />
+          <EntitySet Name="SalarioBasico" EntityType="Self.SalarioBasico" />
           <EntitySet Name="Saldo" EntityType="Self.Saldo" />
           <EntitySet Name="Sector" EntityType="Self.Sector" />
           <EntitySet Name="SO" EntityType="Self.SO" />
@@ -1588,6 +1640,10 @@
           <AssociationSet Name="FK_PuntoSector_Sector" Association="Self.FK_PuntoSector_Sector">
             <End Role="Sector" EntitySet="Sector" />
             <End Role="PuntoSector" EntitySet="PuntoSector" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TipoMultas_SalarioBasico" Association="Self.FK_TipoMultas_SalarioBasico">
+            <End Role="SalarioBasico" EntitySet="SalarioBasico" />
+            <End Role="TipoMultas" EntitySet="TipoMultas" />
           </AssociationSet>
           <AssociationSet Name="FK_Saldo_Usuario" Association="Self.FK_Saldo_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
@@ -1762,6 +1818,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SalarioBasico">
+            <EntityTypeMapping TypeName="CityParkDBModel.SalarioBasico">
+              <MappingFragment StoreEntitySet="SalarioBasico">
+                <ScalarProperty Name="SalarioBasicoId" ColumnName="SalarioBasicoId" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Saldo">
             <EntityTypeMapping TypeName="CityParkDBModel.Saldo">
               <MappingFragment StoreEntitySet="Saldo">
@@ -1831,6 +1896,8 @@
                 <ScalarProperty Name="Multa" ColumnName="Multa" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
+                <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
+                <ScalarProperty Name="SalarioBasicoId" ColumnName="SalarioBasicoId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

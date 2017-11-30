@@ -143,6 +143,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="SalarioBasico">
+      <EntityTypeMapping TypeName="CityParkDBModel.SalarioBasico">
+        <MappingFragment StoreEntitySet="SalarioBasico">
+          <ScalarProperty Name="SalarioBasicoId" ColumnName="SalarioBasicoId" />
+          <ScalarProperty Name="Monto" ColumnName="Monto" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Saldo">
       <EntityTypeMapping TypeName="CityParkDBModel.Saldo">
         <MappingFragment StoreEntitySet="Saldo">
@@ -212,6 +221,8 @@
           <ScalarProperty Name="Multa" ColumnName="Multa" />
           <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
           <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
+          <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
+          <ScalarProperty Name="SalarioBasicoId" ColumnName="SalarioBasicoId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

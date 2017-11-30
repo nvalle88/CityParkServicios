@@ -4,30 +4,31 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c165d664e4be432e872d09886b700148" Name="Diagram1">
-        <EntityTypeShape EntityType="CityParkDBModel.Administrador" Width="1.5" PointX="3" PointY="11.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityParkDBModel.Agente" Width="1.5" PointX="5.25" PointY="24.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityParkDBModel.Carro" Width="1.5" PointX="3.75" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityParkDBModel.Codigo" Width="1.5" PointX="8.25" PointY="18" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityParkDBModel.Dispositivo" Width="1.5" PointX="3" PointY="17.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityParkDBModel.Empresa" Width="1.5" PointX="0.75" PointY="17.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityParkDBModel.Marca" Width="1.5" PointX="1.5" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityParkDBModel.Modelo" Width="1.5" PointX="1.5" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityParkDBModel.Multa" Width="1.5" PointX="7.5" PointY="25.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityParkDBModel.Parqueo" Width="1.5" PointX="6" PointY="17.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityParkDBModel.Plaza" Width="1.5" PointX="3" PointY="26.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityParkDBModel.PuntoSector" Width="1.5" PointX="5.25" PointY="32.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityParkDBModel.Saldo" Width="1.5" PointX="3" PointY="22.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityParkDBModel.Sector" Width="1.5" PointX="3" PointY="32.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityParkDBModel.SO" Width="1.5" PointX="0.75" PointY="14.25" IsExpanded="true" />
+      <Diagram DiagramId="8cef0e3fccfc47959d8dc01f8d1a5b6f" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="CityParkDBModel.Administrador" Width="1.5" PointX="3" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkDBModel.Agente" Width="1.5" PointX="5.25" PointY="25.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkDBModel.Carro" Width="1.5" PointX="3.75" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkDBModel.Codigo" Width="1.5" PointX="8.25" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkDBModel.Dispositivo" Width="1.5" PointX="3" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkDBModel.Empresa" Width="1.5" PointX="0.75" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkDBModel.Marca" Width="1.5" PointX="1.5" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkDBModel.Modelo" Width="1.5" PointX="1.5" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkDBModel.Multa" Width="1.5" PointX="8.25" PointY="22.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkDBModel.Parqueo" Width="1.5" PointX="6" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkDBModel.Plaza" Width="1.5" PointX="3" PointY="28.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkDBModel.PuntoSector" Width="1.5" PointX="5.25" PointY="34.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkDBModel.SalarioBasico" Width="1.5" PointX="3.75" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkDBModel.Saldo" Width="1.5" PointX="3" PointY="22.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkDBModel.Sector" Width="1.5" PointX="3" PointY="34.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkDBModel.SO" Width="1.5" PointX="0.75" PointY="14.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CityParkDBModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityParkDBModel.TarjetaCredito" Width="1.5" PointX="3.75" PointY="4.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityParkDBModel.TarjetaPrepago" Width="1.5" PointX="5.75" PointY="14.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityParkDBModel.TipoMultas" Width="1.5" PointX="3" PointY="35.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityParkDBModel.Transaccion" Width="1.5" PointX="5.25" PointY="28.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityParkDBModel.Usuario" Width="1.5" PointX="0.75" PointY="22.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityParkDBModel.UsuarioTarjetaPrepago" Width="1.5" PointX="8" PointY="22.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityParkDBModel.Vendedor" Width="1.5" PointX="3" PointY="42.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkDBModel.TarjetaCredito" Width="1.5" PointX="3.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkDBModel.TarjetaPrepago" Width="1.5" PointX="3.75" PointY="37.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkDBModel.TipoMultas" Width="1.5" PointX="6" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkDBModel.Transaccion" Width="1.5" PointX="5.25" PointY="30.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkDBModel.Usuario" Width="1.5" PointX="0.75" PointY="23.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkDBModel.UsuarioTarjetaPrepago" Width="1.5" PointX="6" PointY="22.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityParkDBModel.Vendedor" Width="1.5" PointX="3" PointY="44.375" IsExpanded="true" />
         <AssociationConnector Association="CityParkDBModel.FK_Administrador_Empresa" ManuallyRouted="false" />
         <AssociationConnector Association="CityParkDBModel.FK_Agente_Empresa" ManuallyRouted="false" />
         <AssociationConnector Association="CityParkDBModel.FK_Agente_Sector" ManuallyRouted="false" />
@@ -54,6 +55,7 @@
         <AssociationConnector Association="CityParkDBModel.FK_Parqueo_TarjetaCredito" ManuallyRouted="false" />
         <AssociationConnector Association="CityParkDBModel.FK_Parqueo_Usuario" ManuallyRouted="false" />
         <AssociationConnector Association="CityParkDBModel.FK_PuntoSector_Sector" ManuallyRouted="false" />
+        <AssociationConnector Association="CityParkDBModel.FK_TipoMultas_SalarioBasico" ManuallyRouted="false" />
         <AssociationConnector Association="CityParkDBModel.FK_Saldo_Usuario" ManuallyRouted="false" />
         <AssociationConnector Association="CityParkDBModel.FK_TarjetaCredito_Usuario" ManuallyRouted="false" />
         <AssociationConnector Association="CityParkDBModel.FK_UsuarioTarjetaPrepago_TarjetaPrepago" ManuallyRouted="false" />
