@@ -24,7 +24,7 @@ namespace AppCityParkServices.Models
         public string Multa { get; set; }
         public string Descripcion { get; set; }
         public Nullable<int> EmpresaId { get; set; }
-        public Nullable<decimal> Porcentaje { get; set; }
+        public Nullable<double> Porcentaje { get; set; }
     
         public virtual Empresa Empresa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

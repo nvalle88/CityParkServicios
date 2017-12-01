@@ -118,7 +118,7 @@ namespace AppCityParkServices.Controllers.Api
 
                 return new Response { IsSuccess = true };
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return new Response { IsSuccess = false };
             }

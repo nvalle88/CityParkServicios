@@ -138,7 +138,7 @@
     </Key>
     <Property Name="SalarioBasicoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Descripcion" Type="varchar" MaxLength="50" />
-    <Property Name="Monto" Type="float" />
+    <Property Name="Monto" Type="decimal" Precision="18" Scale="0" />
     <Property Name="Fecha" Type="datetime" />
     <Property Name="EmpresaId" Type="int" />
   </EntityType>
@@ -206,7 +206,7 @@
     <Property Name="Multa" Type="nchar" MaxLength="10" />
     <Property Name="Descripcion" Type="varchar" MaxLength="500" Nullable="false" />
     <Property Name="EmpresaId" Type="int" />
-    <Property Name="Porcentaje" Type="float" />
+    <Property Name="Porcentaje" Type="decimal" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="Transaccion">
     <Key>
