@@ -230,7 +230,6 @@
     <Compile Include="Controllers\MVC\SOesController.cs" />
     <Compile Include="Controllers\MVC\TarjetaCreditoesController.cs" />
     <Compile Include="Controllers\MVC\TarjetaPrepagoesController.cs" />
-    <Compile Include="Controllers\MVC\TipoMultasController.cs" />
     <Compile Include="Controllers\MVC\TransaccionsController.cs" />
     <Compile Include="Controllers\MVC\UsuariosController.cs" />
     <Compile Include="Controllers\MVC\UsuarioTarjetaPrepagoesController.cs" />

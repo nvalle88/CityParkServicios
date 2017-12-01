@@ -90,6 +90,7 @@
       <EntityTypeMapping TypeName="CityParkDBModel.Multa">
         <MappingFragment StoreEntitySet="Multa">
           <ScalarProperty Name="MultaId" ColumnName="MultaId" />
+          <ScalarProperty Name="SalarioBasicoId" ColumnName="SalarioBasicoId" />
           <ScalarProperty Name="Valor" ColumnName="Valor" />
           <ScalarProperty Name="Fecha" ColumnName="Fecha" />
           <ScalarProperty Name="AgenteId" ColumnName="AgenteId" />
@@ -99,6 +100,7 @@
           <ScalarProperty Name="Plaza" ColumnName="Plaza" />
           <ScalarProperty Name="Foto" ColumnName="Foto" />
           <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
+          <ScalarProperty Name="Observacion" ColumnName="Observacion" />
           <ScalarProperty Name="TipoMultaId" ColumnName="TipoMultaId" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -224,7 +226,6 @@
           <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
           <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
           <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
-          <ScalarProperty Name="SalarioBasicoId" ColumnName="SalarioBasicoId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -17,7 +17,7 @@ namespace AppCityParkServices.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SalarioBasico()
         {
-            this.TipoMultas = new HashSet<TipoMultas>();
+            this.Multa = new HashSet<Multa>();
         }
     
         public int SalarioBasicoId { get; set; }
@@ -28,6 +28,6 @@ namespace AppCityParkServices.Models
     
         public virtual Empresa Empresa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TipoMultas> TipoMultas { get; set; }
+        public virtual ICollection<Multa> Multa { get; set; }
     }
 }

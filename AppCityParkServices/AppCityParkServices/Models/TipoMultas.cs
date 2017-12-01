@@ -25,11 +25,9 @@ namespace AppCityParkServices.Models
         public string Descripcion { get; set; }
         public Nullable<int> EmpresaId { get; set; }
         public Nullable<double> Porcentaje { get; set; }
-        public Nullable<int> SalarioBasicoId { get; set; }
     
         public virtual Empresa Empresa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Multa> Multa1 { get; set; }
-        public virtual SalarioBasico SalarioBasico { get; set; }
     }
 }

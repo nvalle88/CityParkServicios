@@ -10,96 +10,141 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using AppCityParkServices.Models;
+using AppCityParkServices.Clases;
 
 namespace AppCityParkServices.Controllers.Api
 {
-    public class TipoMultasController : ApiController
+    [RoutePrefix("api/TiposMultas")]
+    public class TiposMultasController : ApiController
     {
         private CityParkApp db = new CityParkApp();
 
-        // GET: api/TipoMultas
-        public IQueryable<TipoMultas> GetTipoMultas()
+        // GET: api/SalarioBasicoes
+        [HttpPost]
+        [Route("GetTipoMulta")]
+        public async Task<Response> GetTipoMulta(TipoMultas tipoMultas)
         {
-            return db.TipoMultas;
-        }
-
-        // GET: api/TipoMultas/5
-        [ResponseType(typeof(TipoMultas))]
-        public async Task<IHttpActionResult> GetTipoMultas(int id)
-        {
-            TipoMultas tipoMultas = await db.TipoMultas.FindAsync(id);
-            if (tipoMultas == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(tipoMultas);
-        }
-
-        // PUT: api/TipoMultas/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutTipoMultas(int id, TipoMultas tipoMultas)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != tipoMultas.TipoMultaId)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(tipoMultas).State = EntityState.Modified;
-
+            db.Configuration.ProxyCreationEnabled = false;
             try
             {
+                if (tipoMultas == null)
+                {
+                    return new Response { IsSuccess = false };
+                }
+                var d = await db.TipoMultas.ToListAsync();
+                var Request = await db.TipoMultas.Where(x => x.TipoMultaId == tipoMultas.TipoMultaId).FirstOrDefaultAsync();
+                if (Request == null)
+                {
+                    return new Response { IsSuccess = false };
+                }
+                return new Response { IsSuccess = true, Result = Request };
+            }
+            catch (Exception)
+            {
+                return new Response { IsSuccess = false };
+            }
+        }
+
+        // GET: api/SalarioBasicoes/5
+        [HttpPost]
+        [Route("GetTiposMultasPorEmpresa")]
+        public async Task<List<TipoMultas>> GetSalariosBasicosPorEmpresa([FromBody] Empresa empresa)
+        {
+            try
+            {
+                db.Configuration.ProxyCreationEnabled = false;
+                if (empresa.EmpresaId <= 0)
+                {
+                    return null;
+                }
+
+                var lista = await db.TipoMultas.Where(x => x.EmpresaId == empresa.EmpresaId).ToListAsync();
+                if (lista == null)
+                {
+                    return new List<TipoMultas>();
+                }
+
+                return lista;
+            }
+            catch (Exception)
+            {
+                return new List<TipoMultas>();
+            }
+        }
+
+        // PUT: api/SalarioBasicoes/5
+        [HttpPost]
+        [Route("EditTipoMulta")]
+        public async Task<Response> EditTipoMulta([FromBody] TipoMultas tipoMultas)
+        {
+            try
+            {
+                if (tipoMultas == null)
+                {
+                    return new Response { IsSuccess = false };
+                }
+                var Request = await db.TipoMultas.Where(x => x.TipoMultaId == tipoMultas.TipoMultaId).FirstOrDefaultAsync();
+                if (Request == null)
+                {
+                    return new Response { IsSuccess = false };
+                }
+                Request.Descripcion = tipoMultas.Descripcion;
+                Request.Porcentaje = tipoMultas.Porcentaje;
+                Request.Multa = tipoMultas.Multa;
+
+                db.Entry(Request).State = EntityState.Modified;
                 await db.SaveChangesAsync();
+                return new Response { IsSuccess = true };
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception)
             {
-                if (!TipoMultasExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return new Response { IsSuccess = false };
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/TipoMultas
-        [ResponseType(typeof(TipoMultas))]
-        public async Task<IHttpActionResult> PostTipoMultas(TipoMultas tipoMultas)
+        // POST: api/SalarioBasicoes
+        [HttpPost]
+        [Route("CreateTipoMulta")]
+        public async Task<Response> CreateTipoMulta([FromBody]TipoMultas tipoMultas)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (tipoMultas == null)
+                {
+                    return new Response { IsSuccess = false };
+                }
+                db.TipoMultas.Add(tipoMultas);
+                await db.SaveChangesAsync();
+
+                return new Response { IsSuccess = true };
             }
-
-            db.TipoMultas.Add(tipoMultas);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = tipoMultas.TipoMultaId }, tipoMultas);
+            catch (Exception)
+            {
+                return new Response { IsSuccess = false };
+            }
         }
 
-        // DELETE: api/TipoMultas/5
-        [ResponseType(typeof(TipoMultas))]
-        public async Task<IHttpActionResult> DeleteTipoMultas(int id)
+        [HttpPost]
+        [Route("DeleteTipoMulta")]
+        public async Task<Response> DeleteTipoMulta([FromBody] TipoMultas tipoMultas)
         {
-            TipoMultas tipoMultas = await db.TipoMultas.FindAsync(id);
-            if (tipoMultas == null)
+            try
             {
-                return NotFound();
+                var Request = await db.TipoMultas.Where(x => x.TipoMultaId == tipoMultas.TipoMultaId).FirstOrDefaultAsync();
+                if (Request == null)
+                {
+                    return new Response { IsSuccess = false };
+                }
+
+                db.TipoMultas.Remove(Request);
+                await db.SaveChangesAsync();
+
+                return new Response { IsSuccess = true };
             }
-
-            db.TipoMultas.Remove(tipoMultas);
-            await db.SaveChangesAsync();
-
-            return Ok(tipoMultas);
+            catch (Exception)
+            {
+                return new Response { IsSuccess = false };
+            }
         }
 
         protected override void Dispose(bool disposing)
@@ -111,9 +156,9 @@ namespace AppCityParkServices.Controllers.Api
             base.Dispose(disposing);
         }
 
-        private bool TipoMultasExists(int id)
+        private bool SalarioBasicoExists(int id)
         {
-            return db.TipoMultas.Count(e => e.TipoMultaId == id) > 0;
+            return db.SalarioBasico.Count(e => e.SalarioBasicoId == id) > 0;
         }
     }
 }
