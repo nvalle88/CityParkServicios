@@ -26,15 +26,29 @@ namespace AppCityParkServices.Controllers.Api
 
         // GET: api/SalarioBasicoes/5
         
-        [Route("GetSalariosPorEmpresa")]
-        public async Task<List<SalarioBasico>> GetSalariosPorEmpresa([FromBody] Empresa empresa)
+        [Route("GetSalariosBasicosPorEmpresa")]
+        public async Task<List<SalarioBasico>> GetSalariosBasicosPorEmpresa([FromBody] Empresa empresa)
         {
-
-            if (empresa.EmpresaId<=0)
+            try
             {
-                return null;
+                db.Configuration.ProxyCreationEnabled = false;
+                if (empresa.EmpresaId <= 0)
+                {
+                    return null;
+                }
+
+                var listaSalariosBasicos = await db.SalarioBasico.Where(x => x.EmpresaId == empresa.EmpresaId).Include(x => x.Empresa).ToListAsync();
+                if (listaSalariosBasicos == null)
+                {
+                    return new List<SalarioBasico>();
+                }
+
+                return listaSalariosBasicos;
             }
-            return null;
+            catch (Exception)
+            {
+                return new List<SalarioBasico>();
+            }
         }
 
         // PUT: api/SalarioBasicoes/5

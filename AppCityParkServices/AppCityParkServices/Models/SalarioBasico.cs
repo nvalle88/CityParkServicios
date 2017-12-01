@@ -21,6 +21,7 @@ namespace AppCityParkServices.Models
         }
     
         public int SalarioBasicoId { get; set; }
+        public string Descripcion { get; set; }
         public Nullable<double> Monto { get; set; }
         public System.DateTime Fecha { get; set; }
         public Nullable<int> EmpresaId { get; set; }
