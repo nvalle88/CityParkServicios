@@ -137,6 +137,7 @@
     <Property Name="SalarioBasicoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Monto" Type="float" />
     <Property Name="Fecha" Type="datetime" />
+    <Property Name="EmpresaId" Type="int" />
   </EntityType>
   <EntityType Name="Saldo">
     <Key>
@@ -495,6 +496,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_SalarioBasico_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+    <End Role="SalarioBasico" Type="Self.SalarioBasico" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="EmpresaId" />
+      </Principal>
+      <Dependent Role="SalarioBasico">
+        <PropertyRef Name="EmpresaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Saldo_Empresa">
     <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
     <End Role="Saldo" Type="Self.Saldo" Multiplicity="*" />
@@ -747,6 +760,10 @@
     <AssociationSet Name="FK_PuntoSector_Sector" Association="Self.FK_PuntoSector_Sector">
       <End Role="Sector" EntitySet="Sector" />
       <End Role="PuntoSector" EntitySet="PuntoSector" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalarioBasico_Empresa" Association="Self.FK_SalarioBasico_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="SalarioBasico" EntitySet="SalarioBasico" />
     </AssociationSet>
     <AssociationSet Name="FK_Saldo_Empresa" Association="Self.FK_Saldo_Empresa">
       <End Role="Empresa" EntitySet="Empresa" />

@@ -149,6 +149,7 @@
           <ScalarProperty Name="SalarioBasicoId" ColumnName="SalarioBasicoId" />
           <ScalarProperty Name="Monto" ColumnName="Monto" />
           <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

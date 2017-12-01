@@ -13,6 +13,7 @@ using AppCityParkServices.Models;
 
 namespace AppCityParkServices.Controllers.Api
 {
+    [RoutePrefix("api/SalariosBasicos")]
     public class SalarioBasicoesController : ApiController
     {
         private CityParkApp db = new CityParkApp();
@@ -24,16 +25,16 @@ namespace AppCityParkServices.Controllers.Api
         }
 
         // GET: api/SalarioBasicoes/5
-        [ResponseType(typeof(SalarioBasico))]
-        public async Task<IHttpActionResult> GetSalarioBasico(int id)
+        
+        [Route("GetSalariosPorEmpresa")]
+        public async Task<List<SalarioBasico>> GetSalariosPorEmpresa([FromBody] Empresa empresa)
         {
-            SalarioBasico salarioBasico = await db.SalarioBasico.FindAsync(id);
-            if (salarioBasico == null)
-            {
-                return NotFound();
-            }
 
-            return Ok(salarioBasico);
+            if (empresa.EmpresaId<=0)
+            {
+                return null;
+            }
+            return null;
         }
 
         // PUT: api/SalarioBasicoes/5

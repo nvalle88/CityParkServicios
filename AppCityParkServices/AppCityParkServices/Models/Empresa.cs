@@ -23,6 +23,7 @@ namespace AppCityParkServices.Models
             this.Multa = new HashSet<Multa>();
             this.Parqueo = new HashSet<Parqueo>();
             this.Plaza = new HashSet<Plaza>();
+            this.SalarioBasico = new HashSet<SalarioBasico>();
             this.Saldo = new HashSet<Saldo>();
             this.Sector = new HashSet<Sector>();
             this.TipoMultas = new HashSet<TipoMultas>();
@@ -49,6 +50,8 @@ namespace AppCityParkServices.Models
         public virtual ICollection<Parqueo> Parqueo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Plaza> Plaza { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SalarioBasico> SalarioBasico { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Saldo> Saldo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
