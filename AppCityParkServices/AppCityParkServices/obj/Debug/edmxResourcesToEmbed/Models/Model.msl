@@ -147,6 +147,7 @@
       <EntityTypeMapping TypeName="CityParkDBModel.SalarioBasico">
         <MappingFragment StoreEntitySet="SalarioBasico">
           <ScalarProperty Name="SalarioBasicoId" ColumnName="SalarioBasicoId" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
           <ScalarProperty Name="Monto" ColumnName="Monto" />
           <ScalarProperty Name="Fecha" ColumnName="Fecha" />
           <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />

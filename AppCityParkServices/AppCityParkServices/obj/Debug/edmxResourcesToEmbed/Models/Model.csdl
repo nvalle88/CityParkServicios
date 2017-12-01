@@ -173,6 +173,7 @@
       <PropertyRef Name="SalarioBasicoId" />
     </Key>
     <Property Name="SalarioBasicoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Monto" Type="Double" />
     <Property Name="Fecha" Type="DateTime" Precision="3" />
     <Property Name="EmpresaId" Type="Int32" />

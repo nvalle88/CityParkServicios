@@ -135,6 +135,7 @@
       <PropertyRef Name="SalarioBasicoId" />
     </Key>
     <Property Name="SalarioBasicoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="50" />
     <Property Name="Monto" Type="float" />
     <Property Name="Fecha" Type="datetime" />
     <Property Name="EmpresaId" Type="int" />

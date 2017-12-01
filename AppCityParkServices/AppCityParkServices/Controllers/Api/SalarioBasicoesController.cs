@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using AppCityParkServices.Models;
+using AppCityParkServices.Clases;
 
 namespace AppCityParkServices.Controllers.Api
 {
@@ -19,13 +20,32 @@ namespace AppCityParkServices.Controllers.Api
         private CityParkApp db = new CityParkApp();
 
         // GET: api/SalarioBasicoes
-        public IQueryable<SalarioBasico> GetSalarioBasico()
+        [HttpPost]
+        [Route("GetSalarioBasico")]
+        public async Task<Response> GetSalarioBasico(SalarioBasico salarioBasico)
         {
-            return db.SalarioBasico;
+            db.Configuration.ProxyCreationEnabled = false;
+            try
+            {
+                if (salarioBasico == null)
+                {
+                    return new Response { IsSuccess = false };
+                }
+                var salarioRequest = await db.SalarioBasico.Where(x => x.SalarioBasicoId == salarioBasico.SalarioBasicoId).FirstOrDefaultAsync();
+                if (salarioRequest == null)
+                {
+                    return new Response { IsSuccess = false };
+                }
+                return new Response { IsSuccess = true, Result = salarioRequest };
+            }
+            catch (Exception)
+            {
+                return new Response { IsSuccess = false };
+            }
         }
 
         // GET: api/SalarioBasicoes/5
-        
+        [HttpPost]
         [Route("GetSalariosBasicosPorEmpresa")]
         public async Task<List<SalarioBasico>> GetSalariosBasicosPorEmpresa([FromBody] Empresa empresa)
         {
@@ -52,69 +72,78 @@ namespace AppCityParkServices.Controllers.Api
         }
 
         // PUT: api/SalarioBasicoes/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutSalarioBasico(int id, SalarioBasico salarioBasico)
+        [HttpPost]
+        [Route("EditSalarioBasico")]
+        public async Task<Response> EditSalarioBasico([FromBody] SalarioBasico salarioBasico)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != salarioBasico.SalarioBasicoId)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(salarioBasico).State = EntityState.Modified;
-
             try
             {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SalarioBasicoExists(id))
+                if (salarioBasico==null)
                 {
-                    return NotFound();
+                    return new Response { IsSuccess=false };
                 }
-                else
+                var salarioRequest =await db.SalarioBasico.Where(x => x.SalarioBasicoId == salarioBasico.SalarioBasicoId).FirstOrDefaultAsync();
+                if (salarioRequest==null)
                 {
-                    throw;
+                    return new Response { IsSuccess = false };
                 }
-            }
+                salarioRequest.Descripcion = salarioBasico.Descripcion;
+                salarioRequest.Fecha = salarioBasico.Fecha;
+                salarioRequest.Monto = salarioBasico.Monto;
 
-            return StatusCode(HttpStatusCode.NoContent);
+                db.Entry(salarioRequest).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return new Response { IsSuccess = true };
+            }
+            catch (Exception)
+            {
+                return new Response { IsSuccess = false };
+            }
         }
 
         // POST: api/SalarioBasicoes
-        [ResponseType(typeof(SalarioBasico))]
-        public async Task<IHttpActionResult> PostSalarioBasico(SalarioBasico salarioBasico)
+        [HttpPost]
+        [Route("CreateSalarioBasico")]
+        public async Task<Response> CreateSalarioBasico([FromBody]SalarioBasico salarioBasico)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (salarioBasico == null)
+                {
+                    return new Response { IsSuccess = false };
+                }
+                db.SalarioBasico.Add(salarioBasico);
+                await db.SaveChangesAsync();
+
+                return new Response { IsSuccess = true };
             }
-
-            db.SalarioBasico.Add(salarioBasico);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = salarioBasico.SalarioBasicoId }, salarioBasico);
+            catch (Exception)
+            {
+                return new Response { IsSuccess = false };
+            }
         }
 
-        // DELETE: api/SalarioBasicoes/5
-        [ResponseType(typeof(SalarioBasico))]
-        public async Task<IHttpActionResult> DeleteSalarioBasico(int id)
+        [HttpPost]
+        [Route("DeleteSalarioBasico")]
+        public async Task<Response> DeleteSalarioBasico([FromBody] SalarioBasico salarioBasico)
         {
-            SalarioBasico salarioBasico = await db.SalarioBasico.FindAsync(id);
-            if (salarioBasico == null)
+            try
             {
-                return NotFound();
+                var salarioRequest = await db.SalarioBasico.Where(x => x.SalarioBasicoId == salarioBasico.SalarioBasicoId).FirstOrDefaultAsync();
+                if (salarioRequest == null)
+                {
+                    return new Response { IsSuccess = false };
+                }
+
+                db.SalarioBasico.Remove(salarioRequest);
+                await db.SaveChangesAsync();
+
+                return new Response { IsSuccess = true };
             }
-
-            db.SalarioBasico.Remove(salarioBasico);
-            await db.SaveChangesAsync();
-
-            return Ok(salarioBasico);
+            catch (Exception)
+            {
+                return new Response { IsSuccess = false };
+            }
         }
 
         protected override void Dispose(bool disposing)
