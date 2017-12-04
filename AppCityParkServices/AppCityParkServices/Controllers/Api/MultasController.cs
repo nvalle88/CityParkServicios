@@ -151,6 +151,11 @@ namespace AppCityParkServices.Controllers.Api
             {
                 return BadRequest(ModelState);
             }
+            var salario = db.SalarioBasico.Where(x => x.EmpresaId == multa.EmpresaId).OrderByDescending(x=>x.Fecha).FirstOrDefault();
+            var tipomulta = db.TipoMultas.Where(x => x.TipoMultaId == multa.TipoMultaId).FirstOrDefault();
+            var valor = salario.Monto * (tipomulta.Porcentaje/100);
+            multa.Valor =(decimal) valor;
+            multa.SalarioBasicoId = salario.SalarioBasicoId;
 
             db.Multa.Add(multa);
             await db.SaveChangesAsync();

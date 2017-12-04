@@ -177,7 +177,7 @@
     </Key>
     <Property Name="SalarioBasicoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Monto" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Monto" Type="Double" />
     <Property Name="Fecha" Type="DateTime" Precision="3" />
     <Property Name="EmpresaId" Type="Int32" />
     <NavigationProperty Name="Empresa" Relationship="Self.FK_SalarioBasico_Empresa" FromRole="SalarioBasico" ToRole="Empresa" />
@@ -253,10 +253,10 @@
       <PropertyRef Name="TipoMultaId" />
     </Key>
     <Property Name="TipoMultaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Multa" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Multa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="EmpresaId" Type="Int32" />
-    <Property Name="Porcentaje" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Porcentaje" Type="Double" />
     <NavigationProperty Name="Empresa" Relationship="Self.FK_TipoMultas_Empresa" FromRole="TipoMultas" ToRole="Empresa" />
     <NavigationProperty Name="Multa1" Relationship="Self.FK_Multa_TipoMultas" FromRole="TipoMultas" ToRole="Multa" />
   </EntityType>
