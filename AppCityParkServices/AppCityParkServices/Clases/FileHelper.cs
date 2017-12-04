@@ -19,7 +19,6 @@ namespace AppCityParkServices.Clases
             }
             catch
             {
-
                 return false;
             }
             return true;

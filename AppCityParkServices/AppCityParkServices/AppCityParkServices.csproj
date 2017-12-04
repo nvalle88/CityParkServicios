@@ -176,6 +176,7 @@
     <Compile Include="Clases\LoginRequest.cs" />
     <Compile Include="Clases\MarcaRequest.cs" />
     <Compile Include="Clases\ModeloRequest.cs" />
+    <Compile Include="Clases\MultaRequest.cs" />
     <Compile Include="Clases\ParqueoHelper.cs" />
     <Compile Include="Clases\PinRequest.cs" />
     <Compile Include="Clases\PlazaRequest.cs" />
