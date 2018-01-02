@@ -110,7 +110,7 @@ namespace AppCityParkServices.Controllers.Api
                         var nuevoSaldo = new Saldo
                         {
                             UsuarioId = codigo.UsuarioId,
-                            Saldo1 =(double)transaccion.transaccion.Monto,
+                            Saldo1 = (double)transaccion.transaccion.Monto,
                         };
                         db.Saldo.Add(nuevoSaldo);
                         await db.SaveChangesAsync();
@@ -122,7 +122,7 @@ namespace AppCityParkServices.Controllers.Api
                     db.Entry(IngresarSaldo).State = EntityState.Modified;
 
                     await db.SaveChangesAsync();
-                    
+
                     transaction.Commit();
 
                     //______________
@@ -135,14 +135,14 @@ namespace AppCityParkServices.Controllers.Api
                     await db.SaveChangesAsync();
 
                     //_______________
-                   List<string> tags= new List<string>();
+                    List<string> tags = new List<string>();
 
                     var PlazaDB = db.Dispositivo.Where(x => x.UsuarioId == transaccion.transaccion.UsuarioId).ToList();
                     foreach (Dispositivo element in PlazaDB)
                     {
                         tags.Add(element.UniqueId);
                     }
-                    AzureHubUtils.SendNotificationAsync("Se han acreditado "+ transaccion.transaccion.Monto +"$", tags);
+                    AzureHubUtils.SendNotificationAsync("Se han acreditado " + transaccion.transaccion.Monto + "$", tags);
 
                     return Ok(IngresarSaldo);
                 }
@@ -165,9 +165,8 @@ namespace AppCityParkServices.Controllers.Api
                 try
                 {
                     db.Configuration.ProxyCreationEnabled = false;
-                    Double monto = (double) ((transaccion.Monto / 30) * 0.50);
+                    Double monto = (double)((transaccion.Monto / 30) * 0.50);
                     transaccion.Monto = monto;
-
                     var DebitarSaldo = db.Saldo.Where(s => s.UsuarioId == transaccion.UsuarioId).FirstOrDefault();
 
                     if (DebitarSaldo == null)
@@ -177,19 +176,16 @@ namespace AppCityParkServices.Controllers.Api
 
                     DebitarSaldo.Saldo1 = DebitarSaldo.Saldo1 - monto;
                     db.Entry(DebitarSaldo).State = EntityState.Modified;
-                    db.SaveChangesAsync().Wait();                  
+                    db.SaveChangesAsync().Wait();
                     //______________
-
                     if (!ModelState.IsValid)
                     {
                         return BadRequest(ModelState);
                     }
                     db.Transaccion.Add(transaccion);
-                     db.SaveChangesAsync().Wait();
-
+                    db.SaveChangesAsync().Wait();
                     //_______________
                     List<string> tags = new List<string>();
-
                     var PlazaDB = db.Dispositivo.Where(x => x.UsuarioId == transaccion.UsuarioId).ToList();
                     foreach (Dispositivo element in PlazaDB)
                     {

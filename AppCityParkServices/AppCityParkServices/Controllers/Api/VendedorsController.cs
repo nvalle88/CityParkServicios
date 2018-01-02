@@ -172,11 +172,23 @@ namespace AppCityParkServices.Controllers.Api
             db.Configuration.ProxyCreationEnabled = false;
             var Nombreusuario = string.Empty;
             var contrasena = string.Empty;
+
+         
+
             dynamic jsonObject = form;
             try
             {
                 Nombreusuario = jsonObject.Nombre.Value;
-                contrasena = jsonObject.Contrasena.Value;
+
+                var cod = new Codificar
+                {
+                    Entrada = jsonObject.Contrasena.Value,
+                };
+
+                var codificar = CodificarHelper.SHA512(cod);
+
+                contrasena = codificar.Salida;
+                
             }
 
             catch (Exception)
@@ -200,7 +212,6 @@ namespace AppCityParkServices.Controllers.Api
             };
             return Ok(respuestaVendedor);
         }
-
 
         // GET: api/Vendedors/5
         [ResponseType(typeof(Vendedor))]
