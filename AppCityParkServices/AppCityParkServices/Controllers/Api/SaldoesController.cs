@@ -26,35 +26,33 @@ namespace AppCityParkServices.Controllers.Api
             return db.Saldo;
         }
 
-
+/// <summary>
+/// consultar saldo segun el id del Usuario la cual debe ser enviada como parametro
+/// </summary>
+/// <param name="form"></param>
+/// <returns> el valor del saldo</returns>
         [HttpPost]
         [Route("ConsultarSaldo")]
         public IHttpActionResult GetSaldo(JObject form)
         {
             db.Configuration.ProxyCreationEnabled = false;
-
-            var UsuarioId =string.Empty;
-
             dynamic jsonObject = form;
 
             try
             {
-                UsuarioId = jsonObject.UsuarioId.Value;
+                int  UsuarioId = Convert.ToInt32(jsonObject.UsuarioId.Value);
+                var usuario = UsuarioId;
+                Saldo saldo = db.Saldo.Where(s => s.UsuarioId == usuario).FirstOrDefault();
+                if (saldo == null)
+                {
+                    return BadRequest("El usuario no posee saldo");
+                }
+                return Ok(saldo.Saldo1);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                return BadRequest("LLamada Incorrecta");
-            }
-
-            var usuario = Convert.ToInt32(UsuarioId);
-            Saldo saldo = db.Saldo.Where(s => s.UsuarioId == usuario).FirstOrDefault();
-            if (saldo == null)
-            {
-                return BadRequest("El usuario no posee saldo");
-            }
-
-            return Ok(saldo);
+                return BadRequest("LLamada Incorrecta, "+ ex);
+            }           
         }
 
 
