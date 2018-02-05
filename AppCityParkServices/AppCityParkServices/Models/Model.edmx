@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CityParkDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CityParkDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Administrador">
           <Key>
             <PropertyRef Name="AdministradorId" />
@@ -73,6 +73,17 @@
           </Key>
           <Property Name="MarcaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MensajeContacto">
+          <Key>
+            <PropertyRef Name="idMensajeContacto" />
+          </Key>
+          <Property Name="idMensajeContacto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="isUsuario" Type="bit" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" />
+          <Property Name="VendedorId" Type="int" />
+          <Property Name="Mensaje" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Modelo">
           <Key>
@@ -383,6 +394,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MensajeContacto_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="MensajeContacto" Type="Self.MensajeContacto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="MensajeContacto">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MensajeContacto_Vendedor">
+          <End Role="Vendedor" Type="Self.Vendedor" Multiplicity="0..1" />
+          <End Role="MensajeContacto" Type="Self.MensajeContacto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendedor">
+              <PropertyRef Name="VendedorId" />
+            </Principal>
+            <Dependent Role="MensajeContacto">
+              <PropertyRef Name="VendedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Modelo_Marca">
           <End Role="Marca" Type="Self.Marca" Multiplicity="1" />
           <End Role="Modelo" Type="Self.Modelo" Multiplicity="*" />
@@ -667,6 +702,7 @@
           <EntitySet Name="Dispositivo" EntityType="Self.Dispositivo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Marca" EntityType="Self.Marca" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MensajeContacto" EntityType="Self.MensajeContacto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Modelo" EntityType="Self.Modelo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Multa" EntityType="Self.Multa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Parqueo" EntityType="Self.Parqueo" Schema="dbo" store:Type="Tables" />
@@ -727,6 +763,14 @@
           <AssociationSet Name="FK_Dispositivo_Usuario" Association="Self.FK_Dispositivo_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Dispositivo" EntitySet="Dispositivo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MensajeContacto_Usuario" Association="Self.FK_MensajeContacto_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="MensajeContacto" EntitySet="MensajeContacto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MensajeContacto_Vendedor" Association="Self.FK_MensajeContacto_Vendedor">
+            <End Role="Vendedor" EntitySet="Vendedor" />
+            <End Role="MensajeContacto" EntitySet="MensajeContacto" />
           </AssociationSet>
           <AssociationSet Name="FK_Modelo_Marca" Association="Self.FK_Modelo_Marca">
             <End Role="Marca" EntitySet="Marca" />
@@ -821,8 +865,7 @@
             <End Role="Vendedor" EntitySet="Vendedor" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CityParkDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1117,6 +1160,7 @@
           <NavigationProperty Name="TarjetaCredito" Relationship="Self.FK_TarjetaCredito_Usuario" FromRole="Usuario" ToRole="TarjetaCredito" />
           <NavigationProperty Name="Transaccion" Relationship="Self.FK_Transaccion_Usuario" FromRole="Usuario" ToRole="Transaccion" />
           <NavigationProperty Name="UsuarioTarjetaPrepago" Relationship="Self.FK_UsuarioTarjetaPrepago_Usuario" FromRole="Usuario" ToRole="UsuarioTarjetaPrepago" />
+          <NavigationProperty Name="MensajeContacto" Relationship="CityParkDBModel.FK_MensajeContacto_Usuario" FromRole="Usuario" ToRole="MensajeContacto" />
         </EntityType>
         <EntityType Name="UsuarioTarjetaPrepago">
           <Key>
@@ -1139,6 +1183,7 @@
           <Property Name="EmpresaId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Empresa" Relationship="Self.FK_Vendedor_Empresa" FromRole="Vendedor" ToRole="Empresa" />
           <NavigationProperty Name="Transaccion" Relationship="Self.FK_Transaccion_Vendedor" FromRole="Vendedor" ToRole="Transaccion" />
+          <NavigationProperty Name="MensajeContacto" Relationship="CityParkDBModel.FK_MensajeContacto_Vendedor" FromRole="Vendedor" ToRole="MensajeContacto" />
         </EntityType>
         <Association Name="FK_Administrador_Empresa">
           <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
@@ -1709,7 +1754,53 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="UsuarioTarjetaPrepago" EntitySet="UsuarioTarjetaPrepago" />
           </AssociationSet>
+          <EntitySet Name="MensajeContacto" EntityType="CityParkDBModel.MensajeContacto" />
+          <AssociationSet Name="FK_MensajeContacto_Usuario" Association="CityParkDBModel.FK_MensajeContacto_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="MensajeContacto" EntitySet="MensajeContacto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MensajeContacto_Vendedor" Association="CityParkDBModel.FK_MensajeContacto_Vendedor">
+            <End Role="Vendedor" EntitySet="Vendedor" />
+            <End Role="MensajeContacto" EntitySet="MensajeContacto" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="MensajeContacto">
+          <Key>
+            <PropertyRef Name="idMensajeContacto" />
+          </Key>
+          <Property Name="idMensajeContacto" Type="Int32" Nullable="false" />
+          <Property Name="isUsuario" Type="Boolean" Nullable="false" />
+          <Property Name="UsuarioId" Type="Int32" />
+          <Property Name="VendedorId" Type="Int32" />
+          <Property Name="Mensaje" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Usuario" Relationship="CityParkDBModel.FK_MensajeContacto_Usuario" FromRole="MensajeContacto" ToRole="Usuario" />
+          <NavigationProperty Name="Vendedor" Relationship="CityParkDBModel.FK_MensajeContacto_Vendedor" FromRole="MensajeContacto" ToRole="Vendedor" />
+        </EntityType>
+        <Association Name="FK_MensajeContacto_Usuario">
+          <End Type="CityParkDBModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="CityParkDBModel.MensajeContacto" Role="MensajeContacto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="MensajeContacto">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MensajeContacto_Vendedor">
+          <End Type="CityParkDBModel.Vendedor" Role="Vendedor" Multiplicity="0..1" />
+          <End Type="CityParkDBModel.MensajeContacto" Role="MensajeContacto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendedor">
+              <PropertyRef Name="VendedorId" />
+            </Principal>
+            <Dependent Role="MensajeContacto">
+              <PropertyRef Name="VendedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1983,6 +2074,18 @@
                 <ScalarProperty Name="Apellido" ColumnName="Apellido" />
                 <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
                 <ScalarProperty Name="EmpresaId" ColumnName="EmpresaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MensajeContacto">
+            <EntityTypeMapping TypeName="CityParkDBModel.MensajeContacto">
+              <MappingFragment StoreEntitySet="MensajeContacto">
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
+                <ScalarProperty Name="VendedorId" ColumnName="VendedorId" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="isUsuario" ColumnName="isUsuario" />
+                <ScalarProperty Name="idMensajeContacto" ColumnName="idMensajeContacto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -303,16 +303,21 @@ namespace AppCityParkServices.Controllers.Api
                     await db.SaveChangesAsync();
                     CarroDB = db.Carro.Where(x => x.UsuarioId == parqueoHelper.UsuarioId && x.Placa == parqueoHelper.Placa).FirstOrDefault();
                 }
-                #endregion
+            #endregion
+            // extraemos las coordenadas de la plaza para utilizarla en el parqueo
+                #region Plaza
+            Plaza plaza = db.Plaza.Where(x => x.PlazaId == parqueoHelper.PlazaId).FirstOrDefault();
 
-                //Ingresamos el parqueo
-                var parqueo = new Parqueo
+            #endregion
+
+            //Ingresamos el parqueo
+            var parqueo = new Parqueo
                 {
                     FechaInicio = parqueoHelper.FechaInicio,
                     FechaFin = parqueoHelper.FechaFin,
                     CarroId = CarroDB.CarroId,
-                    Latitud = parqueoHelper.Latitud,
-                    Longitud = parqueoHelper.Longitud,
+                    Latitud = plaza.Latitud,
+                    Longitud = plaza.Longitud,
                     UsuarioId = parqueoHelper.UsuarioId,
                     PlazaId = parqueoHelper.PlazaId,
                 };
