@@ -69,6 +69,17 @@
     <Property Name="MarcaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Nombre" Type="varchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="MensajeContacto">
+    <Key>
+      <PropertyRef Name="idMensajeContacto" />
+    </Key>
+    <Property Name="idMensajeContacto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="isUsuario" Type="bit" Nullable="false" />
+    <Property Name="UsuarioId" Type="int" />
+    <Property Name="VendedorId" Type="int" />
+    <Property Name="Mensaje" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Fecha" Type="datetime" Nullable="false" />
+  </EntityType>
   <EntityType Name="Modelo">
     <Key>
       <PropertyRef Name="ModeloId" />
@@ -378,6 +389,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_MensajeContacto_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="MensajeContacto" Type="Self.MensajeContacto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="MensajeContacto">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MensajeContacto_Vendedor">
+    <End Role="Vendedor" Type="Self.Vendedor" Multiplicity="0..1" />
+    <End Role="MensajeContacto" Type="Self.MensajeContacto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendedor">
+        <PropertyRef Name="VendedorId" />
+      </Principal>
+      <Dependent Role="MensajeContacto">
+        <PropertyRef Name="VendedorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Modelo_Marca">
     <End Role="Marca" Type="Self.Marca" Multiplicity="1" />
     <End Role="Modelo" Type="Self.Modelo" Multiplicity="*" />
@@ -662,6 +697,7 @@
     <EntitySet Name="Dispositivo" EntityType="Self.Dispositivo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Marca" EntityType="Self.Marca" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MensajeContacto" EntityType="Self.MensajeContacto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Modelo" EntityType="Self.Modelo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Multa" EntityType="Self.Multa" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Parqueo" EntityType="Self.Parqueo" Schema="dbo" store:Type="Tables" />
@@ -722,6 +758,14 @@
     <AssociationSet Name="FK_Dispositivo_Usuario" Association="Self.FK_Dispositivo_Usuario">
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="Dispositivo" EntitySet="Dispositivo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MensajeContacto_Usuario" Association="Self.FK_MensajeContacto_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="MensajeContacto" EntitySet="MensajeContacto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MensajeContacto_Vendedor" Association="Self.FK_MensajeContacto_Vendedor">
+      <End Role="Vendedor" EntitySet="Vendedor" />
+      <End Role="MensajeContacto" EntitySet="MensajeContacto" />
     </AssociationSet>
     <AssociationSet Name="FK_Modelo_Marca" Association="Self.FK_Modelo_Marca">
       <End Role="Marca" EntitySet="Marca" />

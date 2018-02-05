@@ -58,14 +58,18 @@ namespace AppCityParkServices.Controllers.Api
                 return BadRequest("Usuario o contraseña incorrecto...");
             }
 
-            var respuestaUsuario = new Usuario
+          
+            Saldo saldo = db.Saldo.Where(s => s.UsuarioId == existeUsuario.UsuarioId).FirstOrDefault();
+
+            var respuestaUsuario = new UsuarioLoginRequest
             {
                 UsuarioId = existeUsuario.UsuarioId,
                 Carro = existeUsuario.Carro,
                 UsuarioTarjetaPrepago = existeUsuario.UsuarioTarjetaPrepago,
                 TarjetaCredito = existeUsuario.TarjetaCredito,
                 Parqueo = existeUsuario.Parqueo,
-                Saldo = existeUsuario.Saldo,
+                Saldo = null,
+                Saldo1= saldo.Saldo1,
                 Contrasena = existeUsuario.Contrasena,
                 Nombre = existeUsuario.Nombre,
                 

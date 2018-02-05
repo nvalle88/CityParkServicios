@@ -176,6 +176,7 @@
     <Compile Include="Clases\LoginRequest.cs" />
     <Compile Include="Clases\MarcaRequest.cs" />
     <Compile Include="Clases\ModeloRequest.cs" />
+    <Compile Include="Clases\MultaRequest.cs" />
     <Compile Include="Clases\ParqueoHelper.cs" />
     <Compile Include="Clases\PinRequest.cs" />
     <Compile Include="Clases\PlazaRequest.cs" />
@@ -185,10 +186,12 @@
     <Compile Include="Clases\Response.cs" />
     <Compile Include="Clases\SectorViewModel.cs" />
     <Compile Include="Clases\TiempoRequest.cs" />
+    <Compile Include="Clases\UsuarioLoginRequest.cs" />
     <Compile Include="Clases\UsuarioPasswordRequest.cs" />
     <Compile Include="Clases\UsuarioRequest.cs" />
     <Compile Include="Clases\VendedorRequest.cs" />
     <Compile Include="Constants\Constants.cs" />
+    <Compile Include="Controllers\Api\MensajeContactoesController.cs" />
     <Compile Include="Controllers\Api\SalarioBasicoesController.cs" />
     <Compile Include="Controllers\MVC\AgentesController.cs" />
     <Compile Include="Controllers\Api\AdministradorsController.cs" />
@@ -220,6 +223,7 @@
     <Compile Include="Controllers\MVC\DispositivoesController.cs" />
     <Compile Include="Controllers\MVC\EmpresasController.cs" />
     <Compile Include="Controllers\MVC\MarcasController.cs" />
+    <Compile Include="Controllers\MVC\MensajeContactoesController.cs" />
     <Compile Include="Controllers\MVC\ModeloesController.cs" />
     <Compile Include="Controllers\MVC\MultasController.cs" />
     <Compile Include="Controllers\MVC\ParqueosController.cs" />
@@ -258,6 +262,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Marca.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MensajeContacto.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Model.Context.cs">
@@ -512,6 +519,11 @@
     <Content Include="Views\TipoMultas\Details.cshtml" />
     <Content Include="Views\TipoMultas\Edit.cshtml" />
     <Content Include="Views\TipoMultas\Index.cshtml" />
+    <Content Include="Views\MensajeContactoes\Create.cshtml" />
+    <Content Include="Views\MensajeContactoes\Delete.cshtml" />
+    <Content Include="Views\MensajeContactoes\Details.cshtml" />
+    <Content Include="Views\MensajeContactoes\Edit.cshtml" />
+    <Content Include="Views\MensajeContactoes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

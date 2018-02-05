@@ -17,6 +17,7 @@ namespace AppCityParkServices.Clases
 
         public Nullable<int> EmpresaId { get; set; }
 
+        public Nullable<bool> Ocupado { get; set; }
 
 
     }

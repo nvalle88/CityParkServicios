@@ -271,5 +271,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="MensajeContacto">
+      <EntityTypeMapping TypeName="CityParkDBModel.MensajeContacto">
+        <MappingFragment StoreEntitySet="MensajeContacto">
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
+          <ScalarProperty Name="VendedorId" ColumnName="VendedorId" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+          <ScalarProperty Name="isUsuario" ColumnName="isUsuario" />
+          <ScalarProperty Name="idMensajeContacto" ColumnName="idMensajeContacto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

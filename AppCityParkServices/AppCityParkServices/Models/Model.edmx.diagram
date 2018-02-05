@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="bb88b815986e4ad59e4732b8c700f351" Name="Diagram1">
+      <Diagram DiagramId="bb88b815986e4ad59e4732b8c700f351" Name="Diagram1" ZoomLevel="67">
         <EntityTypeShape EntityType="CityParkDBModel.Administrador" Width="1.5" PointX="3" PointY="12.375" IsExpanded="true" />
         <EntityTypeShape EntityType="CityParkDBModel.Agente" Width="1.5" PointX="5.25" PointY="27.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CityParkDBModel.Carro" Width="1.5" PointX="3.75" PointY="8.5" IsExpanded="true" />
@@ -63,6 +63,9 @@
         <AssociationConnector Association="CityParkDBModel.FK_Transaccion_Usuario" ManuallyRouted="false" />
         <AssociationConnector Association="CityParkDBModel.FK_Transaccion_Vendedor" ManuallyRouted="false" />
         <AssociationConnector Association="CityParkDBModel.FK_UsuarioTarjetaPrepago_Usuario" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CityParkDBModel.MensajeContacto" Width="1.5" PointX="8.25" PointY="34.25" />
+        <AssociationConnector Association="CityParkDBModel.FK_MensajeContacto_Usuario" />
+        <AssociationConnector Association="CityParkDBModel.FK_MensajeContacto_Vendedor" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -69,6 +69,7 @@ namespace AppCityParkServices.Controllers.Api
                 Multa=existeAgente.Multa,
                 Contrasena=existeAgente.Contrasena,
                 Nombre=existeAgente.Nombre,
+                EmpresaId= existeAgente.EmpresaId,
             };
 
             return Ok(respuestaAgente);

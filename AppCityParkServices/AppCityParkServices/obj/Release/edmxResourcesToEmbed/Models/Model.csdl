@@ -177,7 +177,7 @@
     </Key>
     <Property Name="SalarioBasicoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Monto" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Monto" Type="Double" />
     <Property Name="Fecha" Type="DateTime" Precision="3" />
     <Property Name="EmpresaId" Type="Int32" />
     <NavigationProperty Name="Empresa" Relationship="Self.FK_SalarioBasico_Empresa" FromRole="SalarioBasico" ToRole="Empresa" />
@@ -253,10 +253,10 @@
       <PropertyRef Name="TipoMultaId" />
     </Key>
     <Property Name="TipoMultaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Multa" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Multa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="EmpresaId" Type="Int32" />
-    <Property Name="Porcentaje" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Porcentaje" Type="Double" />
     <NavigationProperty Name="Empresa" Relationship="Self.FK_TipoMultas_Empresa" FromRole="TipoMultas" ToRole="Empresa" />
     <NavigationProperty Name="Multa1" Relationship="Self.FK_Multa_TipoMultas" FromRole="TipoMultas" ToRole="Multa" />
   </EntityType>
@@ -291,6 +291,7 @@
     <NavigationProperty Name="TarjetaCredito" Relationship="Self.FK_TarjetaCredito_Usuario" FromRole="Usuario" ToRole="TarjetaCredito" />
     <NavigationProperty Name="Transaccion" Relationship="Self.FK_Transaccion_Usuario" FromRole="Usuario" ToRole="Transaccion" />
     <NavigationProperty Name="UsuarioTarjetaPrepago" Relationship="Self.FK_UsuarioTarjetaPrepago_Usuario" FromRole="Usuario" ToRole="UsuarioTarjetaPrepago" />
+    <NavigationProperty Name="MensajeContacto" Relationship="CityParkDBModel.FK_MensajeContacto_Usuario" FromRole="Usuario" ToRole="MensajeContacto" />
   </EntityType>
   <EntityType Name="UsuarioTarjetaPrepago">
     <Key>
@@ -313,6 +314,7 @@
     <Property Name="EmpresaId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Empresa" Relationship="Self.FK_Vendedor_Empresa" FromRole="Vendedor" ToRole="Empresa" />
     <NavigationProperty Name="Transaccion" Relationship="Self.FK_Transaccion_Vendedor" FromRole="Vendedor" ToRole="Transaccion" />
+    <NavigationProperty Name="MensajeContacto" Relationship="CityParkDBModel.FK_MensajeContacto_Vendedor" FromRole="Vendedor" ToRole="MensajeContacto" />
   </EntityType>
   <Association Name="FK_Administrador_Empresa">
     <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
@@ -883,5 +885,51 @@
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="UsuarioTarjetaPrepago" EntitySet="UsuarioTarjetaPrepago" />
     </AssociationSet>
+    <EntitySet Name="MensajeContacto" EntityType="CityParkDBModel.MensajeContacto" />
+    <AssociationSet Name="FK_MensajeContacto_Usuario" Association="CityParkDBModel.FK_MensajeContacto_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="MensajeContacto" EntitySet="MensajeContacto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MensajeContacto_Vendedor" Association="CityParkDBModel.FK_MensajeContacto_Vendedor">
+      <End Role="Vendedor" EntitySet="Vendedor" />
+      <End Role="MensajeContacto" EntitySet="MensajeContacto" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="MensajeContacto">
+    <Key>
+      <PropertyRef Name="idMensajeContacto" />
+    </Key>
+    <Property Name="idMensajeContacto" Type="Int32" Nullable="false" />
+    <Property Name="isUsuario" Type="Boolean" Nullable="false" />
+    <Property Name="UsuarioId" Type="Int32" />
+    <Property Name="VendedorId" Type="Int32" />
+    <Property Name="Mensaje" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Usuario" Relationship="CityParkDBModel.FK_MensajeContacto_Usuario" FromRole="MensajeContacto" ToRole="Usuario" />
+    <NavigationProperty Name="Vendedor" Relationship="CityParkDBModel.FK_MensajeContacto_Vendedor" FromRole="MensajeContacto" ToRole="Vendedor" />
+  </EntityType>
+  <Association Name="FK_MensajeContacto_Usuario">
+    <End Type="CityParkDBModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+    <End Type="CityParkDBModel.MensajeContacto" Role="MensajeContacto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="MensajeContacto">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MensajeContacto_Vendedor">
+    <End Type="CityParkDBModel.Vendedor" Role="Vendedor" Multiplicity="0..1" />
+    <End Type="CityParkDBModel.MensajeContacto" Role="MensajeContacto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendedor">
+        <PropertyRef Name="VendedorId" />
+      </Principal>
+      <Dependent Role="MensajeContacto">
+        <PropertyRef Name="VendedorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

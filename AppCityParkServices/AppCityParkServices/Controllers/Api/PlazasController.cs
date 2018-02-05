@@ -30,10 +30,26 @@ namespace AppCityParkServices.Controllers.Api
         // GET: api/Plazas/GetPlazaByBarrio
         [HttpPost]
         [Route("GetPlazaByBarrio")]
-        public List<Plaza> GetPlazaByBarrio(Barrios barrio)
+        public List<PlazaRequest> GetPlazaByBarrio(Barrios barrio)
         {
             var PlazaDB = db.Plaza.Where(x => x.Barrio == barrio.NombreBarrio).ToList();
-            return PlazaDB;
+            List<PlazaRequest> plazaRequest = new List<PlazaRequest>();
+            foreach (Plaza plaza in PlazaDB)
+            {
+                PlazaRequest plzrqst = new PlazaRequest
+                {
+                    EmpresaId = plaza.EmpresaId,
+                    PlazaId = plaza.PlazaId,
+                    Latitud = plaza.Latitud,
+                    Longitud = plaza.Longitud,
+                    Nombre = plaza.Nombre,
+                    Ocupado = plaza.Ocupado,
+                };
+                plazaRequest.Add(plzrqst);
+            }
+
+
+            return plazaRequest;
         }
 
         // GET: api/Plazas/GetPlazaByNombre
@@ -41,18 +57,18 @@ namespace AppCityParkServices.Controllers.Api
         [Route("GetPlazaByNombre")]
         public Plaza GetPlazaByNombre(Plaza plaza)
         {
-            Plaza PlazaDB = db.Plaza.Where(x => x.Nombre == plaza.Nombre).FirstOrDefault();           
+            Plaza PlazaDB = db.Plaza.Where(x => x.Nombre == plaza.Nombre).FirstOrDefault();
             return PlazaDB;
         }
 
         // GET: api/Plazas/GetPlazaByPosition
         [HttpPost]
         [Route("GetPlazaByPosition")]
-        
+
         public List<PlazaRequest> GetPlazaByPosition(Position Position)
         {
 
-           var PlazaDB = db.Plaza.Where(x => x.Ocupado == false).ToList();
+            var PlazaDB = db.Plaza.Where(x => x.Ocupado == false).ToList();
             List<PlazaRequest> _plazas = new List<PlazaRequest>();
 
             foreach (var plaza in PlazaDB)
@@ -60,11 +76,13 @@ namespace AppCityParkServices.Controllers.Api
                 if (GeoUtils.EstaCercaDeMi(Position, plaza, 0.5))
                 {
                     _plazas.Add(
-                        new PlazaRequest {PlazaId= plaza.PlazaId,
-                        EmpresaId=plaza.EmpresaId,
-                        Latitud=plaza.Latitud,
-                        Longitud=plaza.Longitud,
-                        Nombre=plaza.Nombre,
+                        new PlazaRequest
+                        {
+                            PlazaId = plaza.PlazaId,
+                            EmpresaId = plaza.EmpresaId,
+                            Latitud = plaza.Latitud,
+                            Longitud = plaza.Longitud,
+                            Nombre = plaza.Nombre,
                         }
                         );
                 }
@@ -85,8 +103,8 @@ namespace AppCityParkServices.Controllers.Api
 
             foreach (var pc in g)
             {
-                Barrios.Add(new Barrios { NombreBarrio = pc.Key});
-            }         
+                Barrios.Add(new Barrios { NombreBarrio = pc.Key });
+            }
             return Barrios;
         }
 
@@ -115,7 +133,7 @@ namespace AppCityParkServices.Controllers.Api
             }
             Plaza plaza = await db.Plaza.FindAsync(_plaza.PlazaId);
             plaza.Ocupado = _plaza.Ocupado;
-            
+
             db.Entry(plaza).State = EntityState.Modified;
 
             try
@@ -123,8 +141,8 @@ namespace AppCityParkServices.Controllers.Api
                 await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
-            {                
-                    throw;                
+            {
+                throw;
             }
 
             return StatusCode(HttpStatusCode.NoContent);
