@@ -1,0 +1,51 @@
+﻿@model IEnumerable<AppCityParkServices.Models.Dispositivo>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UsuarioId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UniqueId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Empresa.RazonSocial)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SO.Nombre)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UsuarioId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UniqueId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Empresa.RazonSocial)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SO.Nombre)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.DispositivoId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.DispositivoId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.DispositivoId })
+        </td>
+    </tr>
+}
+
+</table>
