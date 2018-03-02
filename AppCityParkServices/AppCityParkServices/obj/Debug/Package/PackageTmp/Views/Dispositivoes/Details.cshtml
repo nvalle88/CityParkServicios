@@ -1,0 +1,50 @@
+﻿@model AppCityParkServices.Models.Dispositivo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Dispositivo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UsuarioId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UsuarioId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UniqueId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UniqueId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Empresa.RazonSocial)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Empresa.RazonSocial)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SO.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SO.Nombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DispositivoId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

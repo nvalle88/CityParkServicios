@@ -1,0 +1,63 @@
+﻿@model IEnumerable<AppCityParkServices.Models.Plaza>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Barrio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Direccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ocupado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Latitud)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Longitud)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Barrio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Direccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ocupado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Latitud)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Longitud)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PlazaId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PlazaId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PlazaId })
+        </td>
+    </tr>
+}
+
+</table>
